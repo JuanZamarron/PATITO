@@ -133,3 +133,11 @@ def p_retorno(p):
     '''
     retorno : regresa LPARENT exp RPARENT SEMICOLON
     '''
+
+def p_CTE(p):
+    '''CTE : CTE_I
+    | CTE_F
+    | CTE_CH
+    | CTE_STRING
+    | FUNCION
+    '''
