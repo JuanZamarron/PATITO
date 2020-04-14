@@ -89,3 +89,37 @@ def p_estatuto(p):
              | lectura
              | escritura
     '''
+
+def p_si(p):
+    '''
+    si : siaux
+       | siaux SINO bloque
+    '''
+
+def p_siaux(p):
+    '''
+    siaux : si LPARENT expresion RPARENT ENTONCES bloque
+    '''
+
+def p_asignacion(p):
+    '''
+    asignacion : ID asignacionaux SEMICOLON
+    '''
+
+def p_asignacionaux(p):
+    '''
+    asignacionaux : IGUAL expresion
+                  | LCORCH asignacionaxu2 RCORCH IGUAL expresion
+    '''
+
+def p_asignacionaux2(p):
+    '''
+    asignacionaux2 : pos
+                   | pos COMMA pos
+    '''
+
+def p_pos(p):
+    '''
+    pos : ID
+        | CTE_I
+    '''
