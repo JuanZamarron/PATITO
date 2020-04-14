@@ -91,8 +91,8 @@ def p_estatuto(p):
              | si
              | mientras
              | desde
-             | lectura
-             | escritura
+             | lee
+             | escribe
     '''
 
 def p_si(p):
