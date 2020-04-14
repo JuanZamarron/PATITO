@@ -123,3 +123,8 @@ def p_pos(p):
     pos : ID
         | CTE_I
     '''
+
+def p_retorno(p):
+    '''
+    retorno : regresa LPARENT exp RPARENT SEMICOLON
+    '''
