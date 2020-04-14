@@ -1,5 +1,10 @@
+# ------------------------------------------------------------
+# Juan Carlos
+# Valentin Alexandro Trujillo García - A01328426
+# Compiladores
+# ------------------------------------------------------------
+import ply.lex as lex
 import ply.yacc as yacc
-
 def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
