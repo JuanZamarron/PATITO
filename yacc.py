@@ -66,3 +66,26 @@ def p_funcaux3(p):
     funcaux3 : tipo ID
              | tipo ID COMMA funcaux3
     '''
+
+def p_bloque(p):
+    '''
+    bloque : LBRACE RBRACE
+           | LBRACE bloqueaux RBRACE
+    '''
+
+def p_bloqueaux(p):
+    '''
+    bloqueaux : estatuto
+              | estatuto bloqueaux
+              | retorno
+    '''
+
+def p_estatuto(p):
+    '''
+    estatuto : asignacion
+             | si
+             | mientras
+             | desde
+             | lectura
+             | escritura
+    '''
