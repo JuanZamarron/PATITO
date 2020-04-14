@@ -36,11 +36,33 @@ def p_tipo(p):
 def p_funcs(p):
     '''
     funcs : principal
-          | funcs2 principal
+          | funcsaux principal
     '''
 
 def p_funcs2(p):
     '''
-    funcs2 : func
-           | func funcs2
+    funcsaux : func
+             | func funcsaux
+    '''
+
+def p_func(p):
+    '''
+    func : FUNCION funcaux
+    '''
+
+def p_funcaux(p):
+    '''
+    funcaux : tipo funcaux2
+            | VOID funcaux2
+    '''
+
+def p_funcaux2(p):
+    '''
+    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque
+    '''
+
+def p_funcaux3(p):
+    '''
+    funcaux3 : tipo ID
+             | tipo ID COMMA funcaux3
     '''
