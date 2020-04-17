@@ -3,8 +3,15 @@
 # Valentin Alexandro Trujillo García - A01328426
 # Compiladores
 # ------------------------------------------------------------
-import ply.lex as lex
 import ply.yacc as yacc
+from lex import archivo
+#Obtains tokens
+from lex import tokens
+
+#Lee archivo de prueba
+prueba = open(archivo, "r")
+entrada = prueba.read()
+
 def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
@@ -133,3 +140,7 @@ def p_retorno(p):
     '''
     retorno : regresa LPARENT exp RPARENT SEMICOLON
     '''
+
+#Build parser
+parser = yacc.yacc()
+result = parser.parse(entrada)
