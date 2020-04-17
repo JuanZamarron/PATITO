@@ -38,7 +38,7 @@ tokens = [
              'IGUAL', 'GREATERTHAN', 'LESSTHAN','DIFFERENT',
              'LPARENT', 'RPARENT', 'COMMA','NOT'
              'MAS', 'MENOS', 'MULT', 'DIV',
-             'CTE_I', 'CTE_F', 'CTE_CH', 'CTE_STRING',
+             'CTE_I', 'CTE_F', 'CTE_C', 'CTE_S',
              'AND', 'OR', 'COMPARE', 'MOD',
             'COMMENT','MAYORIGUAL', 'MENORIGUAL', 'LCORCH', 'RCORCH ',
 
@@ -72,12 +72,12 @@ t_GREATERTHAN = r'\>'
 t_LESSTHAN = r'\<'
 
 
-t_CTE_I     = r'[0-9][0-9]*'
-t_CTE_F     = r'(\+|-)?[0-9]+(\.[0-9]+)?f'
-t_CTE_CH    = r'\'[A-Za-z]\''
-t_CTE_STRING= r'".*."'
-t_AND       = r'&&'
-t_OR        = r'\|\|'
-t_MOD       = r'%'
-t_NOT       = r'!'
+t_CTE_I = r'[0-9][0-9]*'
+t_CTE_F = r'(\+|-)?[0-9]+(\.[0-9]+)?f'
+t_CTE_C = r'\'[A-Za-z]\''
+t_CTE_S = r'".*."'
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_MOD = r'%'
+t_NOT = r'!'
 t_ignore_COMMENT = r'%%.*'
