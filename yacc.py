@@ -114,13 +114,13 @@ def p_asignacion(p):
 def p_asignacionaux(p):
     '''
     asignacionaux : IGUAL expresion
-                  | LCORCH asignacionaxu2 RCORCH IGUAL expresion
+                  | dimensiones IGUAL expresion
     '''
 
-def p_asignacionaux2(p):
+def p_dimensiones(p):
     '''
-    asignacionaux2 : pos
-                   | pos COMMA pos
+    dimensiones : LCORCH pos RCORCH
+                | LCORCH pos COMMA pos RCORCH
     '''
 
 def p_pos(p):
@@ -132,15 +132,4 @@ def p_pos(p):
 def p_retorno(p):
     '''
     retorno : regresa LPARENT exp RPARENT SEMICOLON
-    '''
-
-def p_escritura(p):
-    '''
-    escritura : ESCRIBE LPARENT escrituraaux RPARENT SEMICOLON
-    '''
-
-def p_escrituraaux(p):
-    '''
-    escrituraaux : x
-                 | x COMMMA escrituraaux
     '''
