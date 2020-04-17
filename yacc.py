@@ -134,10 +134,13 @@ def p_retorno(p):
     retorno : regresa LPARENT exp RPARENT SEMICOLON
     '''
 
-def p_CTE(p):
-    '''CTE : CTE_I
-    | CTE_F
-    | CTE_CH
-    | CTE_STRING
-    | FUNCION
+def p_escritura(p):
+    '''
+    escritura : ESCRIBE LPARENT escrituraaux RPARENT SEMICOLON
+    '''
+
+def p_escrituraaux(p):
+    '''
+    escrituraaux : x
+                 | x COMMMA escrituraaux
     '''
