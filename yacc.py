@@ -31,7 +31,7 @@ def p_varaux(p):
 def p_varaux2(p):
     '''
     varaux2 : ID
-            | ID COMMA varuax2
+            | ID COMMA varaux2
             | ID LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH COMMA varaux2
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
@@ -43,12 +43,18 @@ def p_tipo(p):
     tipo : INT
          | FLOAT
          | CHAR
+         | STRING
     '''
 
 def p_funcs(p):
     '''
     funcs : principal
           | funcsaux principal
+    '''
+
+def p_principal(p):
+    '''
+    principal : PRINCIPAL bloque
     '''
 
 def p_funcs2(p):
@@ -110,7 +116,7 @@ def p_si(p):
 
 def p_siaux(p):
     '''
-    siaux : si LPARENT expresion RPARENT ENTONCES bloque
+    siaux : SI LPARENT expresion RPARENT ENTONCES bloque
     '''
 
 def p_asignacion(p):
@@ -138,17 +144,17 @@ def p_pos(p):
 
 def p_retorno(p):
     '''
-    retorno : regresa LPARENT exp RPARENT SEMICOLON
+    retorno : REGRESA LPARENT exp RPARENT SEMICOLON
     '''
 
 def p_lectura(p):
     '''
-    lectura: lee LPARENT dimensiones RPARENT SEMICOLON
+    lectura : LEE LPARENT dimensiones RPARENT SEMICOLON
     '''
 
 def p_escritura(p):
     '''
-    escritura : escribe LPARENT escrituraaux RPARENT SEMICOLON
+    escritura : ESCRIBE LPARENT escrituraaux RPARENT SEMICOLON
     '''
 
 def p_escrituraaux(p):
@@ -161,12 +167,12 @@ def p_escrituraaux(p):
 
 def p_mientras(p):
     '''
-    mientras : mientras LPARENT expresion RPARENT HAZ bloque
+    mientras : MIENTRAS LPARENT expresion RPARENT HAZ bloque
     '''
 
 def p_desde(p):
     '''
-    desde : desde desdeaux HASTA exp HACER bloque
+    desde : DESDE desdeaux HASTA exp HACER bloque
     '''
 
 def p_desdeaux(p):
@@ -233,6 +239,10 @@ def p_rel(p):
         | COMPARE
         | DIFFERENT
     '''
+
+#Errores de sintaxis
+def p_error(p):
+    print("ERROR DE SINTAXIS", p)
 
 #Build parser
 parser = yacc.yacc()

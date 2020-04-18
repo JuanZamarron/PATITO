@@ -36,45 +36,45 @@ reserved = {
 
 # LIST OF TOKENS
 tokens = [
-    'ID', 
-    'SEMICOLON', 
-    'LBRACE', 
+    'ID',
+    'SEMICOLON',
+    'COLON',
+    'LBRACE',
     'RBRACE',
-    'IGUAL', 
-    'MAYOR', 
+    'IGUAL',
+    'MAYOR',
     'MENOR',
     'DIFFERENT',
-    'LPARENT', 
-    'RPARENT', 
+    'LPARENT',
+    'RPARENT',
     'COMMA',
-    'NOT'
-    'MAS', 
-    'MENOS', 
-    'MULT', 
+    'NOT',
+    'MAS',
+    'MENOS',
+    'MULT',
     'DIV',
-    'CTE_I', 
-    'CTE_F', 
-    'CTE_C', 
+    'CTE_I',
+    'CTE_F',
+    'CTE_C',
     'CTE_S',
-    'AND', 
-    'OR', 
-    'COMPARE', 
+    'AND',
+    'OR',
+    'COMPARE',
     'MOD',
     'COMMENT',
-    'MAYORIGUAL', 
-    'MENORIGUAL', 
-    'LCORCH', 
-    'RCORCH ',
-
+    'MAYORIGUAL',
+    'MENORIGUAL',
+    'LCORCH',
+    'RCORCH',
 ] + list(reserved.values())
 
 #Delimeters
 t_LPARENT = r'\('
-t_RPARENT= r'\)'
+t_RPARENT = r'\)'
 t_LBRACE = r'\{'
 t_RBRACE = r'\}'
-t_LCORCH   = r'\['
-t_RCORCH  = r'\]'
+t_LCORCH = r'\['
+t_RCORCH = r'\]'
 t_COMMA = r'\,'
 t_COLON = r'\:'
 t_SEMICOLON = r'\;'
@@ -88,7 +88,7 @@ t_DIV = r'\/'
 #Comparing
 t_IGUAL = r'\='
 t_DIFFERENT = r'!='
-t_COMPARE   = r'=='
+t_COMPARE = r'=='
 t_MAYORIGUAL = r'>='
 t_MENORIGUAL = r'<='
 t_MAYOR = r'\>'
@@ -98,9 +98,9 @@ t_AND = r'&&'
 t_OR = r'\|\|'
 t_MOD = r'%'
 t_NOT = r'!'
-t_ignore_COMMENT = r'%%.*'
+t_COMMENT = r'%%.*'
 
-t_CTE_S = r'\"([^\\\n]|(\\.))*?\"'
+t_CTE_S = r'\'[\w\d\s\,. ]*\'|\"[\w\d\s\,. ]*\"'
 t_CTE_C = r'\'[A-Za-z]\''
 
 t_ignore = ' \t\n'
@@ -127,19 +127,20 @@ def t_ID(t):
     return t
 
 #Constuir lexer.
-lexer = lex.lex()
+lex.lex()
 
 #Leer archivo prueba
 prueba = open('Pruebas/prueba.txt', "r")
 archivo = 'Pruebas/prueba.txt'
 entrada = prueba.read()
+prueba.close()
 
 #Entrada de lexer.
-lexer.input(entrada)
+lex.input(entrada)
 
 #Muestra tokens
 while True:
-    tok = lexer.token()
+    tok = lex.token()
     if not tok:
         break
     print(tok)
