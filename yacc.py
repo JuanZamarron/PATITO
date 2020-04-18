@@ -194,6 +194,32 @@ def p_exp(p):
         | termino MENOS exp
     '''
 
+def p_termino(p):
+    '''
+    termino : factor
+            | factor MULT termino
+            | factor DIV termino
+    '''
+
+def p_factor(p):
+    '''
+    factor : LCORCH expresion RCORCH
+           | var_cte
+           | MAS var_cte
+           | MENOS var_cte
+    '''
+
+def p_var_cte(p):
+    '''
+    var_cte : ID
+            | CTE_I
+            | CTE_F
+            | CTE_S
+            | CTE_C
+    '''
+
+
+
 #Build parser
 parser = yacc.yacc()
 result = parser.parse(entrada)
