@@ -98,8 +98,8 @@ def p_estatuto(p):
              | si
              | mientras
              | desde
-             | lee
-             | escribe
+             | lectura
+             | escritura
     '''
 
 def p_si(p):
@@ -139,6 +139,59 @@ def p_pos(p):
 def p_retorno(p):
     '''
     retorno : regresa LPARENT exp RPARENT SEMICOLON
+    '''
+
+def p_lectura(p):
+    '''
+    lectura: lee LPARENT dimensiones RPARENT SEMICOLON
+    '''
+
+def p_escritura(p):
+    '''
+    escritura : escribe LPARENT escrituraaux RPARENT SEMICOLON
+    '''
+
+def p_escrituraaux(p):
+    '''
+    escrituraaux : CTE_S
+                 | expresion
+                 | CTE_S COMMA escrituraaux
+                 | expresion COMMA escrituraaux
+    '''
+
+def p_mientras(p):
+    '''
+    mientras : mientras LPARENT expresion RPARENT HAZ bloque
+    '''
+
+def p_desde(p):
+    '''
+    desde : desde desdeaux HASTA exp HACER bloque
+    '''
+
+def p_desdeaux(p):
+    '''
+    desdeaux : ID IGUAL exp
+             | ID dimensiones IGUAL exp
+    '''
+
+def p_expresion(p):
+    '''
+    expresion : expr
+              | expr log expresion
+    '''
+
+def p_expr(p):
+    '''
+    expr : exp
+         | exp rel expr
+    '''
+
+def p_exp(p):
+    '''
+    exp : termino
+        | termino MAS exp
+        | termino MENOS exp
     '''
 
 #Build parser
