@@ -218,7 +218,21 @@ def p_var_cte(p):
             | CTE_C
     '''
 
+def p_log(p):
+    '''
+    log : AND
+        | OR
+    '''
 
+def p_rel(p):
+    '''
+    rel : MENOR
+        | MAYOR
+        | MENORIGUAL
+        | MAYORIGUAL
+        | COMPARE
+        | DIFFERENT
+    '''
 
 #Build parser
 parser = yacc.yacc()
