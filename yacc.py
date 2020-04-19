@@ -1,10 +1,17 @@
 # ------------------------------------------------------------
-# Juan Carlos
+# Juan Carlos Zamarrón Pérez - A00815058
 # Valentin Alexandro Trujillo García - A01328426
 # Compiladores
 # ------------------------------------------------------------
-import ply.lex as lex
 import ply.yacc as yacc
+from lex import archivo
+#Obtains tokens
+from lex import tokens
+
+#Lee archivo de prueba
+prueba = open(archivo, "r")
+entrada = prueba.read()
+
 def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
@@ -24,7 +31,7 @@ def p_varaux(p):
 def p_varaux2(p):
     '''
     varaux2 : ID
-            | ID COMMA varuax2
+            | ID COMMA varaux2
             | ID LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH COMMA varaux2
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
@@ -36,12 +43,18 @@ def p_tipo(p):
     tipo : INT
          | FLOAT
          | CHAR
+         | STRING
     '''
 
 def p_funcs(p):
     '''
     funcs : principal
           | funcsaux principal
+    '''
+
+def p_principal(p):
+    '''
+    principal : PRINCIPAL bloque
     '''
 
 def p_funcs2(p):
@@ -91,8 +104,8 @@ def p_estatuto(p):
              | si
              | mientras
              | desde
-             | lee
-             | escribe
+             | lectura
+             | escritura
     '''
 
 def p_si(p):
@@ -103,7 +116,7 @@ def p_si(p):
 
 def p_siaux(p):
     '''
-    siaux : si LPARENT expresion RPARENT ENTONCES bloque
+    siaux : SI LPARENT expresion RPARENT ENTONCES bloque
     '''
 
 def p_asignacion(p):
@@ -114,13 +127,13 @@ def p_asignacion(p):
 def p_asignacionaux(p):
     '''
     asignacionaux : IGUAL expresion
-                  | LCORCH asignacionaxu2 RCORCH IGUAL expresion
+                  | dimensiones IGUAL expresion
     '''
 
-def p_asignacionaux2(p):
+def p_dimensiones(p):
     '''
-    asignacionaux2 : pos
-                   | pos COMMA pos
+    dimensiones : LCORCH pos RCORCH
+                | LCORCH pos COMMA pos RCORCH
     '''
 
 def p_pos(p):
@@ -131,13 +144,115 @@ def p_pos(p):
 
 def p_retorno(p):
     '''
-    retorno : regresa LPARENT exp RPARENT SEMICOLON
+    retorno : REGRESA LPARENT exp RPARENT SEMICOLON
     '''
 
-def p_cte(p):
-    '''CTE : CTE_I
-    | CTE_F
-    | CTE_CH
-    | CTE_STRING
-    | FUNCION
+def p_lectura(p):
     '''
+    lectura : LEE LPARENT dimensiones RPARENT SEMICOLON
+    '''
+
+def p_escritura(p):
+    '''
+    escritura : ESCRIBE LPARENT escrituraaux RPARENT SEMICOLON
+    '''
+
+def p_escrituraaux(p):
+    '''
+    escrituraaux : CTE_S
+                 | expresion
+                 | CTE_S COMMA escrituraaux
+                 | expresion COMMA escrituraaux
+    '''
+
+def p_mientras(p):
+    '''
+    mientras : MIENTRAS LPARENT expresion RPARENT HAZ bloque
+    '''
+
+def p_desde(p):
+    '''
+    desde : DESDE desdeaux HASTA exp HACER bloque
+    '''
+
+def p_desdeaux(p):
+    '''
+    desdeaux : ID IGUAL exp
+             | ID dimensiones IGUAL exp
+    '''
+
+def p_expresion(p):
+    '''
+    expresion : expr
+              | expr log expresion
+    '''
+
+def p_expr(p):
+    '''
+    expr : exp
+         | exp rel expr
+    '''
+
+def p_exp(p):
+    '''
+    exp : termino
+        | termino MAS exp
+        | termino MENOS exp
+    '''
+
+def p_termino(p):
+    '''
+    termino : factor
+            | factor MULT termino
+            | factor DIV termino
+    '''
+
+def p_factor(p):
+    '''
+    factor : LCORCH expresion RCORCH
+           | var_cte
+           | MAS var_cte
+           | MENOS var_cte
+    '''
+
+def p_var_cte(p):
+    '''
+    var_cte : ID
+            | CTE_I
+            | CTE_F
+            | CTE_S
+            | CTE_C
+    '''
+
+def p_log(p):
+    '''
+    log : AND
+        | OR
+    '''
+
+def p_rel(p):
+    '''
+    rel : MENOR
+        | MAYOR
+        | MENORIGUAL
+        | MAYORIGUAL
+        | COMPARE
+        | DIFFERENT
+    '''
+
+
+#def p_cte(p):
+#    '''CTE : CTE_I
+#    | CTE_F
+#    | CTE_CH
+#    | CTE_STRING
+#    | FUNCION
+#   '''
+
+#Errores de sintaxis
+def p_error(p):
+    print("ERROR DE SINTAXIS", p)
+
+#Build parser
+parser = yacc.yacc()
+result = parser.parse(entrada)
