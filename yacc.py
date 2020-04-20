@@ -209,7 +209,7 @@ def p_termino(p):
 
 def p_factor(p):
     '''
-    factor : LCORCH expresion RCORCH
+    factor : LPARENT expresion RPARENT
            | var_cte
            | MAS var_cte
            | MENOS var_cte

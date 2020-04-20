@@ -89,9 +89,9 @@ t_MULT = r'\*'
 t_DIV = r'\/'
 
 #Comparing
+t_COMPARE = r'=='
 t_IGUAL = r'\='
 t_DIFFERENT = r'!='
-t_COMPARE = r'=='
 t_MAYORIGUAL = r'>='
 t_MENORIGUAL = r'<='
 t_MAYOR = r'\>'

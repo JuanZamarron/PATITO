@@ -78,7 +78,7 @@ Rule 64    exp -> termino MENOS exp
 Rule 65    termino -> factor
 Rule 66    termino -> factor MULT termino
 Rule 67    termino -> factor DIV termino
-Rule 68    factor -> LCORCH expresion RCORCH
+Rule 68    factor -> LPARENT expresion RPARENT
 Rule 69    factor -> var_cte
 Rule 70    factor -> MAS var_cte
 Rule 71    factor -> MENOS var_cte
@@ -129,9 +129,9 @@ ID                   : 1 5 6 7 8 9 10 23 24 25 40 45 56 57 72
 IGUAL                : 41 42 56 57
 INT                  : 11
 LBRACE               : 26 27
-LCORCH               : 7 8 9 9 10 10 43 44 68
+LCORCH               : 7 8 9 9 10 10 43 44
 LEE                  : 48
-LPARENT              : 23 39 47 48 49 54
+LPARENT              : 23 39 47 48 49 54 68
 MAS                  : 63 70
 MAYOR                : 80
 MAYORIGUAL           : 82
@@ -147,9 +147,9 @@ OR                   : 78
 PRINCIPAL            : 17
 PROGRAMA             : 1
 RBRACE               : 26 27
-RCORCH               : 7 8 9 9 10 10 43 44 68
+RCORCH               : 7 8 9 9 10 10 43 44
 REGRESA              : 47
-RPARENT              : 23 39 47 48 49 54
+RPARENT              : 23 39 47 48 49 54 68
 SEMICOLON            : 1 3 4 40 47 48 49
 SI                   : 39
 SINO                 : 38
@@ -841,7 +841,7 @@ state 54
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -851,18 +851,18 @@ state 54
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
     CTE_S           shift and go to state 80
     CTE_C           shift and go to state 81
 
-    exp                            shift and go to state 70
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    exp                            shift and go to state 71
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 55
@@ -885,7 +885,7 @@ state 56
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -895,9 +895,9 @@ state 56
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -907,8 +907,8 @@ state 56
     expresion                      shift and go to state 83
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 57
@@ -953,7 +953,7 @@ state 60
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -963,9 +963,9 @@ state 60
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -975,8 +975,8 @@ state 60
     expresion                      shift and go to state 91
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 61
@@ -1025,7 +1025,7 @@ state 64
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1036,9 +1036,9 @@ state 64
     (76) var_cte -> . CTE_C
 
     CTE_S           shift and go to state 97
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1048,8 +1048,8 @@ state 64
     expresion                      shift and go to state 98
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 65
@@ -1065,7 +1065,7 @@ state 65
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1075,9 +1075,9 @@ state 65
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1087,8 +1087,8 @@ state 65
     expresion                      shift and go to state 99
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 66
@@ -1137,12 +1137,51 @@ state 69
 
 state 70
 
-    (47) retorno -> REGRESA LPARENT exp . RPARENT SEMICOLON
+    (68) factor -> LPARENT . expresion RPARENT
+    (58) expresion -> . expr
+    (59) expresion -> . expr log expresion
+    (60) expr -> . exp
+    (61) expr -> . exp rel expr
+    (62) exp -> . termino
+    (63) exp -> . termino MAS exp
+    (64) exp -> . termino MENOS exp
+    (65) termino -> . factor
+    (66) termino -> . factor MULT termino
+    (67) termino -> . factor DIV termino
+    (68) factor -> . LPARENT expresion RPARENT
+    (69) factor -> . var_cte
+    (70) factor -> . MAS var_cte
+    (71) factor -> . MENOS var_cte
+    (72) var_cte -> . ID
+    (73) var_cte -> . CTE_I
+    (74) var_cte -> . CTE_F
+    (75) var_cte -> . CTE_S
+    (76) var_cte -> . CTE_C
 
-    RPARENT         shift and go to state 103
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
+    ID              shift and go to state 77
+    CTE_I           shift and go to state 78
+    CTE_F           shift and go to state 79
+    CTE_S           shift and go to state 80
+    CTE_C           shift and go to state 81
 
+    expresion                      shift and go to state 103
+    expr                           shift and go to state 84
+    exp                            shift and go to state 85
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
+    var_cte                        shift and go to state 76
 
 state 71
+
+    (47) retorno -> REGRESA LPARENT exp . RPARENT SEMICOLON
+
+    RPARENT         shift and go to state 104
+
+
+state 72
 
     (62) exp -> termino .
     (63) exp -> termino . MAS exp
@@ -1159,33 +1198,15 @@ state 71
     OR              reduce using rule 62 (exp -> termino .)
     SEMICOLON       reduce using rule 62 (exp -> termino .)
     COMMA           reduce using rule 62 (exp -> termino .)
-    RCORCH          reduce using rule 62 (exp -> termino .)
     HACER           reduce using rule 62 (exp -> termino .)
     HASTA           reduce using rule 62 (exp -> termino .)
-    MAS             shift and go to state 104
-    MENOS           shift and go to state 105
+    MAS             shift and go to state 105
+    MENOS           shift and go to state 106
 
-
-state 72
-
-    (70) factor -> MAS . var_cte
-    (72) var_cte -> . ID
-    (73) var_cte -> . CTE_I
-    (74) var_cte -> . CTE_F
-    (75) var_cte -> . CTE_S
-    (76) var_cte -> . CTE_C
-
-    ID              shift and go to state 77
-    CTE_I           shift and go to state 78
-    CTE_F           shift and go to state 79
-    CTE_S           shift and go to state 80
-    CTE_C           shift and go to state 81
-
-    var_cte                        shift and go to state 106
 
 state 73
 
-    (71) factor -> MENOS . var_cte
+    (70) factor -> MAS . var_cte
     (72) var_cte -> . ID
     (73) var_cte -> . CTE_I
     (74) var_cte -> . CTE_F
@@ -1201,6 +1222,23 @@ state 73
     var_cte                        shift and go to state 107
 
 state 74
+
+    (71) factor -> MENOS . var_cte
+    (72) var_cte -> . ID
+    (73) var_cte -> . CTE_I
+    (74) var_cte -> . CTE_F
+    (75) var_cte -> . CTE_S
+    (76) var_cte -> . CTE_C
+
+    ID              shift and go to state 77
+    CTE_I           shift and go to state 78
+    CTE_F           shift and go to state 79
+    CTE_S           shift and go to state 80
+    CTE_C           shift and go to state 81
+
+    var_cte                        shift and go to state 108
+
+state 75
 
     (65) termino -> factor .
     (66) termino -> factor . MULT termino
@@ -1219,51 +1257,11 @@ state 74
     OR              reduce using rule 65 (termino -> factor .)
     SEMICOLON       reduce using rule 65 (termino -> factor .)
     COMMA           reduce using rule 65 (termino -> factor .)
-    RCORCH          reduce using rule 65 (termino -> factor .)
     HACER           reduce using rule 65 (termino -> factor .)
     HASTA           reduce using rule 65 (termino -> factor .)
-    MULT            shift and go to state 108
-    DIV             shift and go to state 109
+    MULT            shift and go to state 109
+    DIV             shift and go to state 110
 
-
-state 75
-
-    (68) factor -> LCORCH . expresion RCORCH
-    (58) expresion -> . expr
-    (59) expresion -> . expr log expresion
-    (60) expr -> . exp
-    (61) expr -> . exp rel expr
-    (62) exp -> . termino
-    (63) exp -> . termino MAS exp
-    (64) exp -> . termino MENOS exp
-    (65) termino -> . factor
-    (66) termino -> . factor MULT termino
-    (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
-    (69) factor -> . var_cte
-    (70) factor -> . MAS var_cte
-    (71) factor -> . MENOS var_cte
-    (72) var_cte -> . ID
-    (73) var_cte -> . CTE_I
-    (74) var_cte -> . CTE_F
-    (75) var_cte -> . CTE_S
-    (76) var_cte -> . CTE_C
-
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
-    ID              shift and go to state 77
-    CTE_I           shift and go to state 78
-    CTE_F           shift and go to state 79
-    CTE_S           shift and go to state 80
-    CTE_C           shift and go to state 81
-
-    expresion                      shift and go to state 110
-    expr                           shift and go to state 84
-    exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
-    var_cte                        shift and go to state 76
 
 state 76
 
@@ -1284,7 +1282,6 @@ state 76
     OR              reduce using rule 69 (factor -> var_cte .)
     SEMICOLON       reduce using rule 69 (factor -> var_cte .)
     COMMA           reduce using rule 69 (factor -> var_cte .)
-    RCORCH          reduce using rule 69 (factor -> var_cte .)
     HACER           reduce using rule 69 (factor -> var_cte .)
     HASTA           reduce using rule 69 (factor -> var_cte .)
 
@@ -1308,7 +1305,6 @@ state 77
     OR              reduce using rule 72 (var_cte -> ID .)
     SEMICOLON       reduce using rule 72 (var_cte -> ID .)
     COMMA           reduce using rule 72 (var_cte -> ID .)
-    RCORCH          reduce using rule 72 (var_cte -> ID .)
     HACER           reduce using rule 72 (var_cte -> ID .)
     HASTA           reduce using rule 72 (var_cte -> ID .)
 
@@ -1332,7 +1328,6 @@ state 78
     OR              reduce using rule 73 (var_cte -> CTE_I .)
     SEMICOLON       reduce using rule 73 (var_cte -> CTE_I .)
     COMMA           reduce using rule 73 (var_cte -> CTE_I .)
-    RCORCH          reduce using rule 73 (var_cte -> CTE_I .)
     HACER           reduce using rule 73 (var_cte -> CTE_I .)
     HASTA           reduce using rule 73 (var_cte -> CTE_I .)
 
@@ -1356,7 +1351,6 @@ state 79
     OR              reduce using rule 74 (var_cte -> CTE_F .)
     SEMICOLON       reduce using rule 74 (var_cte -> CTE_F .)
     COMMA           reduce using rule 74 (var_cte -> CTE_F .)
-    RCORCH          reduce using rule 74 (var_cte -> CTE_F .)
     HACER           reduce using rule 74 (var_cte -> CTE_F .)
     HASTA           reduce using rule 74 (var_cte -> CTE_F .)
 
@@ -1380,7 +1374,6 @@ state 80
     OR              reduce using rule 75 (var_cte -> CTE_S .)
     SEMICOLON       reduce using rule 75 (var_cte -> CTE_S .)
     COMMA           reduce using rule 75 (var_cte -> CTE_S .)
-    RCORCH          reduce using rule 75 (var_cte -> CTE_S .)
     HACER           reduce using rule 75 (var_cte -> CTE_S .)
     HASTA           reduce using rule 75 (var_cte -> CTE_S .)
 
@@ -1404,7 +1397,6 @@ state 81
     OR              reduce using rule 76 (var_cte -> CTE_C .)
     SEMICOLON       reduce using rule 76 (var_cte -> CTE_C .)
     COMMA           reduce using rule 76 (var_cte -> CTE_C .)
-    RCORCH          reduce using rule 76 (var_cte -> CTE_C .)
     HACER           reduce using rule 76 (var_cte -> CTE_C .)
     HASTA           reduce using rule 76 (var_cte -> CTE_C .)
 
@@ -1440,7 +1432,6 @@ state 84
     SEMICOLON       reduce using rule 58 (expresion -> expr .)
     RPARENT         reduce using rule 58 (expresion -> expr .)
     COMMA           reduce using rule 58 (expresion -> expr .)
-    RCORCH          reduce using rule 58 (expresion -> expr .)
     AND             shift and go to state 112
     OR              shift and go to state 113
 
@@ -1462,7 +1453,6 @@ state 85
     SEMICOLON       reduce using rule 60 (expr -> exp .)
     RPARENT         reduce using rule 60 (expr -> exp .)
     COMMA           reduce using rule 60 (expr -> exp .)
-    RCORCH          reduce using rule 60 (expr -> exp .)
     MENOR           shift and go to state 115
     MAYOR           shift and go to state 116
     MENORIGUAL      shift and go to state 117
@@ -1485,7 +1475,7 @@ state 86
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1495,9 +1485,9 @@ state 86
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1507,8 +1497,8 @@ state 86
     expresion                      shift and go to state 121
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 87
@@ -1566,7 +1556,7 @@ state 92
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1576,9 +1566,9 @@ state 92
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1586,8 +1576,8 @@ state 92
     CTE_C           shift and go to state 81
 
     exp                            shift and go to state 125
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 93
@@ -1599,7 +1589,7 @@ state 93
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1609,9 +1599,9 @@ state 93
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1619,8 +1609,8 @@ state 93
     CTE_C           shift and go to state 81
 
     exp                            shift and go to state 126
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 94
@@ -1716,12 +1706,19 @@ state 102
 
 state 103
 
-    (47) retorno -> REGRESA LPARENT exp RPARENT . SEMICOLON
+    (68) factor -> LPARENT expresion . RPARENT
 
-    SEMICOLON       shift and go to state 137
+    RPARENT         shift and go to state 137
 
 
 state 104
+
+    (47) retorno -> REGRESA LPARENT exp RPARENT . SEMICOLON
+
+    SEMICOLON       shift and go to state 138
+
+
+state 105
 
     (63) exp -> termino MAS . exp
     (62) exp -> . termino
@@ -1730,7 +1727,7 @@ state 104
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1740,21 +1737,21 @@ state 104
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
     CTE_S           shift and go to state 80
     CTE_C           shift and go to state 81
 
-    termino                        shift and go to state 71
-    exp                            shift and go to state 138
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    exp                            shift and go to state 139
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
-state 105
+state 106
 
     (64) exp -> termino MENOS . exp
     (62) exp -> . termino
@@ -1763,7 +1760,7 @@ state 105
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1773,21 +1770,21 @@ state 105
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
     CTE_S           shift and go to state 80
     CTE_C           shift and go to state 81
 
-    termino                        shift and go to state 71
-    exp                            shift and go to state 139
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    exp                            shift and go to state 140
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
-state 106
+state 107
 
     (70) factor -> MAS var_cte .
 
@@ -1806,12 +1803,11 @@ state 106
     OR              reduce using rule 70 (factor -> MAS var_cte .)
     SEMICOLON       reduce using rule 70 (factor -> MAS var_cte .)
     COMMA           reduce using rule 70 (factor -> MAS var_cte .)
-    RCORCH          reduce using rule 70 (factor -> MAS var_cte .)
     HACER           reduce using rule 70 (factor -> MAS var_cte .)
     HASTA           reduce using rule 70 (factor -> MAS var_cte .)
 
 
-state 107
+state 108
 
     (71) factor -> MENOS var_cte .
 
@@ -1830,18 +1826,17 @@ state 107
     OR              reduce using rule 71 (factor -> MENOS var_cte .)
     SEMICOLON       reduce using rule 71 (factor -> MENOS var_cte .)
     COMMA           reduce using rule 71 (factor -> MENOS var_cte .)
-    RCORCH          reduce using rule 71 (factor -> MENOS var_cte .)
     HACER           reduce using rule 71 (factor -> MENOS var_cte .)
     HASTA           reduce using rule 71 (factor -> MENOS var_cte .)
 
 
-state 108
+state 109
 
     (66) termino -> factor MULT . termino
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1851,54 +1846,47 @@ state 108
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
     CTE_S           shift and go to state 80
     CTE_C           shift and go to state 81
 
-    factor                         shift and go to state 74
-    termino                        shift and go to state 140
-    var_cte                        shift and go to state 76
-
-state 109
-
-    (67) termino -> factor DIV . termino
-    (65) termino -> . factor
-    (66) termino -> . factor MULT termino
-    (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
-    (69) factor -> . var_cte
-    (70) factor -> . MAS var_cte
-    (71) factor -> . MENOS var_cte
-    (72) var_cte -> . ID
-    (73) var_cte -> . CTE_I
-    (74) var_cte -> . CTE_F
-    (75) var_cte -> . CTE_S
-    (76) var_cte -> . CTE_C
-
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
-    ID              shift and go to state 77
-    CTE_I           shift and go to state 78
-    CTE_F           shift and go to state 79
-    CTE_S           shift and go to state 80
-    CTE_C           shift and go to state 81
-
-    factor                         shift and go to state 74
+    factor                         shift and go to state 75
     termino                        shift and go to state 141
     var_cte                        shift and go to state 76
 
 state 110
 
-    (68) factor -> LCORCH expresion . RCORCH
+    (67) termino -> factor DIV . termino
+    (65) termino -> . factor
+    (66) termino -> . factor MULT termino
+    (67) termino -> . factor DIV termino
+    (68) factor -> . LPARENT expresion RPARENT
+    (69) factor -> . var_cte
+    (70) factor -> . MAS var_cte
+    (71) factor -> . MENOS var_cte
+    (72) var_cte -> . ID
+    (73) var_cte -> . CTE_I
+    (74) var_cte -> . CTE_F
+    (75) var_cte -> . CTE_S
+    (76) var_cte -> . CTE_C
 
-    RCORCH          shift and go to state 142
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
+    ID              shift and go to state 77
+    CTE_I           shift and go to state 78
+    CTE_F           shift and go to state 79
+    CTE_S           shift and go to state 80
+    CTE_C           shift and go to state 81
 
+    factor                         shift and go to state 75
+    termino                        shift and go to state 142
+    var_cte                        shift and go to state 76
 
 state 111
 
@@ -1913,7 +1901,7 @@ state 111
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1923,9 +1911,9 @@ state 111
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1935,15 +1923,15 @@ state 111
     expr                           shift and go to state 84
     expresion                      shift and go to state 143
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 112
 
     (77) log -> AND .
 
-    LCORCH          reduce using rule 77 (log -> AND .)
+    LPARENT         reduce using rule 77 (log -> AND .)
     MAS             reduce using rule 77 (log -> AND .)
     MENOS           reduce using rule 77 (log -> AND .)
     ID              reduce using rule 77 (log -> AND .)
@@ -1957,7 +1945,7 @@ state 113
 
     (78) log -> OR .
 
-    LCORCH          reduce using rule 78 (log -> OR .)
+    LPARENT         reduce using rule 78 (log -> OR .)
     MAS             reduce using rule 78 (log -> OR .)
     MENOS           reduce using rule 78 (log -> OR .)
     ID              reduce using rule 78 (log -> OR .)
@@ -1978,7 +1966,7 @@ state 114
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -1988,9 +1976,9 @@ state 114
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -1999,15 +1987,15 @@ state 114
 
     exp                            shift and go to state 85
     expr                           shift and go to state 144
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 115
 
     (79) rel -> MENOR .
 
-    LCORCH          reduce using rule 79 (rel -> MENOR .)
+    LPARENT         reduce using rule 79 (rel -> MENOR .)
     MAS             reduce using rule 79 (rel -> MENOR .)
     MENOS           reduce using rule 79 (rel -> MENOR .)
     ID              reduce using rule 79 (rel -> MENOR .)
@@ -2021,7 +2009,7 @@ state 116
 
     (80) rel -> MAYOR .
 
-    LCORCH          reduce using rule 80 (rel -> MAYOR .)
+    LPARENT         reduce using rule 80 (rel -> MAYOR .)
     MAS             reduce using rule 80 (rel -> MAYOR .)
     MENOS           reduce using rule 80 (rel -> MAYOR .)
     ID              reduce using rule 80 (rel -> MAYOR .)
@@ -2035,7 +2023,7 @@ state 117
 
     (81) rel -> MENORIGUAL .
 
-    LCORCH          reduce using rule 81 (rel -> MENORIGUAL .)
+    LPARENT         reduce using rule 81 (rel -> MENORIGUAL .)
     MAS             reduce using rule 81 (rel -> MENORIGUAL .)
     MENOS           reduce using rule 81 (rel -> MENORIGUAL .)
     ID              reduce using rule 81 (rel -> MENORIGUAL .)
@@ -2049,7 +2037,7 @@ state 118
 
     (82) rel -> MAYORIGUAL .
 
-    LCORCH          reduce using rule 82 (rel -> MAYORIGUAL .)
+    LPARENT         reduce using rule 82 (rel -> MAYORIGUAL .)
     MAS             reduce using rule 82 (rel -> MAYORIGUAL .)
     MENOS           reduce using rule 82 (rel -> MAYORIGUAL .)
     ID              reduce using rule 82 (rel -> MAYORIGUAL .)
@@ -2063,7 +2051,7 @@ state 119
 
     (83) rel -> COMPARE .
 
-    LCORCH          reduce using rule 83 (rel -> COMPARE .)
+    LPARENT         reduce using rule 83 (rel -> COMPARE .)
     MAS             reduce using rule 83 (rel -> COMPARE .)
     MENOS           reduce using rule 83 (rel -> COMPARE .)
     ID              reduce using rule 83 (rel -> COMPARE .)
@@ -2077,7 +2065,7 @@ state 120
 
     (84) rel -> DIFFERENT .
 
-    LCORCH          reduce using rule 84 (rel -> DIFFERENT .)
+    LPARENT         reduce using rule 84 (rel -> DIFFERENT .)
     MAS             reduce using rule 84 (rel -> DIFFERENT .)
     MENOS           reduce using rule 84 (rel -> DIFFERENT .)
     ID              reduce using rule 84 (rel -> DIFFERENT .)
@@ -2143,7 +2131,7 @@ state 127
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -2153,9 +2141,9 @@ state 127
     (75) var_cte -> . CTE_S
     (76) var_cte -> . CTE_C
 
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -2163,8 +2151,8 @@ state 127
     CTE_C           shift and go to state 81
 
     exp                            shift and go to state 148
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 128
@@ -2198,7 +2186,7 @@ state 130
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -2209,9 +2197,9 @@ state 130
     (76) var_cte -> . CTE_C
 
     CTE_S           shift and go to state 97
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -2221,8 +2209,8 @@ state 130
     expresion                      shift and go to state 98
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 131
@@ -2242,7 +2230,7 @@ state 131
     (65) termino -> . factor
     (66) termino -> . factor MULT termino
     (67) termino -> . factor DIV termino
-    (68) factor -> . LCORCH expresion RCORCH
+    (68) factor -> . LPARENT expresion RPARENT
     (69) factor -> . var_cte
     (70) factor -> . MAS var_cte
     (71) factor -> . MENOS var_cte
@@ -2253,9 +2241,9 @@ state 131
     (76) var_cte -> . CTE_C
 
     CTE_S           shift and go to state 97
-    LCORCH          shift and go to state 75
-    MAS             shift and go to state 72
-    MENOS           shift and go to state 73
+    LPARENT         shift and go to state 70
+    MAS             shift and go to state 73
+    MENOS           shift and go to state 74
     ID              shift and go to state 77
     CTE_I           shift and go to state 78
     CTE_F           shift and go to state 79
@@ -2265,8 +2253,8 @@ state 131
     escrituraaux                   shift and go to state 152
     expr                           shift and go to state 84
     exp                            shift and go to state 85
-    termino                        shift and go to state 71
-    factor                         shift and go to state 74
+    termino                        shift and go to state 72
+    factor                         shift and go to state 75
     var_cte                        shift and go to state 76
 
 state 132
@@ -2318,12 +2306,35 @@ state 136
 
 state 137
 
+    (68) factor -> LPARENT expresion RPARENT .
+
+    MULT            reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    DIV             reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    MAS             reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    MENOS           reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    RPARENT         reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    MENOR           reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    MAYOR           reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    MENORIGUAL      reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    MAYORIGUAL      reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    COMPARE         reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    DIFFERENT       reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    AND             reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    OR              reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    SEMICOLON       reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    COMMA           reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    HACER           reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+    HASTA           reduce using rule 68 (factor -> LPARENT expresion RPARENT .)
+
+
+state 138
+
     (47) retorno -> REGRESA LPARENT exp RPARENT SEMICOLON .
 
     RBRACE          reduce using rule 47 (retorno -> REGRESA LPARENT exp RPARENT SEMICOLON .)
 
 
-state 138
+state 139
 
     (63) exp -> termino MAS exp .
 
@@ -2338,12 +2349,11 @@ state 138
     OR              reduce using rule 63 (exp -> termino MAS exp .)
     SEMICOLON       reduce using rule 63 (exp -> termino MAS exp .)
     COMMA           reduce using rule 63 (exp -> termino MAS exp .)
-    RCORCH          reduce using rule 63 (exp -> termino MAS exp .)
     HACER           reduce using rule 63 (exp -> termino MAS exp .)
     HASTA           reduce using rule 63 (exp -> termino MAS exp .)
 
 
-state 139
+state 140
 
     (64) exp -> termino MENOS exp .
 
@@ -2358,12 +2368,11 @@ state 139
     OR              reduce using rule 64 (exp -> termino MENOS exp .)
     SEMICOLON       reduce using rule 64 (exp -> termino MENOS exp .)
     COMMA           reduce using rule 64 (exp -> termino MENOS exp .)
-    RCORCH          reduce using rule 64 (exp -> termino MENOS exp .)
     HACER           reduce using rule 64 (exp -> termino MENOS exp .)
     HASTA           reduce using rule 64 (exp -> termino MENOS exp .)
 
 
-state 140
+state 141
 
     (66) termino -> factor MULT termino .
 
@@ -2380,12 +2389,11 @@ state 140
     OR              reduce using rule 66 (termino -> factor MULT termino .)
     SEMICOLON       reduce using rule 66 (termino -> factor MULT termino .)
     COMMA           reduce using rule 66 (termino -> factor MULT termino .)
-    RCORCH          reduce using rule 66 (termino -> factor MULT termino .)
     HACER           reduce using rule 66 (termino -> factor MULT termino .)
     HASTA           reduce using rule 66 (termino -> factor MULT termino .)
 
 
-state 141
+state 142
 
     (67) termino -> factor DIV termino .
 
@@ -2402,33 +2410,8 @@ state 141
     OR              reduce using rule 67 (termino -> factor DIV termino .)
     SEMICOLON       reduce using rule 67 (termino -> factor DIV termino .)
     COMMA           reduce using rule 67 (termino -> factor DIV termino .)
-    RCORCH          reduce using rule 67 (termino -> factor DIV termino .)
     HACER           reduce using rule 67 (termino -> factor DIV termino .)
     HASTA           reduce using rule 67 (termino -> factor DIV termino .)
-
-
-state 142
-
-    (68) factor -> LCORCH expresion RCORCH .
-
-    MULT            reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    DIV             reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    MAS             reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    MENOS           reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    RPARENT         reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    MENOR           reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    MAYOR           reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    MENORIGUAL      reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    MAYORIGUAL      reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    COMPARE         reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    DIFFERENT       reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    AND             reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    OR              reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    SEMICOLON       reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    COMMA           reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    RCORCH          reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    HACER           reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
-    HASTA           reduce using rule 68 (factor -> LCORCH expresion RCORCH .)
 
 
 state 143
@@ -2438,7 +2421,6 @@ state 143
     SEMICOLON       reduce using rule 59 (expresion -> expr log expresion .)
     RPARENT         reduce using rule 59 (expresion -> expr log expresion .)
     COMMA           reduce using rule 59 (expresion -> expr log expresion .)
-    RCORCH          reduce using rule 59 (expresion -> expr log expresion .)
 
 
 state 144
@@ -2450,7 +2432,6 @@ state 144
     SEMICOLON       reduce using rule 61 (expr -> exp rel expr .)
     RPARENT         reduce using rule 61 (expr -> exp rel expr .)
     COMMA           reduce using rule 61 (expr -> exp rel expr .)
-    RCORCH          reduce using rule 61 (expr -> exp rel expr .)
 
 
 state 145
