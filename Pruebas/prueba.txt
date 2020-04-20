@@ -21,7 +21,7 @@ var
     var int x;
     {
         x=0;
-        mientras (x < 11)haz{
+        mientras (x < 11) haz {
            Arreglo[x] = y*x;
            x=x+1;
         }

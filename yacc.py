@@ -241,13 +241,13 @@ def p_rel(p):
     '''
 
 
-#def p_cte(p):
-#    '''CTE : CTE_I
-#    | CTE_F
-#    | CTE_CH
-#    | CTE_STRING
-#    | FUNCION
-#   '''
+def p_cte(p):
+    '''CTE : CTE_I
+    | CTE_F
+    | CTE_CH
+    | CTE_STRING
+    | FUNCION
+   '''
 
 #Errores de sintaxis
 def p_error(p):

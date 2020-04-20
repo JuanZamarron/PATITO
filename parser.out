@@ -95,6 +95,11 @@ Rule 81    rel -> MENORIGUAL
 Rule 82    rel -> MAYORIGUAL
 Rule 83    rel -> COMPARE
 Rule 84    rel -> DIFFERENT
+Rule 85    CTE -> CTE_I
+Rule 86    CTE -> CTE_F
+Rule 87    CTE -> CTE_CH
+Rule 88    CTE -> CTE_STRING
+Rule 89    CTE -> FUNCION
 
 Terminals, with rules where they appear
 
@@ -105,16 +110,18 @@ COMMA                : 6 8 10 25 44 52 53
 COMMENT              : 
 COMPARE              : 83
 CTE_C                : 76
-CTE_F                : 74
-CTE_I                : 7 8 9 9 10 10 46 73
+CTE_CH               : 87
+CTE_F                : 74 86
+CTE_I                : 7 8 9 9 10 10 46 73 85
 CTE_S                : 50 52 75
+CTE_STRING           : 88
 DESDE                : 55
 DIFFERENT            : 84
 DIV                  : 67
 ENTONCES             : 39
 ESCRIBE              : 49
 FLOAT                : 12
-FUNCION              : 20
+FUNCION              : 20 89
 HACER                : 55
 HASTA                : 55
 HAZ                  : 54
@@ -153,6 +160,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
+CTE                  : 
 asignacion           : 31
 asignacionaux        : 40
 bloque               : 17 23 38 39 54 55
