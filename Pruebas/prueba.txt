@@ -39,13 +39,13 @@ var
            }
    }
 
-   desde j=0 hasta 2 hacer
+   desde j=0 hasta 2 hacer{
         desde k = 0 hasta 2 hacer{
             OtraMatriz[j,k]=k + j;
         }
         valor = 2.0;
         escribe("el determinante es:", valor);
-        mientras(i >= 0){
+        mientras(i >= 0)haz{
             escribe("resultado", Arreglo[i], fact(i+2) * valor);
             i = i - 1;
         }
