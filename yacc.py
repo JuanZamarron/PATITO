@@ -5,6 +5,8 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
+from tables import VarGeneral, FunGeneral, TabVarG,TabFun
+
 #Obtains tokens
 from lex import tokens
 
@@ -16,6 +18,10 @@ def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
     '''
+    tableG = TabFun()
+    current_tipo = p[1]
+    myprogram = FunGeneral(current_tipo, p[2])
+    tableG.add(myprogram)
 
 def p_vars(p):
     '''
