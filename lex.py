@@ -89,9 +89,9 @@ t_MULT = r'\*'
 t_DIV = r'\/'
 
 #Comparing
+t_COMPARE = r'=='
 t_IGUAL = r'\='
 t_DIFFERENT = r'!='
-t_COMPARE = r'=='
 t_MAYORIGUAL = r'>='
 t_MENORIGUAL = r'<='
 t_MAYOR = r'\>'
@@ -104,7 +104,7 @@ t_NOT = r'!'
 t_COMMENT = r'%%.*'
 t_CTE_STRING= r'".*."'
 
-t_CTE_S = r'\'[\w\d\s\,. ]*\'|\"[\w\d\s\,. ]*\"'
+t_CTE_S = r'\"([^\\\n]|(\\.))*?\"'
 t_CTE_C = r'\'[A-Za-z]\''
 
 t_ignore = ' \t\n'
@@ -116,12 +116,12 @@ def t_error(t):
     t.lexer.skip(1)
 
 def t_CTE_F(t):
-    r'[+-]?\d+\.\d+'
+    r'\d+\.\d+'
     t.value = float(t.value)
     return t
 
 def t_CTE_I(t):
-    r'[+-]?\d+'
+    r'\d+'
     t.value = int(t.value)
     return t
 

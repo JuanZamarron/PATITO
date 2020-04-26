@@ -60,7 +60,7 @@ def p_funcs(p):
 
 def p_principal(p):
     '''
-    principal : PRINCIPAL bloque
+    principal : PRINCIPAL LPARENT RPARENT bloque
     '''
 
 def p_funcs2(p):
@@ -111,6 +111,7 @@ def p_estatuto(p):
              | mientras
              | desde
              | lectura
+             | fcall SEMICOLON
              | escritura
     '''
 
@@ -155,7 +156,26 @@ def p_retorno(p):
 
 def p_lectura(p):
     '''
-    lectura : LEE LPARENT dimensiones RPARENT SEMICOLON
+    lectura : LEE LPARENT lecturaaux RPARENT SEMICOLON
+    '''
+
+def p_lecturaaux(p):
+    '''
+    lecturaaux : ID
+               | ID dimensiones
+               | ID dimensiones COMMA lecturaaux
+    '''
+
+def p_fcall(p):
+    '''
+    fcall : ID LPARENT RPARENT
+          | ID LPARENT fcallaux RPARENT
+    '''
+
+def p_fcallaux(p):
+    '''
+    fcallaux : expresion
+             | expresion COMMA fcallaux
     '''
 
 def p_escritura(p):
@@ -215,7 +235,7 @@ def p_termino(p):
 
 def p_factor(p):
     '''
-    factor : LCORCH expresion RCORCH
+    factor : LPARENT expresion RPARENT
            | var_cte
            | MAS var_cte
            | MENOS var_cte
@@ -224,10 +244,12 @@ def p_factor(p):
 def p_var_cte(p):
     '''
     var_cte : ID
+            | ID dimensiones
             | CTE_I
             | CTE_F
             | CTE_S
             | CTE_C
+            | fcall
     '''
 
 def p_log(p):
