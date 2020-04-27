@@ -5,67 +5,65 @@
 # ------------------------------------------------------------
 import sys
 
-funciones = [] # Tabla de funciones
+listaNombresVar = []#Contiene los id de todas los nombres de variables
+# Objeto Tabla
+class Tabla(object):
+#id -> nombre de la variable/funcion única
+#tipoDato -> Data Type (Int, float, String ... etc)
+#valor -> Lo que contiene la variable
 
-#constructor
-#add
-#idexist
-#update
+    def __init__(self, id, tipoDato, valor):
+        self.id = str(id)
+        self.tipoDato = str(tipoDato)
+        self.valor = valor
 
-class VarGeneral: #Ojeto par almacenar una variable
-    def __init__(self, tipo, id, scope):
-        self.tipo = tipo
-        self.id = id
-        self.scope = scope
+    def existe(self,id):
+        aux = False
+        for i in range(0, len(listaNombresVar)):
+            if listaNombresVar[i].id == id:
+                aux = True
+                print("ERROR: ID ya definido: ", id)
+                sys.exit()
+        return aux
 
+    # Funciones para modificar la Tabla
+    def agrega(self, id, tipoDato):
+        temp = Tabla(id, tipoDato, None)
+        if len(listaNombresVar) >= 1 and not self.existe(id):
+            listaNombresVar.append(temp)
+        if len(listaNombresVar) == 0:
+            listaNombresVar.append(temp)
 
-class FunGeneral:#Almacena funciones
-    def __init__(self, tipo, id):
-        self.tipo = tipo
-        self.id = id
+    def actualizar(self,id, valor):
+        if validar(valor, id):
+            for i in range(0, len(listaNombresVar)):
+                if listaNombresVar[i].id == id:
+                    listaNombresVar[i].valor = valor
 
-
-class TabVarG(): #Tabla de funciones
-    def __init__(self):
-        self.tabVG = []
-
-    def add(self, VarGeneral):
-        if not self.searchVarG(VarGeneral.id):
-            self.tabVG.append(VarGeneral)
-
-    def searchVarG(self, id):
-        if id in self.tabVG:
+    def validar(self,dato, id):
+        temp = str(type(dato))
+        longitud = len(listaNombresVar)
+        aux = None
+        encontro = False
+        for i in range(0, longitud):
+            if listaNombresVar[i].id == id:
+                aux = listaNombresVar[i].tipoDato
+                encontro = True
+        if not encontro:
+            print('ERROR: ID no declarado:', id)
+            sys.exit()
+        if temp == "<class 'float'>" and aux == 'float':
             return True
-        return False
-
-    def printVars(self):
-        for i in self.tabVG:
-            print (i.tipo)
-
-
-class TabFun(): #Directorio de funciones
-    def __init__(self):
-        self.tab_fun = []
-
-    def add(self, FunGeneral):
-        if not self.searchVarG(FunGeneral.id):
-            self.tab_fun.append(FunGeneral)
-
-    def searchVarG(self, id):
-        if id in self.tab_fun:
+        if temp == "<class 'int'>" and aux == 'int':
             return True
-        return False
+        if temp == "<class 'str'>" and aux == 'string':
+            return True
+        else:
+            print("ERROR: Dato no válido.")
+            sys.exit()
 
-x = VarGeneral('int', 'a', 'global')
-y = VarGeneral('char', 'v', 'local')
-
-a = FunGeneral('void', 'MarcaBien')
-
-tablaGen = TabVarG()
-tablaGen.add(x)
-tablaGen.add(y)
-
-x1 = TabFun()
-x1.add(a)
-
-tablaGen.printVars()
+    def imprimir(self):
+        longitud = len(listaNombresVar)
+        i = 0
+        for i in range(0, longitud):
+            print(listaNombresVar[i].id, listaNombresVar[i].tipoDato, listaNombresVar[i].valor, sep=', ')

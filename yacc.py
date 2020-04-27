@@ -5,7 +5,7 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
-from tables import VarGeneral, FunGeneral, TabVarG,TabFun
+from tables import Tabla
 
 #Obtains tokens
 from lex import tokens
@@ -14,20 +14,24 @@ from lex import tokens
 prueba = open(archivo, "r")
 entrada = prueba.read()
 
+#Inicio del Programa con una Tabla Global
+#tabla = None
+tabla = Tabla("PRINCIPAL","PROGRAMA", None)#Ejemplo de inicializacion
+
+#Creacion del programa
 def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
     '''
-    tableG = TabFun()
-    current_tipo = p[1]
-    myprogram = FunGeneral(current_tipo, p[2])
-    tableG.add(myprogram)
-
+    #tabla = Tabla(p[2],p[1], None)
+ 
 def p_vars(p):
     '''
     vars : VAR varaux
     '''
-
+    tabla.agrega('principa', 'void')
+    tabla.imprimir()
+    
 def p_varaux(p):
     '''
     varaux  : tipo varaux2 SEMICOLON varaux
@@ -43,6 +47,7 @@ def p_varaux2(p):
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
     '''
+    print("+++ p_varaux2+++")
 
 def p_tipo(p):
     '''
