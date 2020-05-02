@@ -14,6 +14,8 @@ varTable = {}
 #Variables globales
 myType = None
 isGlobal = True
+func = None
+funcType = None
 
 #Func that defines which insert use
 def insert(id, type):

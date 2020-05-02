@@ -45,6 +45,16 @@ def p_varaux2(p):
     '''
     Tablas.insert(p[1], Tablas.myType)
 
+def p_functipo(p):
+    '''
+    functipo : INT
+             | FLOAT
+             | CHAR
+             | STRING
+             | VOID
+    '''
+    Tablas.funcType = p[1]
+
 def p_tipo(p):
     '''
     tipo : INT
@@ -67,31 +77,33 @@ def p_principal(p):
 
 def p_funcsaux(p):
     '''
-    funcsaux : func dirfunctrue
-             | func dirfunctrue funcsaux
+    funcsaux : func
+             | func funcsaux
     '''
 
 def p_func(p):
     '''
     func : FUNCION funcaux
     '''
+    Tablas.insert(Tablas.func, Tablas.funcType)
 
 def p_funcaux(p):
     '''
-    funcaux : tipo funcaux2
-            | VOID funcaux2
+    funcaux : functipo funcaux2
     '''
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque
+    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
     '''
+    Tablas.func = p[1]
 
 def p_funcaux3(p):
     '''
-    funcaux3 : tipo ID
-             | tipo ID COMMA funcaux3
+    funcaux3 : dirfuncfalse tipo ID
+             | dirfuncfalse tipo ID COMMA funcaux3
     '''
+    Tablas.insert(p[3], Tablas.myType)
 
 def p_bloque(p):
     '''
@@ -297,6 +309,8 @@ def p_dirfuncfalse(p):
 
 #Errores de sintaxis
 def p_error(p):
+    print('')
+    print(Tablas.dirPrint())
     print("ERROR DE SINTAXIS", p)
 
 #Build parse
