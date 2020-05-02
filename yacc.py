@@ -5,7 +5,7 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
-from tables import Tabla
+from tables as Tablas
 
 #Obtains tokens
 from lex import tokens
@@ -14,23 +14,16 @@ from lex import tokens
 prueba = open(archivo, "r")
 entrada = prueba.read()
 
-#Inicio del Programa con una Tabla Global
-#tabla = None
-tabla = Tabla("PRINCIPAL","PROGRAMA", None)#Ejemplo de inicializacion
-
 #Creacion del programa
 def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
     '''
-    #tabla = Tabla(p[2],p[1], None)
  
 def p_vars(p):
     '''
     vars : VAR varaux
     '''
-    tabla.agrega('principa', 'void')
-    tabla.imprimir()
     
 def p_varaux(p):
     '''
