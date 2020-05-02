@@ -5,7 +5,10 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
-from tables as Tablas
+import tables as Tablas
+
+Tablas.dirFuncs.clear()
+Tablas.varTable.clear()
 
 #Obtains tokens
 from lex import tokens
@@ -40,7 +43,7 @@ def p_varaux2(p):
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
     '''
-    print("+++ p_varaux2+++")
+    Tablas.insert(p[1], Tablas.myType)
 
 def p_tipo(p):
     '''
@@ -49,6 +52,7 @@ def p_tipo(p):
          | CHAR
          | STRING
     '''
+    Tablas.myType = p[1]
 
 def p_funcs(p):
     '''
@@ -61,10 +65,10 @@ def p_principal(p):
     principal : PRINCIPAL LPARENT RPARENT bloque
     '''
 
-def p_funcs2(p):
+def p_funcsaux(p):
     '''
-    funcsaux : func
-             | func funcsaux
+    funcsaux : func dirfunctrue
+             | func dirfunctrue funcsaux
     '''
 
 def p_func(p):
@@ -80,7 +84,7 @@ def p_funcaux(p):
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque
+    funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque
     '''
 
 def p_funcaux3(p):
@@ -275,10 +279,26 @@ def p_cte(p):
     | FUNCION
    '''
 
+#Funciones Nuerales
+def p_dirfunctrue(p):
+    '''
+    dirfunctrue :
+    '''
+    Tablas.isGlobal = True
+    print('')
+    Tablas.varsPrint()
+    Tablas.varTable.clear()
+
+def p_dirfuncfalse(p):
+    '''
+    dirfuncfalse :
+    '''
+    Tablas.isGlobal = False
+
 #Errores de sintaxis
 def p_error(p):
     print("ERROR DE SINTAXIS", p)
 
-#Build parser
+#Build parse
 parser = yacc.yacc()
 result = parser.parse(entrada)

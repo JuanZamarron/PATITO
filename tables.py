@@ -11,12 +11,23 @@ dirFuncs = {}
 #List of ids in varsTable
 varTable = {}
 
+#Variables globales
+myType = None
+isGlobal = True
+
+#Func that defines which insert use
+def insert(id, type):
+    if isGlobal:
+        dirInsert(id, type)
+    else:
+        varsInsert(id, type)
+
 #Inserts globalvar or func in dirFunc
 def dirInsert(id, type):
     temp = table.table(id, type)
     if len(dirFuncs) > 0 and not repeatedDirId(id):
         dirFuncs[id] = temp
-    if not simbolos:
+    if not dirFuncs:
         dirFuncs[id] = temp
 
 #Checks if repeated id in dirFunc
@@ -33,7 +44,7 @@ def varsInsert(id, type):
     temp = table.table(id, type)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
-    if not simbolos:
+    if not varTable:
         varTable[id] = temp
 
 #Checks if repeated id in local varTable
@@ -44,3 +55,11 @@ def repeatedVarId(id):
             sys.exit()
             return True
     return False
+
+def dirPrint():
+    for ids in dirFuncs:
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type)
+
+def varsPrint():
+    for ids in varTable:
+        print('ID: ', ids, ', Type: ', varTable[ids].type)
