@@ -1,7 +1,7 @@
 # ------------------------------------------------------------
 # Juan Carlos Zamarrón Pérez - A00815058
 # Valentin Alexandro Trujillo García - A01328426
-# Compiladores
+# Compiladores varTables
 # ------------------------------------------------------------
 import sys
 import estructuras as table
