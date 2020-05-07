@@ -4,7 +4,7 @@
 # Compiladores varTables
 # ------------------------------------------------------------
 import sys
-import estructuras as table
+import Table as table
 
 #List of ids in dirFunc
 dirFuncs = {}
