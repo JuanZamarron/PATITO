@@ -114,8 +114,108 @@ class SemanticCube:
                     'boolean': 'err'
                 }
             },
-            '>': {},
-            '<': {},
-            '&&': {},
-            '||': {}
+            '>': {
+                'int': {
+                    'int': 'boolean',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                },
+                'float': {
+                    'int': 'err',
+                    'float': 'boolean',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'string': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'boolean': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'boolean'
+                },
+            },
+            '<': {
+                'int': {
+                    'int': 'boolean',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                },
+                'float': {
+                    'int': 'err',
+                    'float': 'boolean',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'string': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'boolean': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'boolean'
+                },
+            },
+            '&&': {
+                'int': {
+                    'int': 'boolean',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                },
+                'float': {
+                    'int': 'err',
+                    'float': 'boolean',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'string': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'boolean': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'boolean'
+                },
+            },
+            '||': {
+                'int': {
+                    'int': 'boolean',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                },
+                'float': {
+                    'int': 'err',
+                    'float': 'boolean',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'string': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err'
+                },
+                'boolean': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'boolean'
+                },
+            }
         }
