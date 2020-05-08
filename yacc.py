@@ -5,7 +5,11 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
-from tables import Tabla
+import tables as Tablas
+import cuadruplo as quad
+
+Tablas.dirFuncs.clear()
+Tablas.varTable.clear()
 
 #Obtains tokens
 from lex import tokens
@@ -14,23 +18,16 @@ from lex import tokens
 prueba = open(archivo, "r")
 entrada = prueba.read()
 
-#Inicio del Programa con una Tabla Global
-#tabla = None
-tabla = Tabla("PRINCIPAL","PROGRAMA", None)#Ejemplo de inicializacion
-
 #Creacion del programa
 def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
     '''
-    #tabla = Tabla(p[2],p[1], None)
  
 def p_vars(p):
     '''
     vars : VAR varaux
     '''
-    tabla.agrega('principa', 'void')
-    tabla.imprimir()
     
 def p_varaux(p):
     '''
@@ -47,7 +44,17 @@ def p_varaux2(p):
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
     '''
-    print("+++ p_varaux2+++")
+    Tablas.insert(p[1], Tablas.myType)
+
+def p_functipo(p):
+    '''
+    functipo : INT
+             | FLOAT
+             | CHAR
+             | STRING
+             | VOID
+    '''
+    Tablas.funcType = p[1]
 
 def p_tipo(p):
     '''
@@ -56,6 +63,7 @@ def p_tipo(p):
          | CHAR
          | STRING
     '''
+    Tablas.myType = p[1]
 
 def p_funcs(p):
     '''
@@ -68,7 +76,7 @@ def p_principal(p):
     principal : PRINCIPAL LPARENT RPARENT bloque
     '''
 
-def p_funcs2(p):
+def p_funcsaux(p):
     '''
     funcsaux : func
              | func funcsaux
@@ -78,23 +86,25 @@ def p_func(p):
     '''
     func : FUNCION funcaux
     '''
+    Tablas.insert(Tablas.func, Tablas.funcType)
 
 def p_funcaux(p):
     '''
-    funcaux : tipo funcaux2
-            | VOID funcaux2
+    funcaux : functipo funcaux2
     '''
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque
+    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
     '''
+    Tablas.func = p[1]
 
 def p_funcaux3(p):
     '''
-    funcaux3 : tipo ID
-             | tipo ID COMMA funcaux3
+    funcaux3 : dirfuncfalse tipo ID
+             | dirfuncfalse tipo ID COMMA funcaux3
     '''
+    Tablas.insert(p[3], Tablas.myType)
 
 def p_bloque(p):
     '''
@@ -226,17 +236,36 @@ def p_expr(p):
 
 def p_exp(p):
     '''
-    exp : termino
-        | termino MAS exp
-        | termino MENOS exp
+    exp : termino popterm
+        | termino popterm MAS pushpoper exp
+        | termino popterm MENOS pushpoper exp
     '''
+
+
+def p_pushpoper(p):
+    '''
+    pushpoper :
+    '''
+    quad.pushPoper(p[-1])
+
+def p_popterm(p):
+    '''
+    popterm :
+    '''
+    quad.popTerm()
 
 def p_termino(p):
     '''
-    termino : factor
-            | factor MULT termino
-            | factor DIV termino
+    termino : factor popfact
+            | factor popfact MULT pushpoper termino
+            | factor popfact DIV pushpoper termino
     '''
+
+def p_popfact(p):
+    '''
+    popfact :
+    '''
+    quad.popFact()
 
 def p_factor(p):
     '''
@@ -248,14 +277,31 @@ def p_factor(p):
 
 def p_var_cte(p):
     '''
-    var_cte : ID
-            | ID dimensiones
-            | CTE_I
-            | CTE_F
-            | CTE_S
-            | CTE_C
+    var_cte : ID pushpilaid
+            | ID pushpilao dimensiones
+            | CTE_I pushpilao
+            | CTE_F pushpilao
+            | CTE_S pushpilao
+            | CTE_C pushpilao
             | fcall
     '''
+
+def p_pushpilaid(p):
+    '''
+    pushpilaid :
+    '''
+    tipo = 'int'
+    quad.pushPilaO(p[-1])
+    quad.pushType(tipo)
+
+def p_pushpilao(p):
+    '''
+    pushpilao :
+    '''
+    tipo = quad.gettipo(p[-1])
+    quad.pushPilaO(p[-1])
+    quad.pushType(tipo)
+    print(p[-1])
 
 def p_log(p):
     '''
@@ -282,10 +328,29 @@ def p_cte(p):
     | FUNCION
    '''
 
+#Funciones Nuerales
+def p_dirfunctrue(p):
+    '''
+    dirfunctrue :
+    '''
+    Tablas.isGlobal = True
+    print('')
+    Tablas.varsPrint()
+    Tablas.varTable.clear()
+
+def p_dirfuncfalse(p):
+    '''
+    dirfuncfalse :
+    '''
+    Tablas.isGlobal = False
+
 #Errores de sintaxis
 def p_error(p):
+    print('')
+    print(Tablas.dirPrint())
+    quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
-#Build parser
+#Build parse
 parser = yacc.yacc()
 result = parser.parse(entrada)

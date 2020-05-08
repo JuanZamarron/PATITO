@@ -4,66 +4,64 @@
 # Compiladores
 # ------------------------------------------------------------
 import sys
+import estructuras as table
 
-listaNombresVar = []#Contiene los id de todas los nombres de variables
-# Objeto Tabla
-class Tabla(object):
-#id -> nombre de la variable/funcion única
-#tipoDato -> Data Type (Int, float, String ... etc)
-#valor -> Lo que contiene la variable
+#List of ids in dirFunc
+dirFuncs = {}
+#List of ids in varsTable
+varTable = {}
 
-    def __init__(self, id, tipoDato, valor):
-        self.id = str(id)
-        self.tipoDato = str(tipoDato)
-        self.valor = valor
+#Variables globales
+myType = None
+isGlobal = True
+func = None
+funcType = None
 
-    def existe(self,id):
-        aux = False
-        for i in range(0, len(listaNombresVar)):
-            if listaNombresVar[i].id == id:
-                aux = True
-                print("ERROR: ID ya definido: ", id)
-                sys.exit()
-        return aux
+#Func that defines which insert use
+def insert(id, type):
+    if isGlobal:
+        dirInsert(id, type)
+    else:
+        varsInsert(id, type)
 
-    # Funciones para modificar la Tabla
-    def agrega(self, id, tipoDato):
-        temp = Tabla(id, tipoDato, None)
-        if len(listaNombresVar) >= 1 and not self.existe(id):
-            listaNombresVar.append(temp)
-        if len(listaNombresVar) == 0:
-            listaNombresVar.append(temp)
+#Inserts globalvar or func in dirFunc
+def dirInsert(id, type):
+    temp = table.table(id, type)
+    if len(dirFuncs) > 0 and not repeatedDirId(id):
+        dirFuncs[id] = temp
+    if not dirFuncs:
+        dirFuncs[id] = temp
 
-    def actualizar(self,id, valor):
-        if validar(valor, id):
-            for i in range(0, len(listaNombresVar)):
-                if listaNombresVar[i].id == id:
-                    listaNombresVar[i].valor = valor
-
-    def validar(self,dato, id):
-        temp = str(type(dato))
-        longitud = len(listaNombresVar)
-        aux = None
-        encontro = False
-        for i in range(0, longitud):
-            if listaNombresVar[i].id == id:
-                aux = listaNombresVar[i].tipoDato
-                encontro = True
-        if not encontro:
-            print('ERROR: ID no declarado:', id)
+#Checks if repeated id in dirFunc
+def repeatedDirId(id):
+    for ids in dirFuncs:
+        if id == ids:
+            print('Id en uso: ', id)
             sys.exit()
-        if temp == "<class 'float'>" and aux == 'float':
             return True
-        if temp == "<class 'int'>" and aux == 'int':
-            return True
-        if temp == "<class 'str'>" and aux == 'string':
-            return True
-        else:
-            print("ERROR: Dato no válido.")
-            sys.exit()
+    return False
 
-    def imprimir(self):
-        longitud = len(listaNombresVar)
-        i = 0
-        for i in range(0, longitud):
-            print(listaNombresVar[i].id, listaNombresVar[i].tipoDato, listaNombresVar[i].valor, sep=', ')
+#Insert varibles in local varTable
+def varsInsert(id, type):
+    temp = table.table(id, type)
+    if len(varTable) > 0 and not repeatedVarId(id):
+        varTable[id] = temp
+    if not varTable:
+        varTable[id] = temp
+
+#Checks if repeated id in local varTable
+def repeatedVarId(id):
+    for ids in varTable:
+        if id == ids:
+            print('Id en uso: ', id)
+            sys.exit()
+            return True
+    return False
+
+def dirPrint():
+    for ids in dirFuncs:
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type)
+
+def varsPrint():
+    for ids in varTable:
+        print('ID: ', ids, ', Type: ', varTable[ids].type)

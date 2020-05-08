@@ -147,4 +147,4 @@ while True:
     tok = lex.token()
     if not tok:
         break
-    print(tok)
+    #print(tok)
