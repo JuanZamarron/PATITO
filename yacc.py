@@ -6,6 +6,7 @@
 import ply.yacc as yacc
 from lex import archivo
 import tables as Tablas
+import cuadruplo as quad
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
@@ -235,17 +236,36 @@ def p_expr(p):
 
 def p_exp(p):
     '''
-    exp : termino
-        | termino MAS exp
-        | termino MENOS exp
+    exp : termino popterm
+        | termino popterm MAS pushpoper exp
+        | termino popterm MENOS pushpoper exp
     '''
+
+
+def p_pushpoper(p):
+    '''
+    pushpoper :
+    '''
+    quad.pushPoper(p[-1])
+
+def p_popterm(p):
+    '''
+    popterm :
+    '''
+    quad.popTerm()
 
 def p_termino(p):
     '''
-    termino : factor
-            | factor MULT termino
-            | factor DIV termino
+    termino : factor popfact
+            | factor popfact MULT pushpoper termino
+            | factor popfact DIV pushpoper termino
     '''
+
+def p_popfact(p):
+    '''
+    popfact :
+    '''
+    quad.popFact()
 
 def p_factor(p):
     '''
@@ -257,14 +277,31 @@ def p_factor(p):
 
 def p_var_cte(p):
     '''
-    var_cte : ID
-            | ID dimensiones
-            | CTE_I
-            | CTE_F
-            | CTE_S
-            | CTE_C
+    var_cte : ID pushpilaid
+            | ID pushpilao dimensiones
+            | CTE_I pushpilao
+            | CTE_F pushpilao
+            | CTE_S pushpilao
+            | CTE_C pushpilao
             | fcall
     '''
+
+def p_pushpilaid(p):
+    '''
+    pushpilaid :
+    '''
+    tipo = 'int'
+    quad.pushPilaO(p[-1])
+    quad.pushType(tipo)
+
+def p_pushpilao(p):
+    '''
+    pushpilao :
+    '''
+    tipo = quad.gettipo(p[-1])
+    quad.pushPilaO(p[-1])
+    quad.pushType(tipo)
+    print(p[-1])
 
 def p_log(p):
     '''
@@ -311,6 +348,7 @@ def p_dirfuncfalse(p):
 def p_error(p):
     print('')
     print(Tablas.dirPrint())
+    quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
 #Build parse
