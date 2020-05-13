@@ -37,46 +37,48 @@ def pushPoper(action):
 def popTerm():
     size = len(Poper)
     if size > 0:
-        if Poper[size-1] == '+' or Poper[size-1] == '-':
-            right_operand = PilaO.pop()
-            right_type = Ptypes.pop()
-            left_operand = PilaO.pop()
-            left_type = Ptypes.pop()
-            operator = Poper.pop()
-            result_type = semantic_cube[operator][left_type][right_type]
-            if(result_type != 'err'):
-                result = 'temp'
-                temp = cuadruplo.cuadruplo(operator, left_operand, right_operand, result)
-                Quad.append(temp)
-                PilaO.append(result)
-                Ptypes.append(result_type)
-            else:
-                print("ERROR: type mismatch")
+        if Poper[size-1] != '(':
+            if Poper[size-1] == '+' or Poper[size-1] == '-':
+                right_operand = PilaO.pop()
+                right_type = Ptypes.pop()
+                left_operand = PilaO.pop()
+                left_type = Ptypes.pop()
+                operator = Poper.pop()
+                result_type = semantic_cube[operator][left_type][right_type]
+                if(result_type != 'err'):
+                    result = 'temp'
+                    temp = cuadruplo.cuadruplo(operator, left_operand, right_operand, result)
+                    Quad.append(temp)
+                    PilaO.append(result)
+                    Ptypes.append(result_type)
+                else:
+                    print("ERROR: type mismatch")
 
 def popFact():
     size = len(Poper)
     if size > 0:
-        if Poper[size-1] == '*' or Poper[size-1] == '/':
-            right_operand = PilaO.pop()
-            right_type = Ptypes.pop()
-            left_operand = PilaO.pop()
-            left_type = Ptypes.pop()
-            operator = Poper.pop()
-            result_type = semantic_cube[operator][left_type][right_type]
-            if(result_type != 'err'):
-                result = 'temp'
-                temp = cuadruplo.cuadruplo(operator, left_operand, right_operand, result)
-                Quad.append(temp)
-                PilaO.append(result)
-                Ptypes.append(result_type)
-            else:
-                print("ERROR: type mismatch")
+        if Poper[size-1] != '(':
+            if Poper[size-1] == '*' or Poper[size-1] == '/':
+                right_operand = PilaO.pop()
+                right_type = Ptypes.pop()
+                left_operand = PilaO.pop()
+                left_type = Ptypes.pop()
+                operator = Poper.pop()
+                result_type = semantic_cube[operator][left_type][right_type]
+                if(result_type != 'err'):
+                    result = 'temp'
+                    temp = cuadruplo.cuadruplo(operator, left_operand, right_operand, result)
+                    Quad.append(temp)
+                    PilaO.append(result)
+                    Ptypes.append(result_type)
+                else:
+                    print("ERROR: type mismatch")
 
 def gettipo(cte):
     tipo = str(type(cte))
     temp = None
     if cte == 'true' or cte == 'false':
-        tipo = 'bool'
+        temp = 'bool'
         return temp
     if tipo == "<class 'float'>":
         temp = 'float'
@@ -94,3 +96,6 @@ def gettipo(cte):
 def imprime():
     for i in range(0, len(Quad)):
         print(Quad[i].action, Quad[i].dir1, Quad[i].dir2, Quad[i].result)
+
+def popFalseBottom():
+    Poper.pop()

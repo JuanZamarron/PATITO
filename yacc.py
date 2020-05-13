@@ -269,16 +269,28 @@ def p_popfact(p):
 
 def p_factor(p):
     '''
-    factor : LPARENT expresion RPARENT
+    factor : LPARENT addfalsebottom expresion RPARENT removefalsebottom
            | var_cte
            | MAS var_cte
            | MENOS var_cte
     '''
 
+def p_addfalsebottom(p):
+    '''
+    addfalsebottom :
+    '''
+    quad.pushPoper(p[-1])
+
+def p_removefalsebottom(p):
+    '''
+    removefalsebottom :
+    '''
+    quad.popFalseBottom()
+
 def p_var_cte(p):
     '''
     var_cte : ID pushpilaid
-            | ID pushpilao dimensiones
+            | ID pushpilaid dimensiones
             | CTE_I pushpilao
             | CTE_F pushpilao
             | CTE_S pushpilao
@@ -290,7 +302,7 @@ def p_pushpilaid(p):
     '''
     pushpilaid :
     '''
-    tipo = 'int'
+    tipo = Tablas.getIdType(p[-1])
     quad.pushPilaO(p[-1])
     quad.pushType(tipo)
 
@@ -301,7 +313,6 @@ def p_pushpilao(p):
     tipo = quad.gettipo(p[-1])
     quad.pushPilaO(p[-1])
     quad.pushType(tipo)
-    print(p[-1])
 
 def p_log(p):
     '''

@@ -65,3 +65,14 @@ def dirPrint():
 def varsPrint():
     for ids in varTable:
         print('ID: ', ids, ', Type: ', varTable[ids].type)
+
+def getIdType(id):
+    tipo = None
+    for ids in varTable:
+        if id == ids:
+            tipo = varTable[ids].type
+    if (tipo == None):
+        for ids in dirFuncs:
+            if id == ids:
+                tipo = dirFuncs[ids].type
+    return tipo
