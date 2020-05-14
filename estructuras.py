@@ -11,7 +11,8 @@ class table(object):
         self.type = type
 
 class cuadruplo(object):
-    def __init__(self, action, dir1, dir2, result):
+    def __init__(self, count, action, dir1, dir2, result):
+        self.count = count
         self.action = action
         self.dir1 = dir1
         self.dir2 = dir2

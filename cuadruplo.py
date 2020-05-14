@@ -47,12 +47,14 @@ def popTerm():
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
                     result = 'temp'
-                    temp = cuadruplo.cuadruplo(operator, left_operand, right_operand, result)
+                    temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
                     Ptypes.append(result_type)
+                    return True
                 else:
                     print("ERROR: type mismatch")
+    return False
 
 def popFact():
     size = len(Poper)
@@ -67,12 +69,14 @@ def popFact():
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
                     result = 'temp'
-                    temp = cuadruplo.cuadruplo(operator, left_operand, right_operand, result)
+                    temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
                     Ptypes.append(result_type)
+                    return True
                 else:
                     print("ERROR: type mismatch")
+    return False
 
 def gettipo(cte):
     tipo = str(type(cte))
@@ -95,7 +99,7 @@ def gettipo(cte):
 
 def imprime():
     for i in range(0, len(Quad)):
-        print(Quad[i].action, Quad[i].dir1, Quad[i].dir2, Quad[i].result)
+        print(Quad[i].count, Quad[i].action, Quad[i].dir1, Quad[i].dir2, Quad[i].result)
 
 def popFalseBottom():
     Poper.pop()

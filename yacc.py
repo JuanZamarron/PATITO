@@ -252,7 +252,9 @@ def p_popterm(p):
     '''
     popterm :
     '''
-    quad.popTerm()
+    temp = quad.popTerm()
+    if temp:
+        quad.count += 1
 
 def p_termino(p):
     '''
@@ -265,7 +267,9 @@ def p_popfact(p):
     '''
     popfact :
     '''
-    quad.popFact()
+    temp = quad.popFact()
+    if temp:
+        quad.count += 1
 
 def p_factor(p):
     '''
