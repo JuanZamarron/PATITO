@@ -143,13 +143,21 @@ def p_siaux(p):
 
 def p_asignacion(p):
     '''
-    asignacion : ID asignacionaux SEMICOLON
+    asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
     '''
+
+def p_popassign(p):
+    '''
+    popassign :
+    '''
+    temp = quad.popAssign()
+    if temp:
+        quad.count += 1
 
 def p_asignacionaux(p):
     '''
-    asignacionaux : IGUAL expresion
-                  | dimensiones IGUAL expresion
+    asignacionaux : IGUAL pushpoper expresion
+                  | dimensiones IGUAL pushpoper expresion
     '''
 
 def p_dimensiones(p):
