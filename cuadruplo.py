@@ -21,9 +21,8 @@ semantic_cube = semantic.SemanticCube().cube
 
 #Func that defines which insert use
 def quadInsert(action, dir1, dir2, result):
-    temp = cuadruplo.cuadruplo(action, dir1, dir2, result)
+    temp = cuadruplo.cuadruplo(count-1, action, dir1, dir2, result)
     Quad.append(temp)
-    count = count + 1
 
 def pushPilaO(id):
     PilaO.append(id)
@@ -33,6 +32,27 @@ def pushType(type):
 
 def pushPoper(action):
     Poper.append(action)
+
+def popAssign():
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] == '=':
+            right_operand = PilaO.pop()
+            right_type = Ptypes.pop()
+            left_operand = PilaO.pop()
+            left_type = Ptypes.pop()
+            operator = Poper.pop()
+            #result_type = semantic_cube[operator][left_type][right_type]
+            if(left_type == right_type):
+                result = 'temp'
+                temp = cuadruplo.cuadruplo(count-1, operator, right_operand, None, left_operand)
+                Quad.append(temp)
+                PilaO.append(result)
+                Ptypes.append(left_type)
+                return True
+            else:
+                print("ERROR: type mismatch")
+    return False
 
 def popTerm():
     size = len(Poper)
