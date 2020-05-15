@@ -179,14 +179,14 @@ def p_retorno(p):
 
 def p_lectura(p):
     '''
-    lectura : LEE LPARENT lecturaaux RPARENT SEMICOLON
+    lectura : LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
     '''
 
 def p_lecturaaux(p):
     '''
-    lecturaaux : ID
-               | ID dimensiones
-               | ID dimensiones COMMA lecturaaux
+    lecturaaux : ID pushpilaid
+               | ID pushpilaid dimensiones
+               | ID pushpilaid dimensiones COMMA lecturaaux
     '''
 
 def p_fcall(p):
@@ -203,8 +203,16 @@ def p_fcallaux(p):
 
 def p_escritura(p):
     '''
-    escritura : ESCRIBE LPARENT escrituraaux RPARENT SEMICOLON
+    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
     '''
+
+def p_popio(p):
+    '''
+    popio :
+    '''
+    temp = quad.popIO()
+    if temp:
+        quad.count += 1
 
 def p_escrituraaux(p):
     '''
@@ -357,9 +365,9 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    print('')
-    Tablas.varsPrint()
-    Tablas.varTable.clear()
+    #print('')
+    #Tablas.varTable.clear()
+    #Tablas.varsPrint()
 
 def p_dirfuncfalse(p):
     '''
@@ -369,8 +377,8 @@ def p_dirfuncfalse(p):
 
 #Errores de sintaxis
 def p_error(p):
-    print('')
-    print(Tablas.dirPrint())
+    #print('')
+    #print(Tablas.dirPrint())
     quad.imprime()
     print("ERROR DE SINTAXIS", p)
 

@@ -33,6 +33,19 @@ def pushType(type):
 def pushPoper(action):
     Poper.append(action)
 
+def popIO():
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] == 'escribe' or Poper[size-1] == 'lee':
+            right_operand = PilaO.pop()
+            Ptypes.pop()
+            operator = Poper.pop()
+            #result_type = semantic_cube[operator][left_type][right_type]
+            temp = cuadruplo.cuadruplo(count-1, operator, None, None, right_operand)
+            Quad.append(temp)
+            return True
+    return False
+
 def popAssign():
     size = len(Poper)
     if size > 0:
@@ -44,11 +57,11 @@ def popAssign():
             operator = Poper.pop()
             #result_type = semantic_cube[operator][left_type][right_type]
             if(left_type == right_type):
-                result = 'temp'
+                #result = 't' + str(count)
                 temp = cuadruplo.cuadruplo(count-1, operator, right_operand, None, left_operand)
                 Quad.append(temp)
-                PilaO.append(result)
-                Ptypes.append(left_type)
+                #PilaO.append(result)
+                #Ptypes.append(left_type)
                 return True
             else:
                 print("ERROR: type mismatch")
@@ -66,7 +79,7 @@ def popTerm():
                 operator = Poper.pop()
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
-                    result = 'temp'
+                    result = 't' + str(count)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -88,7 +101,7 @@ def popFact():
                 operator = Poper.pop()
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
-                    result = 'temp'
+                    result = 't' + str(count)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
