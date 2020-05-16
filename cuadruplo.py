@@ -178,3 +178,30 @@ def imprime():
 
 def popFalseBottom():
     Poper.pop()
+
+#Neural point 1 of if
+def GotoF_SI():
+    exp_type = Ptypes.pop()
+    if (exp_type != 'boolean'):
+        print('Error: type mismatch')
+        return False
+    else:
+        result = PilaO.pop()
+        temp = cuadruplo.cuadruplo(count-1, 'GotoF', result, None, None)
+        Quad.append(temp)
+        Pjumps.append(count-1)
+        return True
+
+#Neural point 2 of if
+def fillGoto():
+    end = Pjumps.pop()
+    Quad[end].result = count-1
+
+#Nueral point 3 of if-else
+def Goto_SI():
+    temp = cuadruplo.cuadruplo(count-1, 'Goto', None, None, None)
+    Quad.append(temp)
+    false = Pjumps.pop()
+    Pjumps.append(count-1)
+    Quad[false].result = count
+    return True

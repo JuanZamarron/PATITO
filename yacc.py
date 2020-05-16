@@ -132,14 +132,41 @@ def p_estatuto(p):
 
 def p_si(p):
     '''
-    si : siaux
-       | siaux SINO bloque
+    si : siaux siend
+       | siaux si3 SINO bloque siend
     '''
+
+def p_siend(p):
+    '''
+    siend : si2
+    '''
+
+def p_si3(p):
+    '''
+    si3 :
+    '''
+    temp = quad.Goto_SI()
+    if temp:
+        quad.count += 1
 
 def p_siaux(p):
     '''
-    siaux : SI LPARENT expresion RPARENT ENTONCES bloque
+    siaux : SI LPARENT expresion RPARENT si1 ENTONCES bloque
     '''
+
+def p_si1(p):
+    '''
+    si1 :
+    '''
+    temp = quad.GotoF_SI()
+    if temp:
+        quad.count += 1
+
+def p_si2(p):
+    '''
+    si2 :
+    '''
+    quad.fillGoto()
 
 def p_asignacion(p):
     '''
