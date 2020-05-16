@@ -244,11 +244,27 @@ def p_expresion(p):
               | expr log expresion
     '''
 
+def p_poolog(p):
+    '''
+    poplog :
+    '''
+    temp = quad.popLog()
+    if temp:
+        quad.count += 1
+
 def p_expr(p):
     '''
-    expr : exp
-         | exp rel expr
+    expr : exp poprel
+         | exp poprel rel expr
     '''
+
+def p_porel(p):
+    '''
+    poprel :
+    '''
+    temp = quad.popRel()
+    if temp:
+        quad.count += 1
 
 def p_exp(p):
     '''
@@ -291,8 +307,8 @@ def p_factor(p):
     '''
     factor : LPARENT addfalsebottom expresion RPARENT removefalsebottom
            | var_cte
-           | MAS var_cte
-           | MENOS var_cte
+           | MAS pushpoper var_cte
+           | MENOS pushpoper var_cte
     '''
 
 def p_addfalsebottom(p):
@@ -336,18 +352,18 @@ def p_pushpilao(p):
 
 def p_log(p):
     '''
-    log : AND
-        | OR
+    log : AND pushpoper
+        | OR pushpoper
     '''
 
 def p_rel(p):
     '''
-    rel : MENOR
-        | MAYOR
-        | MENORIGUAL
-        | MAYORIGUAL
-        | COMPARE
-        | DIFFERENT
+    rel : MENOR pushpoper
+        | MAYOR pushpoper
+        | MENORIGUAL pushpoper
+        | MAYORIGUAL pushpoper
+        | COMPARE pushpoper
+        | DIFFERENT pushpoper
     '''
 
 
@@ -365,8 +381,7 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    #print('')
-    #Tablas.varTable.clear()
+    Tablas.varTable.clear()
     #Tablas.varsPrint()
 
 def p_dirfuncfalse(p):
@@ -377,8 +392,7 @@ def p_dirfuncfalse(p):
 
 #Errores de sintaxis
 def p_error(p):
-    #print('')
-    #print(Tablas.dirPrint())
+    #Tablas.dirPrint()
     quad.imprime()
     print("ERROR DE SINTAXIS", p)
 

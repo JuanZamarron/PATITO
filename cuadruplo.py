@@ -67,6 +67,48 @@ def popAssign():
                 print("ERROR: type mismatch")
     return False
 
+def popLog():
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] == '||' or Poper[size-1] == '&&':
+            right_operand = PilaO.pop()
+            right_type = Ptypes.pop()
+            left_operand = PilaO.pop()
+            left_type = Ptypes.pop()
+            operator = Poper.pop()
+            result_type = semantic_cube[operator][left_type][right_type]
+            if(result_type != 'err'):
+                result = 't' + str(count)
+                temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
+                Quad.append(temp)
+                PilaO.append(result)
+                Ptypes.append(result_type)
+                return True
+            else:
+                print("ERROR: type mismatch")
+    return False
+
+def popRel():
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] == '>' or Poper[size-1] == '<' or Poper[size-1] == '>=' or Poper[size-1] == '<=' or Poper[size-1] == '==' or Poper[size-1] == '!=':
+            right_operand = PilaO.pop()
+            right_type = Ptypes.pop()
+            left_operand = PilaO.pop()
+            left_type = Ptypes.pop()
+            operator = Poper.pop()
+            result_type = semantic_cube[operator][left_type][right_type]
+            if(result_type != 'err'):
+                result = 't' + str(count)
+                temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
+                Quad.append(temp)
+                PilaO.append(result)
+                Ptypes.append(result_type)
+                return True
+            else:
+                print("ERROR: type mismatch")
+    return False
+
 def popTerm():
     size = len(Poper)
     if size > 0:
