@@ -122,7 +122,7 @@ def p_bloqueaux(p):
 def p_estatuto(p):
     '''
     estatuto : asignacion
-             | si
+             | si si2
              | mientras
              | desde
              | lectura
@@ -132,13 +132,8 @@ def p_estatuto(p):
 
 def p_si(p):
     '''
-    si : siaux siend
-       | siaux si3 SINO bloque siend
-    '''
-
-def p_siend(p):
-    '''
-    siend : si2
+    si : siaux
+       | siaux si3 SINO bloque
     '''
 
 def p_si3(p):
