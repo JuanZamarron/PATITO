@@ -15,104 +15,148 @@ class SemanticCube:
                     'int': 'int',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'int',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'float',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'float'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
-                    'string': 'string',
-                    'boolean': 'err'
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
-                    'int': 'int',
-                    'float': 'float',
+                    'int': 'err',
+                    'float': 'err',
                     'string': 'err',
-                    'boolean': 'int'
-                }
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
+                },
             },
             '-': {
                 'int': {
                     'int': 'int',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'int'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'float',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'float'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
-                    'int': 'int',
-                    'float': 'float',
+                    'int': 'err',
+                    'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
-                }
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
+                },
             },
             '/': {
                 'int': {
                     'int': 'float',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'float'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'float',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'float'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
-                    'string': 'string',
-                    'boolean': 'float'
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
-                    'int': 'float',
-                    'float': 'float',
+                    'int': 'err',
+                    'float': 'err',
                     'string': 'err',
-                    'boolean': 'float'
-                }
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
+                },
             },
             '*': {
                 'int': {
                     'int': 'int',
                     'float': 'float',
-                    'string': 'string',
-                    'boolean': 'int'
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'float',
                     'float': 'float',
                     'string': 'err',
-                    'boolean': 'float'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
-                    'int': 'string',
+                    'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
-                    'int': 'int',
-                    'float': 'float',
+                    'int': 'err',
+                    'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
-                }
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
+                },
             },
             '>': {
                 'int': {
@@ -120,24 +164,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'boolean',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
             },
             '<': {
@@ -146,24 +201,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'boolean',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
             },
             '<=': {
@@ -172,24 +238,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'boolean',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
             },
             '>=': {
@@ -198,24 +275,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'boolean',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
             },
             '==': {
@@ -224,24 +312,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'boolean',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'boolean',
                 },
             },
             '!=': {
@@ -250,24 +349,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'boolean',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'boolean',
                 },
             },
             '&&': {
@@ -276,24 +386,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'boolean'
+                    'boolean': 'boolean',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
             },
             '||': {
@@ -302,24 +423,35 @@ class SemanticCube:
                     'float': 'err',
                     'string': 'err',
                     'boolean': 'err',
+                    'char': 'err',
                 },
                 'float': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'string': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'err'
+                    'boolean': 'err',
+                    'char': 'err',
                 },
                 'boolean': {
                     'int': 'err',
                     'float': 'err',
                     'string': 'err',
-                    'boolean': 'boolean'
+                    'boolean': 'boolean',
+                    'char': 'err',
+                },
+                'char': {
+                    'int': 'err',
+                    'float': 'err',
+                    'string': 'err',
+                    'boolean': 'err',
+                    'char': 'err',
                 },
             }
         }
