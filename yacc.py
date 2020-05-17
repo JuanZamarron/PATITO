@@ -273,13 +273,37 @@ def p_while3(p):
 
 def p_desde(p):
     '''
-    desde : DESDE desdeaux HASTA exp HACER bloque
+    desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
     '''
+
+def p_for2(p):
+    '''
+    for2 :
+    '''
+    temp = quad.compareFor()
+    if temp:
+        quad.count += 1
+    
+def p_for4(p):
+    '''
+    for4 :
+    '''
+    temp = quad.addToFor()
+    if temp:
+        quad.count += 1
+    
+def p_for5(p):
+    '''
+    for5 :
+    '''
+    temp = quad.assignToFor()
+    if temp:
+        quad.count += 1
 
 def p_desdeaux(p):
     '''
-    desdeaux : ID IGUAL exp
-             | ID dimensiones IGUAL exp
+    desdeaux : ID pushpilaid IGUAL pushpoper exp
+             | ID pushpilaid dimensiones IGUAL pushpoper exp
     '''
 
 def p_expresion(p):
