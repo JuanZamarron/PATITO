@@ -246,8 +246,30 @@ def p_escrituraaux(p):
 
 def p_mientras(p):
     '''
-    mientras : MIENTRAS LPARENT expresion RPARENT HAZ bloque
+    mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
     '''
+
+def p_while1(p):
+    '''
+    while1 :
+    '''
+    quad.pushJumps()
+
+def p_while2(p):
+    '''
+    while2 :
+    '''
+    temp = quad.GotoF_While()
+    if temp:
+        quad.count += 1
+
+def p_while3(p):
+    '''
+    while3 :
+    '''
+    temp = quad.Goto_While()
+    if temp:
+        quad.count += 1
 
 def p_desde(p):
     '''

@@ -45,7 +45,7 @@ var
         }
         valor = 2.0;
         escribe("el determinante es:", valor);
-        mientras(i >= 0)haz{
+        mientras(i+2 >= 3+0)haz{
             escribe("resultado", Arreglo[i], fact(i+2) * valor);
             i = i - 1;
         }

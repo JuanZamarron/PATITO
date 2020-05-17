@@ -205,3 +205,29 @@ def Goto_SI():
     Pjumps.append(count-1)
     Quad[false].result = count
     return True
+
+#Neural point 1 of while
+def pushJumps():
+    Pjumps.append(count-1)
+
+#Nueral point 2 of while
+def GotoF_While():
+    exp_type = Ptypes.pop()
+    if (exp_type != 'boolean'):
+        print('Error: type mismatch')
+        return False
+    else:
+        result = PilaO.pop()
+        temp = cuadruplo.cuadruplo(count-1, 'GotoF', result, None, None)
+        Quad.append(temp)
+        Pjumps.append(count-1)
+        return True
+
+#Nueral point 3 of while
+def Goto_While():
+    end = Pjumps.pop()
+    retur = Pjumps.pop()
+    temp = cuadruplo.cuadruplo(count-1, 'Goto', None, None, retur)
+    Quad.append(temp)
+    Quad[end].result = count
+    return True
