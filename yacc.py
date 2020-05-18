@@ -23,12 +23,16 @@ def p_programa(p):
     '''
     programa : PROGRAMA ID SEMICOLON vars funcs
     '''
- 
+
+# ======================== VARIABLES =======================
 def p_vars(p):
     '''
     vars : VAR varaux
     '''
-    
+    #5.Insert into DirFunc the number of local variables defined.
+    #6.Insert into DirFunc the current quadruple counter (CONT),
+
+
 def p_varaux(p):
     '''
     varaux  : tipo varaux2 SEMICOLON varaux
@@ -45,25 +49,8 @@ def p_varaux2(p):
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
     '''
     Tablas.insert(p[1], Tablas.myType)
-
-def p_functipo(p):
-    '''
-    functipo : INT
-             | FLOAT
-             | CHAR
-             | STRING
-             | VOID
-    '''
-    Tablas.funcType = p[1]
-
-def p_tipo(p):
-    '''
-    tipo : INT
-         | FLOAT
-         | CHAR
-         | STRING
-    '''
-    Tablas.myType = p[1]
+# ======================== END VARIABLES =======================
+# ======================== FUNCIONES =======================
 
 def p_funcs(p):
     '''
@@ -75,6 +62,7 @@ def p_principal(p):
     '''
     principal : PRINCIPAL LPARENT RPARENT bloque
     '''
+
 
 def p_funcsaux(p):
     '''
@@ -93,18 +81,55 @@ def p_funcaux(p):
     funcaux : functipo funcaux2
     '''
 
+def p_tipo(p):
+    '''
+    tipo : INT
+         | FLOAT
+         | CHAR
+         | STRING
+    '''
+    Tablas.myType = p[1]
+
+def p_functipo(p):
+    '''
+    functipo : INT
+             | FLOAT
+             | CHAR
+             | STRING
+             | VOID
+    '''
+    Tablas.funcType = p[1]
+
 def p_funcaux2(p):
     '''
     funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
     '''
     Tablas.func = p[1]
+    #1.- Insert Function name into the DirFunc table (and its type, if any), verify semantics.
+
+
 
 def p_funcaux3(p):
     '''
-    funcaux3 : dirfuncfalse tipo ID
-             | dirfuncfalse tipo ID COMMA funcaux3
+    funcaux3 : funcaux4
+            | empty
     '''
     Tablas.insert(p[3], Tablas.myType)
+    # 2.- Insert every parameter into the current (local) VarTable.
+    # 3.- Insert the type to every parameter uploaded into the VarTable.At the same time into the ParameterTable (to create the Function’s signature)..
+
+
+def p_funcaux4(p):
+    '''
+    funcaux4 : dirfuncfalse tipo ID
+             | dirfuncfalse tipo ID COMMA funcaux3
+    '''
+    p[0] = ''
+    for i in range(1, len(p)):
+        p[0] += p[i] + " "
+ #4.4.- Insert into DirFunc the number of parameters defined.
+# ======================== END FUNCIONES =======================
+# ======================== BLOQUE =======================
 
 def p_bloque(p):
     '''
@@ -451,6 +476,8 @@ def p_dirfunctrue(p):
     Tablas.isGlobal = True
     Tablas.varTable.clear()
     #Tablas.varsPrint()
+    #7.Release the current VarTable (local).
+
 
 def p_dirfuncfalse(p):
     '''

@@ -76,3 +76,5 @@ def getIdType(id):
             if id == ids:
                 tipo = dirFuncs[ids].type
     return tipo
+
+
