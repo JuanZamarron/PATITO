@@ -280,9 +280,3 @@ def assignToFor():
 #Funciones
 # Función que obtiene el id de la función y genera el cuádruplo
 # función e incializa el contador de parámetros en 1.
-def moduloDos(id):
-    quadr = quadruple(len(Quad), 'era', None, None, id)
-    Quad.append(quadr)
-    global paramCont
-    paramCont = 1
-
