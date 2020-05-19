@@ -35,14 +35,14 @@ def pushPoper(action):
     Poper.append(action)
 
 def popIO():
-    size = len(Poper)
+    size = len(Poper) #poper stack de operacions
     if size > 0:
         if Poper[size-1] == 'escribe' or Poper[size-1] == 'lee':
             right_operand = PilaO.pop()
             Ptypes.pop()
             operator = Poper.pop()
             #result_type = semantic_cube[operator][left_type][right_type]
-            temp = cuadruplo.cuadruplo(count-1, operator, None, None, right_operand)
+            temp = cuadruplo.cuadruplo(count-1, operator, None, None, right_operand)#Pops crean un cuadriplo
             Quad.append(temp)
             return True
     return False
@@ -279,4 +279,28 @@ def assignToFor():
 
 #Funciones
 # Función que obtiene el id de la función y genera el cuádruplo
-# función e incializa el contador de parámetros en 1.
+# función e incializa
+# el contador de parámetros en 1.
+def genEraQuad(id):
+    quadr = cuadruplo.cuadruplo(count - 1, 'era', None, None, id)
+    Quad.append(quadr)
+    global paramCont
+    paramCont = 1
+    return True
+
+# Función que genera el cuádruplo param con el parámetro obtenido de la pila
+# de operandos y el número de de parámetros, y regresa el valor para ctualizar.
+def genQuadParam():
+    argument = PilaO.pop()
+    Ptypes.pop()
+    valor = avail.pop()
+    num = str(paramCont)
+    quadr = cuadruplo(len(Quad), 'param', argument, None, 'param'+num)
+    Quad.append(quadr)
+    return valor
+
+
+# Función que actualiza el contador de parámetros.
+def addParam():
+    global paramCont
+    paramCont = paramCont + 1
