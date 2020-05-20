@@ -6,6 +6,7 @@
 import sys
 import estructuras as cuadruplo
 import SemanticCube as semantic
+import memoriaVirtual as mv
 
 #Stacks
 Poper = []
@@ -68,7 +69,7 @@ def popAssign():
                 print("ERROR: type mismatch")
     return False
 
-def popLog():
+def popLog(glob):
     size = len(Poper)
     if size > 0:
         if Poper[size-1] == '||' or Poper[size-1] == '&&':
@@ -79,7 +80,7 @@ def popLog():
             operator = Poper.pop()
             result_type = semantic_cube[operator][left_type][right_type]
             if(result_type != 'err'):
-                result = 't' + str(count)
+                result = mv.getMemoTemp(result_type, glob)
                 temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                 Quad.append(temp)
                 PilaO.append(result)
@@ -89,7 +90,7 @@ def popLog():
                 print("ERROR: type mismatch")
     return False
 
-def popRel():
+def popRel(glob):
     size = len(Poper)
     if size > 0:
         if Poper[size-1] == '>' or Poper[size-1] == '<' or Poper[size-1] == '>=' or Poper[size-1] == '<=' or Poper[size-1] == '==' or Poper[size-1] == '!=':
@@ -100,7 +101,7 @@ def popRel():
             operator = Poper.pop()
             result_type = semantic_cube[operator][left_type][right_type]
             if(result_type != 'err'):
-                result = 't' + str(count)
+                result = mv.getMemoTemp(result_type, glob)
                 temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                 Quad.append(temp)
                 PilaO.append(result)
@@ -110,7 +111,7 @@ def popRel():
                 print("ERROR: type mismatch")
     return False
 
-def popTerm():
+def popTerm(glob):
     size = len(Poper)
     if size > 0:
         if Poper[size-1] != '(':
@@ -122,7 +123,7 @@ def popTerm():
                 operator = Poper.pop()
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
-                    result = 't' + str(count)
+                    result = mv.getMemoTemp(result_type, glob)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -132,7 +133,7 @@ def popTerm():
                     print("ERROR: type mismatch")
     return False
 
-def popFact():
+def popFact(glob):
     size = len(Poper)
     if size > 0:
         if Poper[size-1] != '(':
@@ -144,7 +145,7 @@ def popFact():
                 operator = Poper.pop()
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
-                    result = 't' + str(count)
+                    result = mv.getMemoTemp(result_type, glob)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -236,7 +237,7 @@ def Goto_While():
 #Neural point 1 of for is the same as while1
 
 #Neural point 2 of for
-def compareFor():
+def compareFor(glob):
     right_operand = PilaO.pop()
     right_type = Ptypes.pop()
     left_operand = PilaO.pop()
@@ -244,7 +245,7 @@ def compareFor():
     result_type = semantic_cube['<='][left_type][right_type]
     if(result_type != 'err'):
         desde.append(left_operand)
-        result = 't' + str(count)
+        result = mv.getMemoTemp(result_type, glob)
         temp = cuadruplo.cuadruplo(count-1, '<=', left_operand, right_operand, result)
         Quad.append(temp)
         PilaO.append(result)
@@ -257,8 +258,9 @@ def compareFor():
 #Neural point 3 of for same as while2
 
 #Neural point 4 of for
-def addToFor():
-    result = 't' + str(count)
+def addToFor(glob):
+    result_type = 'int'
+    result = mv.getMemoTemp(result_type, glob)
     left_operand = desde.pop()
     right_operand = 1
     temp = cuadruplo.cuadruplo(count-1, '+', left_operand, right_operand, result)

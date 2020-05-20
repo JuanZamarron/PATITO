@@ -251,9 +251,9 @@ def p_popio(p):
 
 def p_escrituraaux(p):
     '''
-    escrituraaux : CTE_S
+    escrituraaux : CTE_S ctemem
                  | expresion
-                 | CTE_S COMMA escrituraaux
+                 | CTE_S ctemem COMMA escrituraaux
                  | expresion COMMA escrituraaux
     '''
 
@@ -293,7 +293,7 @@ def p_for2(p):
     '''
     for2 :
     '''
-    temp = quad.compareFor()
+    temp = quad.compareFor(Tablas.isGlobal)
     if temp:
         quad.count += 1
     
@@ -301,7 +301,7 @@ def p_for4(p):
     '''
     for4 :
     '''
-    temp = quad.addToFor()
+    temp = quad.addToFor(Tablas.isGlobal)
     if temp:
         quad.count += 1
     
@@ -329,7 +329,7 @@ def p_poolog(p):
     '''
     poplog :
     '''
-    temp = quad.popLog()
+    temp = quad.popLog(Tablas.isGlobal)
     if temp:
         quad.count += 1
 
@@ -343,7 +343,7 @@ def p_porel(p):
     '''
     poprel :
     '''
-    temp = quad.popRel()
+    temp = quad.popRel(Tablas.isGlobal)
     if temp:
         quad.count += 1
 
@@ -365,7 +365,7 @@ def p_popterm(p):
     '''
     popterm :
     '''
-    temp = quad.popTerm()
+    temp = quad.popTerm(Tablas.isGlobal)
     if temp:
         quad.count += 1
 
@@ -380,7 +380,7 @@ def p_popfact(p):
     '''
     popfact :
     '''
-    temp = quad.popFact()
+    temp = quad.popFact(Tablas.isGlobal)
     if temp:
         quad.count += 1
 
@@ -408,10 +408,10 @@ def p_var_cte(p):
     '''
     var_cte : ID pushpilaid
             | ID pushpilaid dimensiones
-            | CTE_I pushpilao
-            | CTE_F pushpilao
-            | CTE_S pushpilao
-            | CTE_C pushpilao
+            | CTE_I ctemem pushpilao
+            | CTE_F ctemem pushpilao
+            | CTE_S ctemem pushpilao
+            | CTE_C ctemem pushpilao
             | fcall
     '''
 
@@ -420,12 +420,13 @@ def p_pushpilaid(p):
     pushpilaid :
     '''
     tipo = Tablas.getIdType(p[-1])
-    quad.pushPilaO(p[-1])
+    dir = Tablas.findVM(p[-1])
+    quad.pushPilaO(dir)
     quad.pushType(tipo)
 
-def p_pushpilao(p):
+def p_ctemem(p):
     '''
-    pushpilao :
+    ctemem :
     '''
     tipo = quad.gettipo(p[-1])
     #Memoria Virtual
@@ -433,8 +434,15 @@ def p_pushpilao(p):
     temp = Tablas.cteInsert(p[-1], tipo, dir)
     if (temp == False):
         mv.restMemo(tipo)
+    
+def p_pushpilao(p):
+    '''
+    pushpilao :
+    '''
+    tipo = quad.gettipo(p[-2])
+    dir = Tablas.findCteVM(p[-2])
     #Cuadruplo
-    quad.pushPilaO(p[-1])
+    quad.pushPilaO(dir)
     quad.pushType(tipo)
 
 def p_log(p):
@@ -459,9 +467,13 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    Tablas.varsPrint()
-    print('')
+    #Tablas.varsPrint()
+    #print('')
     mv.lI = 13000
+    mv.ltI = 16000
+    mv.ltF = 17000
+    mv.ltC = 18000
+    mv.ltB = 19000
     Tablas.varTable.clear()
 
 def p_dirfuncfalse(p):
@@ -472,11 +484,11 @@ def p_dirfuncfalse(p):
 
 #Errores de sintaxis
 def p_error(p):
-    Tablas.dirPrint()
-    print('')
-    print('Constantes')
-    Tablas.ctePrint()
-    #quad.imprime()
+    #Tablas.dirPrint()
+    #print('')
+    #print('Constantes')
+    #Tablas.ctePrint()
+    quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
 #Build parse

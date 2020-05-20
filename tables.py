@@ -102,3 +102,19 @@ def ctePrint():
     leng = len(cteTable)
     for ids in range(leng):
         print('ID: ', cteTable[ids].id, ', Type: ', cteTable[ids].type, ' Dir: ', cteTable[ids].dir)
+
+#Find associated memory
+def findVM(id):
+    for ids in varTable:
+        if id == ids:
+            return varTable[id].dir
+    for ids in dirFuncs:
+        if id == ids:
+            return dirFuncs[id].dir
+
+#Find associtaed memory of constants
+def findCteVM(id):
+    leng = len(cteTable)
+    for ids in range(leng):
+        if str(cteTable[ids].id) == str(id):
+            return cteTable[ids].dir

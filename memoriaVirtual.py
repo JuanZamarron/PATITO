@@ -25,10 +25,10 @@ lI = 13000
 lF = 14000
 lC = 15000
 #Temporales Locales
-tlI = 16000
-tlF = 17000
-tlC = 18000
-tlB = 19000
+ltI = 16000
+ltF = 17000
+ltC = 18000
+ltB = 19000
 
 def getMemoGlob(tipo):
     global gI
@@ -107,3 +107,47 @@ def restMemo(tipo):
         gcB -= 1
     if tipo == "string":
         gcS -= 1
+
+def getMemoTemp(tipo, glob):
+    global gtI
+    global gtF
+    global gtC
+    global gtB
+    global ltI
+    global ltF
+    global ltC
+    global ltB
+    if glob == True:
+        if tipo == "float":
+            temp = gtF
+            gtF += 1
+            return temp
+        if tipo == "int":
+            temp = gtI
+            gtI += 1
+            return temp
+        if tipo == "char":
+            temp = gtC
+            gtC += 1
+            return temp
+        if tipo == "boolean":
+            temp = gtB
+            gtB += 1
+            return temp
+    else:
+        if tipo == "float":
+            temp = ltF
+            ltF += 1
+            return temp
+        if tipo == "int":
+            temp = ltI
+            ltI += 1
+            return temp
+        if tipo == "char":
+            temp = ltC
+            ltC += 1
+            return temp
+        if tipo == "boolean":
+            temp = ltB
+            ltB += 1
+            return temp
