@@ -10,6 +10,8 @@ import estructuras as table
 dirFuncs = {}
 #List of ids in varsTable
 varTable = {}
+#List of cte
+cteTable = []
 
 #Variables globales
 myType = None
@@ -18,15 +20,15 @@ func = None
 funcType = None
 
 #Func that defines which insert use
-def insert(id, type):
+def insert(id, type, dir):
     if isGlobal:
-        dirInsert(id, type)
+        dirInsert(id, type, dir)
     else:
-        varsInsert(id, type)
+        varsInsert(id, type, dir)
 
 #Inserts globalvar or func in dirFunc
-def dirInsert(id, type):
-    temp = table.table(id, type)
+def dirInsert(id, type, dir):
+    temp = table.table(id, type, dir)
     if len(dirFuncs) > 0 and not repeatedDirId(id):
         dirFuncs[id] = temp
     if not dirFuncs:
@@ -42,8 +44,8 @@ def repeatedDirId(id):
     return False
 
 #Insert varibles in local varTable
-def varsInsert(id, type):
-    temp = table.table(id, type)
+def varsInsert(id, type, dir):
+    temp = table.table(id, type, dir)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
     if not varTable:
@@ -60,8 +62,59 @@ def repeatedVarId(id):
 
 def dirPrint():
     for ids in dirFuncs:
-        print('ID: ', ids, ', Type: ', dirFuncs[ids].type)
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Dir: ', dirFuncs[ids].dir)
 
 def varsPrint():
     for ids in varTable:
-        print('ID: ', ids, ', Type: ', varTable[ids].type)
+        print('ID: ', ids, ', Type: ', varTable[ids].type, ' Dir: ', varTable[ids].dir)
+
+def getIdType(id):
+    tipo = None
+    for ids in varTable:
+        if id == ids:
+            tipo = varTable[ids].type
+    if (tipo == None):
+        for ids in dirFuncs:
+            if id == ids:
+                tipo = dirFuncs[ids].type
+    return tipo
+
+#Table de constantes
+def cteInsert(id, type, dir):
+    cte = id
+    temp = table.table(cte, type, dir)
+    if len(cteTable) > 0 and not repeatedCte(cte):
+        cteTable.append(temp)
+        return True
+    if not cteTable:
+        cteTable.append(temp)
+        return True
+    return False
+
+def repeatedCte(id):
+    leng = len(cteTable)
+    for ids in range(leng):
+        if str(cteTable[ids].id) == str(id):
+            return True
+    return False
+
+def ctePrint():
+    leng = len(cteTable)
+    for ids in range(leng):
+        print('ID: ', cteTable[ids].id, ', Type: ', cteTable[ids].type, ' Dir: ', cteTable[ids].dir)
+
+#Find associated memory
+def findVM(id):
+    for ids in varTable:
+        if id == ids:
+            return varTable[id].dir
+    for ids in dirFuncs:
+        if id == ids:
+            return dirFuncs[id].dir
+
+#Find associtaed memory of constants
+def findCteVM(id):
+    leng = len(cteTable)
+    for ids in range(leng):
+        if str(cteTable[ids].id) == str(id):
+            return cteTable[ids].dir
