@@ -104,20 +104,32 @@ def p_funcaux(p):
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
+    funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
     '''
     Tablas.func = p[1]
 
 def p_funcaux3(p):
     '''
-    funcaux3 : dirfuncfalse tipo ID
-             | dirfuncfalse tipo ID COMMA funcaux3
+    funcaux3 : funcaux4
+             | empty
+    '''
+
+def p_funcaux4(p):
+    '''
+    funcaux4 : tipo funcaux5
+             | tipo funcaux5 funcaux4
+    '''
+
+def p_funcaux5(p):
+    '''
+    funcaux5 : ID
+             | ID COMMA
     '''
     if (Tablas.isGlobal == True):
         dir = mv.getMemoGlob(Tablas.myType)
     else:
         dir = mv.getMemoLoc(Tablas.myType)
-    Tablas.insert(p[3], Tablas.myType, dir)
+    Tablas.insert(p[1], Tablas.myType, dir)
 
 def p_bloque(p):
     '''
@@ -467,8 +479,8 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    #Tablas.varsPrint()
-    #print('')
+    Tablas.varsPrint()
+    print('')
     mv.lI = 13000
     mv.ltI = 16000
     mv.ltF = 17000
@@ -481,6 +493,12 @@ def p_dirfuncfalse(p):
     dirfuncfalse :
     '''
     Tablas.isGlobal = False
+
+def p_empty(p):
+    '''
+    empty :
+    '''
+    pass
 
 #Errores de sintaxis
 def p_error(p):
