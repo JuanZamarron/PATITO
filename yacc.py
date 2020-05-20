@@ -427,7 +427,6 @@ def p_pushpilao(p):
     '''
     pushpilao :
     '''
-    
     tipo = quad.gettipo(p[-1])
     #Memoria Virtual
     dir = mv.getMemoCte(tipo)
@@ -453,15 +452,6 @@ def p_rel(p):
         | COMPARE pushpoper
         | DIFFERENT pushpoper
     '''
-
-
-def p_cte(p):
-    '''CTE : CTE_I
-    | CTE_F
-    | CTE_CH
-    | CTE_STRING
-    | FUNCION
-   '''
 
 #Funciones Nuerales
 def p_dirfunctrue(p):
