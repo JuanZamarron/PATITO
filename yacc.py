@@ -7,6 +7,7 @@ import ply.yacc as yacc
 from lex import archivo
 import tables as Tablas
 import cuadruplo as quad
+import memoriaVirtual as mv
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
@@ -44,7 +45,11 @@ def p_varaux2(p):
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
     '''
-    Tablas.insert(p[1], Tablas.myType)
+    if Tablas.isGlobal == True:
+        dir = mv.getMemoGlob(Tablas.myType)
+    else:
+        dir = mv.getMemoLoc(Tablas.myType)
+    Tablas.insert(p[1], Tablas.myType, dir)
 
 def p_functipo(p):
     '''
@@ -86,7 +91,11 @@ def p_func(p):
     '''
     func : FUNCION funcaux
     '''
-    Tablas.insert(Tablas.func, Tablas.funcType)
+    if (Tablas.isGlobal == True):
+        dir = mv.getMemoGlob(Tablas.funcType)
+    else:
+        dir = mv.getMemoLoc(Tablas.funcType)
+    Tablas.insert(Tablas.func, Tablas.funcType, dir)
 
 def p_funcaux(p):
     '''
@@ -104,7 +113,11 @@ def p_funcaux3(p):
     funcaux3 : dirfuncfalse tipo ID
              | dirfuncfalse tipo ID COMMA funcaux3
     '''
-    Tablas.insert(p[3], Tablas.myType)
+    if (Tablas.isGlobal == True):
+        dir = mv.getMemoGlob(Tablas.myType)
+    else:
+        dir = mv.getMemoLoc(Tablas.myType)
+    Tablas.insert(p[3], Tablas.myType, dir)
 
 def p_bloque(p):
     '''
@@ -414,7 +427,14 @@ def p_pushpilao(p):
     '''
     pushpilao :
     '''
+    
     tipo = quad.gettipo(p[-1])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-1], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    #Cuadruplo
     quad.pushPilaO(p[-1])
     quad.pushType(tipo)
 
@@ -449,8 +469,10 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
+    Tablas.varsPrint()
+    print('')
+    mv.lI = 13000
     Tablas.varTable.clear()
-    #Tablas.varsPrint()
 
 def p_dirfuncfalse(p):
     '''
@@ -460,8 +482,11 @@ def p_dirfuncfalse(p):
 
 #Errores de sintaxis
 def p_error(p):
-    #Tablas.dirPrint()
-    quad.imprime()
+    Tablas.dirPrint()
+    print('')
+    print('Constantes')
+    Tablas.ctePrint()
+    #quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
 #Build parse

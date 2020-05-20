@@ -13,7 +13,7 @@ gtI = 4000
 gtF = 5000
 gtC = 6000
 gtB = 7000
-#Constantes Globales
+#Constantes
 gcI = 8000
 gcF = 9000
 gcC = 10000
@@ -29,28 +29,81 @@ tlI = 16000
 tlF = 17000
 tlC = 18000
 tlB = 19000
-#Constantes Locales
-clI = 20000
-clF = 21000
-clC = 22000
-clS = 23000
-clB = 24000
 
-def getMemoGlob(cte):
-    tipo = str(type(cte))
-    temp = None
-    if cte == 'true' or cte == 'false':
-        temp = 'bool'
+def getMemoGlob(tipo):
+    global gI
+    global gF
+    global gC
+    if tipo == "float":
+        temp = gF
+        gF += 1
         return temp
-    if tipo == "<class 'float'>":
-        temp = 'float'
+    if tipo == "int":
+        temp = gI
+        gI +=1
         return temp
-    if tipo == "<class 'int'>":
-        temp = 'int'
+    if tipo == "char":
+        temp = gC
+        gC += 1
         return temp
-    if tipo == "<class 'str'>":
-        temp = 'string'
+
+def getMemoLoc(tipo):
+    global lI
+    global lF
+    global lC
+    if tipo == "float":
+        temp = lF
+        lF += 1
         return temp
-    if tipo == "<class 'char'>":
-        temp = 'char'
+    if tipo == "int":
+        temp = lI
+        lI += 1
         return temp
+    if tipo == "char":
+        temp = lC
+        lC += 1
+        return temp
+
+def getMemoCte(tipo):
+    global gcI
+    global gcF
+    global gcC
+    global gcS
+    global gcB
+    if tipo == "float":
+        temp = gcF
+        gcF += 1
+        return temp
+    if tipo == "int":
+        temp = gcI
+        gcI += 1
+        return temp
+    if tipo == "char":
+        temp = gcC
+        gcC += 1
+        return temp
+    if tipo == "boolean":
+        temp = gcB
+        gcB += 1
+        return temp
+    if tipo == "string":
+        temp = gcS
+        gcS += 1
+        return temp
+
+def restMemo(tipo):
+    global gcI
+    global gcF
+    global gcC
+    global gcS
+    global gcB
+    if tipo == "float":
+        gcF -= 1
+    if tipo == "int":
+        gcI -= 1
+    if tipo == "char":
+        gcC -= 1
+    if tipo == "boolean":
+        gcB -= 1
+    if tipo == "string":
+        gcS -= 1
