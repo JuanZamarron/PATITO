@@ -158,7 +158,7 @@ def gettipo(cte):
     tipo = str(type(cte))
     temp = None
     if cte == 'true' or cte == 'false':
-        temp = 'bool'
+        temp = 'boolean'
         return temp
     if tipo == "<class 'float'>":
         temp = 'float'
