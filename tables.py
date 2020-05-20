@@ -19,6 +19,9 @@ isGlobal = True
 func = None
 funcType = None
 
+#Variables de funciones
+params = ''
+
 #Func that defines which insert use
 def insert(id, type, dir):
     if isGlobal:
@@ -28,7 +31,7 @@ def insert(id, type, dir):
 
 #Inserts globalvar or func in dirFunc
 def dirInsert(id, type, dir):
-    temp = table.table(id, type, dir)
+    temp = table.table(id, type, dir, None, None, None)
     if len(dirFuncs) > 0 and not repeatedDirId(id):
         dirFuncs[id] = temp
     if not dirFuncs:
@@ -45,7 +48,7 @@ def repeatedDirId(id):
 
 #Insert varibles in local varTable
 def varsInsert(id, type, dir):
-    temp = table.table(id, type, dir)
+    temp = table.table(id, type, dir, None, None, None)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
     if not varTable:
@@ -62,7 +65,7 @@ def repeatedVarId(id):
 
 def dirPrint():
     for ids in dirFuncs:
-        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Dir: ', dirFuncs[ids].dir)
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Dir: ', dirFuncs[ids].dir, ' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
 
 def varsPrint():
     for ids in varTable:
@@ -82,7 +85,7 @@ def getIdType(id):
 #Table de constantes
 def cteInsert(id, type, dir):
     cte = id
-    temp = table.table(cte, type, dir)
+    temp = table.table(cte, type, dir, None, None, None)
     if len(cteTable) > 0 and not repeatedCte(cte):
         cteTable.append(temp)
         return True
@@ -118,3 +121,10 @@ def findCteVM(id):
     for ids in range(leng):
         if str(cteTable[ids].id) == str(id):
             return cteTable[ids].dir
+
+def insertFuncParams(params, func):
+    #print(func)
+    for ids in dirFuncs:
+        print(ids)
+        if ids == func:
+            dirFuncs[ids].params = params

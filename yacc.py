@@ -83,8 +83,8 @@ def p_principal(p):
 
 def p_funcsaux(p):
     '''
-    funcsaux : func
-             | func funcsaux
+    funcsaux : func insertparams
+             | func insertparams funcsaux
     '''
 
 def p_func(p):
@@ -96,7 +96,7 @@ def p_func(p):
     else:
         dir = mv.getMemoLoc(Tablas.funcType)
     Tablas.insert(Tablas.func, Tablas.funcType, dir)
-
+    
 def p_funcaux(p):
     '''
     funcaux : functipo funcaux2
@@ -107,6 +107,13 @@ def p_funcaux2(p):
     funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
     '''
     Tablas.func = p[1]
+
+def p_insertparams(p):
+    '''
+    insertparams :
+    '''
+    Tablas.insertFuncParams(Tablas.params, Tablas.func)
+    Tablas.params = ''
 
 def p_funcaux3(p):
     '''
@@ -130,6 +137,7 @@ def p_funcaux5(p):
     else:
         dir = mv.getMemoLoc(Tablas.myType)
     Tablas.insert(p[1], Tablas.myType, dir)
+    Tablas.params = str(Tablas.params) + Tablas.myType[0]
 
 def p_bloque(p):
     '''
@@ -479,8 +487,8 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    Tablas.varsPrint()
-    print('')
+    #Tablas.varsPrint()
+    #print('')
     mv.lI = 13000
     mv.ltI = 16000
     mv.ltF = 17000
@@ -502,11 +510,11 @@ def p_empty(p):
 
 #Errores de sintaxis
 def p_error(p):
-    #Tablas.dirPrint()
+    Tablas.dirPrint()
     #print('')
     #print('Constantes')
     #Tablas.ctePrint()
-    quad.imprime()
+    #quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
 #Build parse
