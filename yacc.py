@@ -7,6 +7,7 @@ import ply.yacc as yacc
 from lex import archivo
 import tables as Tablas
 import cuadruplo as quad
+import memoriaVirtual as mv
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
@@ -44,7 +45,11 @@ def p_varaux2(p):
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
     '''
-    Tablas.insert(p[1], Tablas.myType)
+    if Tablas.isGlobal == True:
+        dir = mv.getMemoGlob(Tablas.myType)
+    else:
+        dir = mv.getMemoLoc(Tablas.myType)
+    Tablas.insert(p[1], Tablas.myType, dir)
 
 def p_functipo(p):
     '''
@@ -86,7 +91,11 @@ def p_func(p):
     '''
     func : FUNCION funcaux
     '''
-    Tablas.insert(Tablas.func, Tablas.funcType)
+    if (Tablas.isGlobal == True):
+        dir = mv.getMemoGlob(Tablas.funcType)
+    else:
+        dir = mv.getMemoLoc(Tablas.funcType)
+    Tablas.insert(Tablas.func, Tablas.funcType, dir)
 
 def p_funcaux(p):
     '''
@@ -95,16 +104,32 @@ def p_funcaux(p):
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
+    funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
     '''
     Tablas.func = p[1]
 
 def p_funcaux3(p):
     '''
-    funcaux3 : dirfuncfalse tipo ID
-             | dirfuncfalse tipo ID COMMA funcaux3
+    funcaux3 : funcaux4
+             | empty
     '''
-    Tablas.insert(p[3], Tablas.myType)
+
+def p_funcaux4(p):
+    '''
+    funcaux4 : tipo funcaux5
+             | tipo funcaux5 funcaux4
+    '''
+
+def p_funcaux5(p):
+    '''
+    funcaux5 : ID
+             | ID COMMA
+    '''
+    if (Tablas.isGlobal == True):
+        dir = mv.getMemoGlob(Tablas.myType)
+    else:
+        dir = mv.getMemoLoc(Tablas.myType)
+    Tablas.insert(p[1], Tablas.myType, dir)
 
 def p_bloque(p):
     '''
@@ -122,7 +147,7 @@ def p_bloqueaux(p):
 def p_estatuto(p):
     '''
     estatuto : asignacion
-             | si
+             | si si2
              | mientras
              | desde
              | lectura
@@ -133,23 +158,53 @@ def p_estatuto(p):
 def p_si(p):
     '''
     si : siaux
-       | siaux SINO bloque
+       | siaux si3 SINO bloque
     '''
+
+def p_si3(p):
+    '''
+    si3 :
+    '''
+    temp = quad.Goto_SI()
+    if temp:
+        quad.count += 1
 
 def p_siaux(p):
     '''
-    siaux : SI LPARENT expresion RPARENT ENTONCES bloque
+    siaux : SI LPARENT expresion RPARENT si1 ENTONCES bloque
     '''
+
+def p_si1(p):
+    '''
+    si1 :
+    '''
+    temp = quad.GotoF_SI()
+    if temp:
+        quad.count += 1
+
+def p_si2(p):
+    '''
+    si2 :
+    '''
+    quad.fillGoto()
 
 def p_asignacion(p):
     '''
-    asignacion : ID asignacionaux SEMICOLON
+    asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
     '''
+
+def p_popassign(p):
+    '''
+    popassign :
+    '''
+    temp = quad.popAssign()
+    if temp:
+        quad.count += 1
 
 def p_asignacionaux(p):
     '''
-    asignacionaux : IGUAL expresion
-                  | dimensiones IGUAL expresion
+    asignacionaux : IGUAL pushpoper expresion
+                  | dimensiones IGUAL pushpoper expresion
     '''
 
 def p_dimensiones(p):
@@ -171,14 +226,14 @@ def p_retorno(p):
 
 def p_lectura(p):
     '''
-    lectura : LEE LPARENT lecturaaux RPARENT SEMICOLON
+    lectura : LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
     '''
 
 def p_lecturaaux(p):
     '''
-    lecturaaux : ID
-               | ID dimensiones
-               | ID dimensiones COMMA lecturaaux
+    lecturaaux : ID pushpilaid
+               | ID pushpilaid dimensiones
+               | ID pushpilaid dimensiones COMMA lecturaaux
     '''
 
 def p_fcall(p):
@@ -195,31 +250,85 @@ def p_fcallaux(p):
 
 def p_escritura(p):
     '''
-    escritura : ESCRIBE LPARENT escrituraaux RPARENT SEMICOLON
+    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
     '''
+
+def p_popio(p):
+    '''
+    popio :
+    '''
+    temp = quad.popIO()
+    if temp:
+        quad.count += 1
 
 def p_escrituraaux(p):
     '''
-    escrituraaux : CTE_S
+    escrituraaux : CTE_S ctemem
                  | expresion
-                 | CTE_S COMMA escrituraaux
+                 | CTE_S ctemem COMMA escrituraaux
                  | expresion COMMA escrituraaux
     '''
 
 def p_mientras(p):
     '''
-    mientras : MIENTRAS LPARENT expresion RPARENT HAZ bloque
+    mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
     '''
+
+def p_while1(p):
+    '''
+    while1 :
+    '''
+    quad.pushJumps()
+
+def p_while2(p):
+    '''
+    while2 :
+    '''
+    temp = quad.GotoF_While()
+    if temp:
+        quad.count += 1
+
+def p_while3(p):
+    '''
+    while3 :
+    '''
+    temp = quad.Goto_While()
+    if temp:
+        quad.count += 1
 
 def p_desde(p):
     '''
-    desde : DESDE desdeaux HASTA exp HACER bloque
+    desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
     '''
+
+def p_for2(p):
+    '''
+    for2 :
+    '''
+    temp = quad.compareFor(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+    
+def p_for4(p):
+    '''
+    for4 :
+    '''
+    temp = quad.addToFor(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+    
+def p_for5(p):
+    '''
+    for5 :
+    '''
+    temp = quad.assignToFor()
+    if temp:
+        quad.count += 1
 
 def p_desdeaux(p):
     '''
-    desdeaux : ID IGUAL exp
-             | ID dimensiones IGUAL exp
+    desdeaux : ID pushpilaid IGUAL pushpoper exp
+             | ID pushpilaid dimensiones IGUAL pushpoper exp
     '''
 
 def p_expresion(p):
@@ -228,11 +337,27 @@ def p_expresion(p):
               | expr log expresion
     '''
 
+def p_poolog(p):
+    '''
+    poplog :
+    '''
+    temp = quad.popLog(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+
 def p_expr(p):
     '''
-    expr : exp
-         | exp rel expr
+    expr : exp poprel
+         | exp poprel rel expr
     '''
+
+def p_porel(p):
+    '''
+    poprel :
+    '''
+    temp = quad.popRel(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
 
 def p_exp(p):
     '''
@@ -252,7 +377,9 @@ def p_popterm(p):
     '''
     popterm :
     '''
-    quad.popTerm()
+    temp = quad.popTerm(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
 
 def p_termino(p):
     '''
@@ -265,24 +392,38 @@ def p_popfact(p):
     '''
     popfact :
     '''
-    quad.popFact()
+    temp = quad.popFact(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
 
 def p_factor(p):
     '''
-    factor : LPARENT expresion RPARENT
+    factor : LPARENT addfalsebottom expresion RPARENT removefalsebottom
            | var_cte
-           | MAS var_cte
-           | MENOS var_cte
+           | MAS pushpoper var_cte
+           | MENOS pushpoper var_cte
     '''
+
+def p_addfalsebottom(p):
+    '''
+    addfalsebottom :
+    '''
+    quad.pushPoper(p[-1])
+
+def p_removefalsebottom(p):
+    '''
+    removefalsebottom :
+    '''
+    quad.popFalseBottom()
 
 def p_var_cte(p):
     '''
     var_cte : ID pushpilaid
-            | ID pushpilao dimensiones
-            | CTE_I pushpilao
-            | CTE_F pushpilao
-            | CTE_S pushpilao
-            | CTE_C pushpilao
+            | ID pushpilaid dimensiones
+            | CTE_I ctemem pushpilao
+            | CTE_F ctemem pushpilao
+            | CTE_S ctemem pushpilao
+            | CTE_C ctemem pushpilao
             | fcall
     '''
 
@@ -290,43 +431,47 @@ def p_pushpilaid(p):
     '''
     pushpilaid :
     '''
-    tipo = 'int'
-    quad.pushPilaO(p[-1])
+    tipo = Tablas.getIdType(p[-1])
+    dir = Tablas.findVM(p[-1])
+    quad.pushPilaO(dir)
     quad.pushType(tipo)
 
+def p_ctemem(p):
+    '''
+    ctemem :
+    '''
+    tipo = quad.gettipo(p[-1])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-1], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    
 def p_pushpilao(p):
     '''
     pushpilao :
     '''
-    tipo = quad.gettipo(p[-1])
-    quad.pushPilaO(p[-1])
+    tipo = quad.gettipo(p[-2])
+    dir = Tablas.findCteVM(p[-2])
+    #Cuadruplo
+    quad.pushPilaO(dir)
     quad.pushType(tipo)
-    print(p[-1])
 
 def p_log(p):
     '''
-    log : AND
-        | OR
+    log : AND pushpoper
+        | OR pushpoper
     '''
 
 def p_rel(p):
     '''
-    rel : MENOR
-        | MAYOR
-        | MENORIGUAL
-        | MAYORIGUAL
-        | COMPARE
-        | DIFFERENT
+    rel : MENOR pushpoper
+        | MAYOR pushpoper
+        | MENORIGUAL pushpoper
+        | MAYORIGUAL pushpoper
+        | COMPARE pushpoper
+        | DIFFERENT pushpoper
     '''
-
-
-def p_cte(p):
-    '''CTE : CTE_I
-    | CTE_F
-    | CTE_CH
-    | CTE_STRING
-    | FUNCION
-   '''
 
 #Funciones Nuerales
 def p_dirfunctrue(p):
@@ -334,8 +479,13 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    print('')
     Tablas.varsPrint()
+    print('')
+    mv.lI = 13000
+    mv.ltI = 16000
+    mv.ltF = 17000
+    mv.ltC = 18000
+    mv.ltB = 19000
     Tablas.varTable.clear()
 
 def p_dirfuncfalse(p):
@@ -344,10 +494,18 @@ def p_dirfuncfalse(p):
     '''
     Tablas.isGlobal = False
 
+def p_empty(p):
+    '''
+    empty :
+    '''
+    pass
+
 #Errores de sintaxis
 def p_error(p):
-    print('')
-    print(Tablas.dirPrint())
+    #Tablas.dirPrint()
+    #print('')
+    #print('Constantes')
+    #Tablas.ctePrint()
     quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
