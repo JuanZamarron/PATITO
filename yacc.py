@@ -294,6 +294,7 @@ def p_fcall(p):
     temp = quad.parcheguad(p[1], Tablas.isGlobal)
     if (temp):
         quad.count += 1
+    quad.param = 1
 
 def p_erainsert(p):
     '''
