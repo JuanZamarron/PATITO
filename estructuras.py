@@ -6,10 +6,13 @@
 
 #Estructura para dirFunc y varsTable
 class table(object):
-    def __init__(self, id, type, dir):
+    def __init__(self, id, type, dir, params, size, quad):
         self.id = id
         self.type = type
         self.dir = dir
+        self.params = params
+        self.size = size
+        self.quad = quad
 
 class cuadruplo(object):
     def __init__(self, count, action, dir1, dir2, result):

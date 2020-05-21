@@ -7,6 +7,7 @@ import sys
 import estructuras as cuadruplo
 import SemanticCube as semantic
 import memoriaVirtual as mv
+import tables as Tabla
 
 #Stacks
 Poper = []
@@ -20,11 +21,15 @@ desde = []
 #Variables globales
 count = 1
 semantic_cube = semantic.SemanticCube().cube
+param = 1
 
 #Func that defines which insert use
 def quadInsert(action, dir1, dir2, result):
     temp = cuadruplo.cuadruplo(count-1, action, dir1, dir2, result)
     Quad.append(temp)
+
+def gotoMain():
+    Quad[0].result = count-1
 
 def pushPilaO(id):
     PilaO.append(id)
@@ -81,6 +86,10 @@ def popLog(glob):
             result_type = semantic_cube[operator][left_type][right_type]
             if(result_type != 'err'):
                 result = mv.getMemoTemp(result_type, glob)
+                if (glob):
+                    Tabla.gtempAddSize(result_type)
+                else:
+                    Tabla.tempAddSize(result_type)
                 temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                 Quad.append(temp)
                 PilaO.append(result)
@@ -102,6 +111,10 @@ def popRel(glob):
             result_type = semantic_cube[operator][left_type][right_type]
             if(result_type != 'err'):
                 result = mv.getMemoTemp(result_type, glob)
+                if (glob):
+                    Tabla.gtempAddSize(result_type)
+                else:
+                    Tabla.tempAddSize(result_type)
                 temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                 Quad.append(temp)
                 PilaO.append(result)
@@ -124,6 +137,10 @@ def popTerm(glob):
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
                     result = mv.getMemoTemp(result_type, glob)
+                    if (glob):
+                        Tabla.gtempAddSize(result_type)
+                    else:
+                        Tabla.tempAddSize(result_type)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -146,6 +163,10 @@ def popFact(glob):
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
                     result = mv.getMemoTemp(result_type, glob)
+                    if (glob):
+                        Tabla.gtempAddSize(result_type)
+                    else:
+                        Tabla.tempAddSize(result_type)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -246,6 +267,10 @@ def compareFor(glob):
     if(result_type != 'err'):
         desde.append(left_operand)
         result = mv.getMemoTemp(result_type, glob)
+        if (glob):
+            Tabla.gtempAddSize(result_type)
+        else:
+            Tabla.tempAddSize(result_type)
         temp = cuadruplo.cuadruplo(count-1, '<=', left_operand, right_operand, result)
         Quad.append(temp)
         PilaO.append(result)
@@ -261,6 +286,10 @@ def compareFor(glob):
 def addToFor(glob):
     result_type = 'int'
     result = mv.getMemoTemp(result_type, glob)
+    if (glob):
+        Tabla.gtempAddSize(result_type)
+    else:
+        Tabla.tempAddSize(result_type)
     left_operand = desde.pop()
     right_operand = 1
     temp = cuadruplo.cuadruplo(count-1, '+', left_operand, right_operand, result)
@@ -278,3 +307,31 @@ def assignToFor():
     return True
 
 #Neural point 6 of for same as while 3
+
+#Param insert
+def paramInsert():
+    params = PilaO.pop()
+    tipo = Ptypes.pop()
+    num = 'param' + str(param)
+    temp = cuadruplo.cuadruplo(count-1, 'Param', params, None, num)
+    Quad.append(temp)
+
+def gosub(func):
+    temp = cuadruplo.cuadruplo(count-1, 'Gosub', None, None, func)
+    Quad.append(temp)
+
+def parcheguad(func, glob):
+    gvarTable = Tabla.gvarTable
+    for ids in gvarTable:
+        if ids == func:    
+            dir = gvarTable[func].dir
+            tipo = gvarTable[func].type
+            if (dir == None):
+                return False
+            else:
+                result = mv.getMemoTemp(tipo, glob)
+                temp = cuadruplo.cuadruplo(count-1, '=', dir, None, result)
+                Quad.append(temp)
+                PilaO.append(result)
+                Ptypes.append(tipo)
+            return True
