@@ -11,6 +11,7 @@ import memoriaVirtual as mv
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
+Tablas.gvarTable.clear()
 
 #Obtains tokens
 from lex import tokens
@@ -22,9 +23,24 @@ entrada = prueba.read()
 #Creacion del programa
 def p_programa(p):
     '''
-    programa : PROGRAMA ID SEMICOLON vars funcs
+    programa : PROGRAMA ID globfunc SEMICOLON gotomain vars funcs endprog
     '''
- 
+
+def p_globfunc(p):
+    '''
+    globfunc :
+    '''
+    Tablas.insertDirFunc(p[-1], None)
+    Tablas.dirFuncs[p[-1]].quad = 0
+    Tablas.program = p[-1]
+
+def p_gotomain(p):
+    '''
+    gotomain :
+    '''
+    quad.quadInsert('Goto', None, None, None)
+    quad.count += 1
+
 def p_vars(p):
     '''
     vars : VAR varaux
@@ -38,12 +54,18 @@ def p_varaux(p):
 
 def p_varaux2(p):
     '''
-    varaux2 : ID
-            | ID COMMA varaux2
+    varaux2 : varaux3
+            | varaux3 varaux2
+    '''
+
+def p_varaux3(p):
+    '''
+    varaux3 : ID
+            | ID COMMA
             | ID LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH COMMA varaux2
+            | ID LCORCH CTE_I RCORCH COMMA
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA
     '''
     if Tablas.isGlobal == True:
         dir = mv.getMemoGlob(Tablas.myType)
@@ -72,9 +94,15 @@ def p_tipo(p):
 
 def p_funcs(p):
     '''
-    funcs : principal
-          | funcsaux principal
+    funcs : setmain principal
+          | funcsaux setmain principal
     '''
+
+def p_setGotoMain(p):
+    '''
+    setmain :
+    '''
+    quad.gotoMain()
 
 def p_principal(p):
     '''
@@ -83,19 +111,27 @@ def p_principal(p):
 
 def p_funcsaux(p):
     '''
-    funcsaux : func
-             | func funcsaux
+    funcsaux : func insertparams endfunc
+             | func insertparams endfunc funcsaux
     '''
+
+def p_endfunc(p):
+    '''
+    endfunc :
+    '''
+    quad.quadInsert('Endfunc', None, None, None)
+    quad.count += 1
 
 def p_func(p):
     '''
-    func : FUNCION funcaux
+    func : getquad FUNCION funcaux
     '''
-    if (Tablas.isGlobal == True):
-        dir = mv.getMemoGlob(Tablas.funcType)
-    else:
-        dir = mv.getMemoLoc(Tablas.funcType)
-    Tablas.insert(Tablas.func, Tablas.funcType, dir)
+    
+def p_getquad(p):
+    '''
+    getquad :
+    '''
+    Tablas.quad = quad.count
 
 def p_funcaux(p):
     '''
@@ -104,9 +140,31 @@ def p_funcaux(p):
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
+    funcaux2 : ID dirfuncinsert LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
     '''
-    Tablas.func = p[1]
+
+def p_dirfuncinsert(p):
+    '''
+    dirfuncinsert :
+    '''
+    Tablas.func = p[-1]
+    if (Tablas.isGlobal == True):
+        dir = mv.getMemoGlob(Tablas.funcType)
+    else:
+        dir = mv.getMemoLoc(Tablas.funcType)
+    Tablas.insert(p[-1], Tablas.funcType, dir)
+    Tablas.insertDirFunc(p[-1], Tablas.funcType)
+
+def p_insertparams(p):
+    '''
+    insertparams :
+    '''
+    Tablas.insertFuncParams(Tablas.params, Tablas.func)
+    Tablas.params = ''
+    size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
+    Tablas.insertFuncSize(size, Tablas.func)
+    Tablas.clearVarSize()
+    Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
 
 def p_funcaux3(p):
     '''
@@ -130,6 +188,7 @@ def p_funcaux5(p):
     else:
         dir = mv.getMemoLoc(Tablas.myType)
     Tablas.insert(p[1], Tablas.myType, dir)
+    Tablas.params = str(Tablas.params) + Tablas.myType[0]
 
 def p_bloque(p):
     '''
@@ -238,15 +297,36 @@ def p_lecturaaux(p):
 
 def p_fcall(p):
     '''
-    fcall : ID LPARENT RPARENT
-          | ID LPARENT fcallaux RPARENT
+    fcall : ID erainsert LPARENT RPARENT
+          | ID erainsert LPARENT addfalsebottom fcallaux RPARENT removefalsebottom
     '''
+    quad.gosub(p[1])
+    quad.count += 1
+    temp = quad.parcheguad(p[1], Tablas.isGlobal)
+    if (temp):
+        quad.count += 1
+    quad.param = 1
+
+def p_erainsert(p):
+    '''
+    erainsert :
+    '''
+    quad.quadInsert('Era', None, None, p[-1])
+    quad.count += 1
 
 def p_fcallaux(p):
     '''
-    fcallaux : expresion
-             | expresion COMMA fcallaux
+    fcallaux : addfalsebottom expresion removefalsebottom paraminsert
+             | addfalsebottom expresion removefalsebottom paraminsert COMMA fcallaux
     '''
+
+def p_paraminsert(p):
+    '''
+    paraminsert :
+    '''
+    quad.paramInsert()
+    quad.param += 1
+    quad.count += 1
 
 def p_escritura(p):
     '''
@@ -337,7 +417,7 @@ def p_expresion(p):
               | expr log expresion
     '''
 
-def p_poolog(p):
+def p_poplog(p):
     '''
     poplog :
     '''
@@ -502,12 +582,22 @@ def p_empty(p):
 
 #Errores de sintaxis
 def p_error(p):
-    #Tablas.dirPrint()
-    #print('')
+    print("ERROR DE SINTAXIS", p)
+
+def p_endprog(p):
+    '''
+    endprog :
+    '''
+    print(Tablas.program)
+    size = str(Tablas.gli) + ',' + str(Tablas.glf) + ',' + str(Tablas.glc) + ',' + str(Tablas.glti) + ',' + str(Tablas.gltf) + ',' + str(Tablas.gltc) + ',' + str(Tablas.gltb)
+    Tablas.insertFuncSize(size, Tablas.program)
+    quad.quadInsert('End', None, None, None)
+    Tablas.gvarPrint()
+    print('')
+    Tablas.dirPrint()
     #print('Constantes')
     #Tablas.ctePrint()
     quad.imprime()
-    print("ERROR DE SINTAXIS", p)
 
 #Build parse
 parser = yacc.yacc()
