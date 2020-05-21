@@ -45,12 +45,18 @@ def p_varaux(p):
 
 def p_varaux2(p):
     '''
-    varaux2 : ID
-            | ID COMMA varaux2
+    varaux2 : varaux3
+            | varaux3 varaux2
+    '''
+
+def p_varaux3(p):
+    '''
+    varaux3 : ID
+            | ID COMMA
             | ID LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH COMMA varaux2
+            | ID LCORCH CTE_I RCORCH COMMA
             | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA varaux2
+            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA
     '''
     if Tablas.isGlobal == True:
         dir = mv.getMemoGlob(Tablas.myType)
@@ -510,8 +516,8 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    #Tablas.varsPrint()
-    #print('')
+    Tablas.varsPrint()
+    print('')
     mv.lI = 13000
     mv.ltI = 16000
     mv.ltF = 17000
@@ -541,7 +547,7 @@ def p_endprog(p):
     '''
     quad.quadInsert('End', None, None, None)
     #print('')
-    #Tablas.dirPrint()
+    Tablas.dirPrint()
     #print('Constantes')
     #Tablas.ctePrint()
     quad.imprime()
