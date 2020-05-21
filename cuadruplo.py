@@ -21,6 +21,7 @@ desde = []
 #Variables globales
 count = 1
 semantic_cube = semantic.SemanticCube().cube
+param = 1
 
 #Func that defines which insert use
 def quadInsert(action, dir1, dir2, result):
@@ -288,3 +289,31 @@ def assignToFor():
     return True
 
 #Neural point 6 of for same as while 3
+
+#Param insert
+def paramInsert():
+    params = PilaO.pop()
+    tipo = Ptypes.pop()
+    num = 'param' + str(param)
+    temp = cuadruplo.cuadruplo(count-1, 'Param', params, None, num)
+    Quad.append(temp)
+
+def gosub(func):
+    temp = cuadruplo.cuadruplo(count-1, 'Gosub', None, None, func)
+    Quad.append(temp)
+
+def parcheguad(func, glob):
+    dirFunc = Tabla.dirFuncs
+    for ids in dirFunc:
+        if ids == func:    
+            dir = dirFunc[func].dir
+            tipo = dirFunc[func].type
+            if (dir == None):
+                return False
+            else:
+                result = mv.getMemoTemp(tipo, glob)
+                temp = cuadruplo.cuadruplo(count-1, '=', dir, None, result)
+                Quad.append(temp)
+                PilaO.append(result)
+                Ptypes.append(tipo)
+            return True

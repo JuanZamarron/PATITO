@@ -102,19 +102,21 @@ def p_principal(p):
 
 def p_funcsaux(p):
     '''
-    funcsaux : func insertparams
-             | func insertparams funcsaux
+    funcsaux : func insertparams endfunc
+             | func insertparams endfunc funcsaux
     '''
+
+def p_endfunc(p):
+    '''
+    endfunc :
+    '''
+    quad.quadInsert('Endfunc', None, None, None)
+    quad.count += 1
 
 def p_func(p):
     '''
     func : getquad FUNCION funcaux
     '''
-    if (Tablas.isGlobal == True):
-        dir = mv.getMemoGlob(Tablas.funcType)
-    else:
-        dir = mv.getMemoLoc(Tablas.funcType)
-    Tablas.insert(Tablas.func, Tablas.funcType, dir)
     
 def p_getquad(p):
     '''
@@ -129,9 +131,18 @@ def p_funcaux(p):
 
 def p_funcaux2(p):
     '''
-    funcaux2 : ID LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
+    funcaux2 : ID dirfuncinsert LPARENT dirfuncfalse funcaux3 RPARENT vars bloque dirfunctrue
     '''
-    Tablas.func = p[1]
+
+def p_dirfuncinsert(p):
+    '''
+    dirfuncinsert :
+    '''
+    if (Tablas.isGlobal == True):
+        dir = mv.getMemoGlob(Tablas.funcType)
+    else:
+        dir = mv.getMemoLoc(Tablas.funcType)
+    Tablas.insert(p[-1], Tablas.funcType, dir)
 
 def p_insertparams(p):
     '''
@@ -275,15 +286,35 @@ def p_lecturaaux(p):
 
 def p_fcall(p):
     '''
-    fcall : ID LPARENT RPARENT
-          | ID LPARENT fcallaux RPARENT
+    fcall : ID erainsert LPARENT RPARENT
+          | ID erainsert LPARENT addfalsebottom fcallaux RPARENT removefalsebottom
     '''
+    quad.gosub(p[1])
+    quad.count += 1
+    temp = quad.parcheguad(p[1], Tablas.isGlobal)
+    if (temp):
+        quad.count += 1
+
+def p_erainsert(p):
+    '''
+    erainsert :
+    '''
+    quad.quadInsert('Era', None, None, p[-1])
+    quad.count += 1
 
 def p_fcallaux(p):
     '''
-    fcallaux : expresion
-             | expresion COMMA fcallaux
+    fcallaux : addfalsebottom expresion removefalsebottom paraminsert
+             | addfalsebottom expresion removefalsebottom paraminsert COMMA fcallaux
     '''
+
+def p_paraminsert(p):
+    '''
+    paraminsert :
+    '''
+    quad.paramInsert()
+    quad.param += 1
+    quad.count += 1
 
 def p_escritura(p):
     '''
