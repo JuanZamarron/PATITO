@@ -11,6 +11,7 @@ import memoriaVirtual as mv
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
+Tablas.gvarTable.clear()
 
 #Obtains tokens
 from lex import tokens
@@ -22,8 +23,16 @@ entrada = prueba.read()
 #Creacion del programa
 def p_programa(p):
     '''
-    programa : PROGRAMA ID SEMICOLON gotomain vars funcs endprog
+    programa : PROGRAMA ID globfunc SEMICOLON gotomain vars funcs endprog
     '''
+
+def p_globfunc(p):
+    '''
+    globfunc :
+    '''
+    Tablas.insertDirFunc(p[-1], None)
+    Tablas.dirFuncs[p[-1]].quad = 0
+    Tablas.program = p[-1]
 
 def p_gotomain(p):
     '''
@@ -138,11 +147,13 @@ def p_dirfuncinsert(p):
     '''
     dirfuncinsert :
     '''
+    Tablas.func = p[-1]
     if (Tablas.isGlobal == True):
         dir = mv.getMemoGlob(Tablas.funcType)
     else:
         dir = mv.getMemoLoc(Tablas.funcType)
     Tablas.insert(p[-1], Tablas.funcType, dir)
+    Tablas.insertDirFunc(p[-1], Tablas.funcType)
 
 def p_insertparams(p):
     '''
@@ -151,7 +162,7 @@ def p_insertparams(p):
     Tablas.insertFuncParams(Tablas.params, Tablas.func)
     Tablas.params = ''
     size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
-    Tablas.inserFuncSize(size, Tablas.func)
+    Tablas.insertFuncSize(size, Tablas.func)
     Tablas.clearVarSize()
     Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
 
@@ -577,8 +588,12 @@ def p_endprog(p):
     '''
     endprog :
     '''
+    print(Tablas.program)
+    size = str(Tablas.gli) + ',' + str(Tablas.glf) + ',' + str(Tablas.glc) + ',' + str(Tablas.glti) + ',' + str(Tablas.gltf) + ',' + str(Tablas.gltc) + ',' + str(Tablas.gltb)
+    Tablas.insertFuncSize(size, Tablas.program)
     quad.quadInsert('End', None, None, None)
-    #print('')
+    Tablas.gvarPrint()
+    print('')
     Tablas.dirPrint()
     #print('Constantes')
     #Tablas.ctePrint()
