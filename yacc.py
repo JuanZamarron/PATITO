@@ -114,6 +114,9 @@ def p_insertparams(p):
     '''
     Tablas.insertFuncParams(Tablas.params, Tablas.func)
     Tablas.params = ''
+    size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
+    Tablas.inserFuncSize(size, Tablas.func)
+    Tablas.clearVarSize()
 
 def p_funcaux3(p):
     '''

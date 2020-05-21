@@ -21,6 +21,13 @@ funcType = None
 
 #Variables de funciones
 params = ''
+li = 0
+lf = 0
+lc = 0
+lti = 0
+ltf = 0
+ltc = 0
+ltb = 0
 
 #Func that defines which insert use
 def insert(id, type, dir):
@@ -49,10 +56,36 @@ def repeatedDirId(id):
 #Insert varibles in local varTable
 def varsInsert(id, type, dir):
     temp = table.table(id, type, dir, None, None, None)
+    addSize(type)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
     if not varTable:
         varTable[id] = temp
+
+def addSize(type):
+    global li
+    global lf
+    global lc
+    if type == 'int':
+        li += 1
+    elif type == 'float':
+        lf += 1
+    elif type == 'char':
+        lc += 1
+
+def tempAddSize(type):
+    global lti
+    global ltf
+    global ltc
+    global ltb
+    if type == 'int':
+        lti += 1
+    elif type == 'float':
+        ltf += 1
+    elif type == 'char':
+        ltc += 1
+    elif type == 'boolean':
+        ltb += 1
 
 #Checks if repeated id in local varTable
 def repeatedVarId(id):
@@ -125,6 +158,27 @@ def findCteVM(id):
 def insertFuncParams(params, func):
     #print(func)
     for ids in dirFuncs:
-        print(ids)
         if ids == func:
             dirFuncs[ids].params = params
+
+def inserFuncSize(size, func):
+    for ids in dirFuncs:
+        if ids == func:
+            dirFuncs[ids].size = size
+
+def clearVarSize():
+    global li
+    global lf
+    global lc
+    global lti
+    global ltf
+    global ltc
+    global ltb
+    li = 0
+    lf = 0
+    lc = 0
+    lti = 0
+    ltf = 0
+    ltc = 0
+    ltb = 0
+    

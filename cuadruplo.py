@@ -7,6 +7,7 @@ import sys
 import estructuras as cuadruplo
 import SemanticCube as semantic
 import memoriaVirtual as mv
+import tables as Tabla
 
 #Stacks
 Poper = []
@@ -81,6 +82,7 @@ def popLog(glob):
             result_type = semantic_cube[operator][left_type][right_type]
             if(result_type != 'err'):
                 result = mv.getMemoTemp(result_type, glob)
+                Tabla.tempAddSize(result_type)
                 temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                 Quad.append(temp)
                 PilaO.append(result)
@@ -102,6 +104,7 @@ def popRel(glob):
             result_type = semantic_cube[operator][left_type][right_type]
             if(result_type != 'err'):
                 result = mv.getMemoTemp(result_type, glob)
+                Tabla.tempAddSize(result_type)
                 temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                 Quad.append(temp)
                 PilaO.append(result)
@@ -124,6 +127,7 @@ def popTerm(glob):
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
                     result = mv.getMemoTemp(result_type, glob)
+                    Tabla.tempAddSize(result_type)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -146,6 +150,7 @@ def popFact(glob):
                 result_type = semantic_cube[operator][left_type][right_type]
                 if(result_type != 'err'):
                     result = mv.getMemoTemp(result_type, glob)
+                    Tabla.tempAddSize(result_type)
                     temp = cuadruplo.cuadruplo(count-1, operator, left_operand, right_operand, result)
                     Quad.append(temp)
                     PilaO.append(result)
@@ -246,6 +251,7 @@ def compareFor(glob):
     if(result_type != 'err'):
         desde.append(left_operand)
         result = mv.getMemoTemp(result_type, glob)
+        Tabla.tempAddSize(result_type)
         temp = cuadruplo.cuadruplo(count-1, '<=', left_operand, right_operand, result)
         Quad.append(temp)
         PilaO.append(result)
@@ -261,6 +267,7 @@ def compareFor(glob):
 def addToFor(glob):
     result_type = 'int'
     result = mv.getMemoTemp(result_type, glob)
+    Tabla.tempAddSize(result_type)
     left_operand = desde.pop()
     right_operand = 1
     temp = cuadruplo.cuadruplo(count-1, '+', left_operand, right_operand, result)
