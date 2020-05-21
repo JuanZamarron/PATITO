@@ -27,6 +27,9 @@ def quadInsert(action, dir1, dir2, result):
     temp = cuadruplo.cuadruplo(count-1, action, dir1, dir2, result)
     Quad.append(temp)
 
+def gotoMain():
+    Quad[0].result = count-1
+
 def pushPilaO(id):
     PilaO.append(id)
 

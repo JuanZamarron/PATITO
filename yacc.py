@@ -22,9 +22,16 @@ entrada = prueba.read()
 #Creacion del programa
 def p_programa(p):
     '''
-    programa : PROGRAMA ID SEMICOLON vars funcs
+    programa : PROGRAMA ID SEMICOLON gotomain vars funcs endprog
     '''
- 
+
+def p_gotomain(p):
+    '''
+    gotomain :
+    '''
+    quad.quadInsert('Goto', None, None, None)
+    quad.count += 1
+
 def p_vars(p):
     '''
     vars : VAR varaux
@@ -72,9 +79,15 @@ def p_tipo(p):
 
 def p_funcs(p):
     '''
-    funcs : principal
-          | funcsaux principal
+    funcs : setmain principal
+          | funcsaux setmain principal
     '''
+
+def p_setGotoMain(p):
+    '''
+    setmain :
+    '''
+    quad.gotoMain()
 
 def p_principal(p):
     '''
@@ -355,7 +368,7 @@ def p_expresion(p):
               | expr log expresion
     '''
 
-def p_poolog(p):
+def p_poplog(p):
     '''
     poplog :
     '''
@@ -520,12 +533,18 @@ def p_empty(p):
 
 #Errores de sintaxis
 def p_error(p):
-    Tablas.dirPrint()
-    print('')
+    print("ERROR DE SINTAXIS", p)
+
+def p_endprog(p):
+    '''
+    endprog :
+    '''
+    quad.quadInsert('End', None, None, None)
+    #print('')
+    #Tablas.dirPrint()
     #print('Constantes')
     #Tablas.ctePrint()
     quad.imprime()
-    print("ERROR DE SINTAXIS", p)
 
 #Build parse
 parser = yacc.yacc()
