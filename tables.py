@@ -28,6 +28,7 @@ lti = 0
 ltf = 0
 ltc = 0
 ltb = 0
+quad = 0
 
 #Func that defines which insert use
 def insert(id, type, dir):
@@ -182,3 +183,7 @@ def clearVarSize():
     ltc = 0
     ltb = 0
     
+def insertFuncQuad(quad, func):
+    for ids in dirFuncs:
+        if ids == func:
+            dirFuncs[ids].quad = quad

@@ -89,7 +89,7 @@ def p_funcsaux(p):
 
 def p_func(p):
     '''
-    func : FUNCION funcaux
+    func : getquad FUNCION funcaux
     '''
     if (Tablas.isGlobal == True):
         dir = mv.getMemoGlob(Tablas.funcType)
@@ -97,6 +97,12 @@ def p_func(p):
         dir = mv.getMemoLoc(Tablas.funcType)
     Tablas.insert(Tablas.func, Tablas.funcType, dir)
     
+def p_getquad(p):
+    '''
+    getquad :
+    '''
+    Tablas.quad = quad.count
+
 def p_funcaux(p):
     '''
     funcaux : functipo funcaux2
@@ -117,6 +123,7 @@ def p_insertparams(p):
     size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
     Tablas.inserFuncSize(size, Tablas.func)
     Tablas.clearVarSize()
+    Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
 
 def p_funcaux3(p):
     '''
@@ -514,10 +521,10 @@ def p_empty(p):
 #Errores de sintaxis
 def p_error(p):
     Tablas.dirPrint()
-    #print('')
+    print('')
     #print('Constantes')
     #Tablas.ctePrint()
-    #quad.imprime()
+    quad.imprime()
     print("ERROR DE SINTAXIS", p)
 
 #Build parse
