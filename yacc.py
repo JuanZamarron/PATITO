@@ -8,6 +8,7 @@ from lex import archivo
 import tables as Tablas
 import cuadruplo as quad
 import memoriaVirtual as mv
+import compiledFile as cf
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
@@ -559,8 +560,8 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    Tablas.varsPrint()
-    print('')
+    #Tablas.varsPrint()
+    #print('')
     mv.lI = 13000
     mv.ltI = 16000
     mv.ltF = 17000
@@ -588,15 +589,18 @@ def p_endprog(p):
     '''
     endprog :
     '''
-    print(Tablas.program)
     size = str(Tablas.gli) + ',' + str(Tablas.glf) + ',' + str(Tablas.glc) + ',' + str(Tablas.glti) + ',' + str(Tablas.gltf) + ',' + str(Tablas.gltc) + ',' + str(Tablas.gltb)
     Tablas.insertFuncSize(size, Tablas.program)
     quad.quadInsert('End', None, None, None)
-    Tablas.gvarPrint()
-    print('')
+    cf.export_txt(Tablas.dirFuncs, Tablas.cteTable, quad.Quad)
+    #Tablas.gvarPrint()
+    print('DirFunc')
     Tablas.dirPrint()
-    #print('Constantes')
-    #Tablas.ctePrint()
+    print('')
+    print('Constantes')
+    Tablas.ctePrint()
+    print('')
+    print('Cuadruplos')
     quad.imprime()
 
 #Build parse
