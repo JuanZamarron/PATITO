@@ -8,15 +8,15 @@
 def export_txt(dirFunc, cte, Quad):
         filename = 'compiled.txt'
         leng = len(cte)
-        file = open(filename, 'w')
+        file = open('compiledCode/'+filename, 'w')
         for ids in dirFunc:
-            line = str(ids) + '|', str(dirFunc[ids].type) + '|', str(dirFunc[ids].params) + '|', str(dirFunc[ids].size) + '|', str(dirFunc[ids].quad) + '\n'
+            line = str(ids) + 'Ç', str(dirFunc[ids].type) + 'Ç', str(dirFunc[ids].params) + 'Ç', str(dirFunc[ids].size) + 'Ç', str(dirFunc[ids].quad) + '\n'
             file.writelines(line)
         file.write('/\n')
         for i in range(leng):
-            line = str(cte[i].id) + '|', str(cte[i].type) + '|', str(cte[i].dir) + '\n'
+            line = str(cte[i].id) + 'Ç', str(cte[i].type) + 'Ç', str(cte[i].dir) + '\n'
             file.writelines(line)
         file.write('/\n')
         for i in range(0, len(Quad)):
-            line = str(Quad[i].count) + '|', str(Quad[i].action) + '|', str(Quad[i].dir1) + '|', str(Quad[i].dir2) + '|', str(Quad[i].result) +'\n'
+            line = str(Quad[i].count) + 'Ç', str(Quad[i].action) + 'Ç', str(Quad[i].dir1) + 'Ç', str(Quad[i].dir2) + 'Ç', str(Quad[i].result) +'\n'
             file.writelines(line)
