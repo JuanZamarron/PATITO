@@ -4,10 +4,9 @@
 # Compiladores
 # ------------------------------------------------------------
 
-dirFuncs = {}
+dirFuncs = []
 cteTable = []
 Quad = []
-table = 1
 
 class dir(object):
     def __init__(self, id, type, params, size, quad):
@@ -32,6 +31,7 @@ class cuadruplo(object):
         self.result = result
 
 def readFile():
+    table = 1
     filename = 'compiled.txt'
     file = open('compiledCode/'+filename, 'r')
     compiled = file.readlines()
@@ -44,7 +44,7 @@ def readFile():
             if table == 1 :
                 func = (line.split('Ç'))
                 temp = dir(func[0], func[1], func[2], func[3], func[4])
-                dirFuncs[func[0]] = temp
+                dirFuncs.append(temp)
             elif table == 2:
                 func = (line.split('Ç'))
                 temp = const(func[0], func[1], func[2])
