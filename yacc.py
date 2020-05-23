@@ -286,15 +286,22 @@ def p_retorno(p):
 
 def p_lectura(p):
     '''
-    lectura : LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+    lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
     '''
 
 def p_lecturaaux(p):
     '''
-    lecturaaux : ID pushpilaid
-               | ID pushpilaid dimensiones
-               | ID pushpilaid dimensiones COMMA lecturaaux
+    lecturaaux : ID pushpilaid popio
+               | ID pushpilaid popio COMMA lequad lecturaaux
+               | ID pushpilaid dimensiones popio
+               | ID pushpilaid dimensiones popio COMMA lequad lecturaaux
     '''
+
+def p_lequad(p):
+    '''
+    lequad :
+    '''
+    quad.pushPoper('lee')
 
 def p_fcall(p):
     '''
