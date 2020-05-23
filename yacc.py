@@ -331,7 +331,7 @@ def p_paraminsert(p):
 
 def p_escritura(p):
     '''
-    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
     '''
 
 def p_popio(p):
@@ -344,11 +344,17 @@ def p_popio(p):
 
 def p_escrituraaux(p):
     '''
-    escrituraaux : CTE_S ctemem
-                 | expresion
-                 | CTE_S ctemem COMMA escrituraaux
-                 | expresion COMMA escrituraaux
+    escrituraaux : CTE_S ctemem pushpilao popio
+                 | expresion popio
+                 | CTE_S ctemem pushpilao popio COMMA escquad escrituraaux
+                 | expresion popio COMMA escquad escrituraaux
     '''
+
+def p_escquad(p):
+    '''
+    escquad :
+    '''
+    quad.pushPoper('escribe')
 
 def p_mientras(p):
     '''
