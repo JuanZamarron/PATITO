@@ -41,6 +41,8 @@ def goto(cuadr, i):
 def sum(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
+    print(dir1)
+    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -51,28 +53,35 @@ def sum(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     print(left_op,'+',right_op)
     res = left_op + right_op
+    print(res)
+    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def rest(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
+    print(dir1)
+    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
-        left_op = memo.get(glob, globTemp, local, localTemp, dir2)
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
     if dir2>=8000 and dir2<13000:
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     print(left_op,'-',right_op)
     res = left_op - right_op
+    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def div(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
+    print(dir1)
+    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -83,12 +92,15 @@ def div(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     print(left_op,'/',right_op)
     res = left_op / right_op
+    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def mult(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
+    print(dir1)
+    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -99,6 +111,7 @@ def mult(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     print(left_op,'*',right_op)
     res = left_op * right_op
+    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
@@ -144,11 +157,6 @@ def switch(cuadr, i):
         position = func(cuadr, i)
         return position
     return i+1
-
-
-#for i in range(len(quad)):
-#    print(i)
-#    print(quad[i].dir1)
 
 i = 0
 while quad[i].action != 'End':
