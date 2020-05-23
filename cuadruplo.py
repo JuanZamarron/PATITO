@@ -53,6 +53,19 @@ def popIO():
             return True
     return False
 
+def popRet():
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] == 'regresa':
+            right_operand = PilaO.pop()
+            Ptypes.pop()
+            operator = Poper.pop()
+            #result_type = semantic_cube[operator][left_type][right_type]
+            temp = cuadruplo.cuadruplo(count-1, operator, None, None, right_operand)
+            Quad.append(temp)
+            return True
+    return False
+    
 def popAssign():
     size = len(Poper)
     if size > 0:

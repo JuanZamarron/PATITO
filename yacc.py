@@ -166,6 +166,7 @@ def p_insertparams(p):
     Tablas.insertFuncSize(size, Tablas.func)
     Tablas.clearVarSize()
     Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
+    Tablas.func = ''
 
 def p_funcaux3(p):
     '''
@@ -281,8 +282,16 @@ def p_pos(p):
 
 def p_retorno(p):
     '''
-    retorno : REGRESA LPARENT exp RPARENT SEMICOLON
+    retorno : REGRESA pushpoper LPARENT exp RPARENT popret SEMICOLON
     '''
+
+def p_popret(p):
+    '''
+    popret :
+    '''
+    temp = quad.popRet()
+    if temp:
+        quad.count += 1
 
 def p_lectura(p):
     '''
