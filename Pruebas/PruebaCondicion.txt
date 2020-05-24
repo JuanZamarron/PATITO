@@ -1,0 +1,28 @@
+programa condicion;
+var
+    int m = 0,
+    int Arreglo[10],
+    int local = 9,
+   int mult = 5;
+
+principal()
+   {
+       desde i = 0 hasta local hacer {
+        Arreglo[i] = i * mult;
+       }
+
+        mientras m <= local haz {
+            escribir(Arreglo[j]);
+            m = m + 1;
+        }
+
+      si Arreglo[2] < local entonces
+         {
+         escribe(Arreglo[2] , " es menor a: ", mult);
+         }
+      sino
+        {
+         escribe(Arreglo[2] , " es mayoy a: ", mult);
+        }
+   }
+
