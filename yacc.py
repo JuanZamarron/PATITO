@@ -405,7 +405,7 @@ def p_asignacionaux(p):
 def p_dimensiones(p):
     '''
     dimensiones : addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver1 RCORCH removefalsebottom
-                | addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom COMMA addfalsebottom exp removefalsebottom RCORCH removefalsebottom
+                | addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver2 COMMA addfalsebottom exp removefalsebottom ver3 RCORCH removefalsebottom
     '''
 
 def p_ver1(p):
@@ -428,6 +428,49 @@ def p_ver1(p):
     quad.count += 1
     quad.PilaO.append('('+str(result)+')')
 
+def p_ver2(p):
+    '''
+    ver2 :
+    '''
+    temp = quad.PilaO.pop()
+    #quad.PilaO.append(temp)
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+        m = Tablas.vectLTable[Tablas.isVector].m
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+        m = Tablas.vectGTable[Tablas.isVector].m
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    result = mv.getMemoTemp('int',Tablas.isGlobal)
+    quad.quadInsert('*', temp, m, result)
+    quad.count += 1
+    quad.PilaO.append(result)
+
+def p_ver3(p):
+    '''
+    ver3 :
+    '''
+    temp = quad.PilaO.pop()
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    temp2 = quad.PilaO.pop()
+    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    quad.quadInsert('+', temp, temp2, result)
+    quad.count += 1
+    result2 = mv.getMemoTemp('int', Tablas.isGlobal)
+    dir = Tablas.findCteVM(Tablas.isVector)
+    quad.quadInsert('+', result, dir, result2)
+    quad.count += 1
+    quad.PilaO.append('('+str(result2)+')')
 
 def p_removeid(p):
     '''
