@@ -16,7 +16,7 @@ principal()
    escribe("Enter the number of terms of series : ");
    lee(x);
    escribe("Fibonnaci Series : ");
-   while(i < x)
+   mientras (i < x)
    {
       escribe(fib(i));
       i++;

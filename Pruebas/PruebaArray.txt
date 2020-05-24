@@ -6,9 +6,9 @@ float arr[100];
 {
     escribe("Enter total number of elements(1 to 100): ");
     lee(n);
-    //escribe(endl);
+    %%escribe(endl);
 
-    // Store number entered by the user
+    %% Store number entered by the user
     for(i = 0; i < n; ++i)
     {
        escribe("Enter Number " , i + 1 , " : ");
