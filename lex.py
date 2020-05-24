@@ -126,21 +126,51 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')
     return t
 
-#Constuir lexer.
+##Constuir lexer.
+#lex.lex()
+#
+##Leer archivo prueba
+#prueba = open('Pruebas/prueba.txt', "r")
+#archivo = 'Pruebas/prueba.txt'
+#entrada = prueba.read()
+#prueba.close()
+#
+##Entrada de lexer.
+#lex.input(entrada)
+#
+##Muestra tokens
+#while True:
+#    tok = lex.token()
+#    if not tok:
+#        break
+#    #print(tok)
 lex.lex()
 
 #Leer archivo prueba
-prueba = open('Pruebas/prueba.txt', "r")
-archivo = 'Pruebas/prueba.txt'
-entrada = prueba.read()
-prueba.close()
+print("=================================")
+print("===== Iniciando Patito ++ =====" )
+x = input('Ingresa el nombre de tu archivo txt: ')
+data = "Pruebas/" + x + ".txt"
+print("Leyendo => " + data )
+try:
+    prueba = open(data, "r")
+    archivo = data
+    entrada = prueba.read()
+    prueba.close()
+    lex.input(entrada)
+    # Muestra tokens
+    while True:
+        tok = lex.token()
+        if not tok:
+            break
+        print(tok)
+    print("===== Finalizando Patito ++ =====")
+    print("=================================")
+except OSError as e:
+    print("===== Finalizando Patito ++ =====")
+    print("=================================")
+    print('Error:')
 
-#Entrada de lexer.
-lex.input(entrada)
 
-#Muestra tokens
-while True:
-    tok = lex.token()
-    if not tok:
-        break
-    #print(tok)
+
+
