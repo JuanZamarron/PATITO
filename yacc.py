@@ -47,6 +47,7 @@ def p_gotomain(p):
 def p_vars(p):
     '''
     vars : VAR varaux
+         | empty
     '''
     
 def p_varaux(p):
@@ -286,7 +287,7 @@ def p_dirfuncinsert(p):
     if (Tablas.isGlobal == True):
         dir = mv.getMemoGlob(Tablas.funcType, 1)
     else:
-        dir = mv.getMemoLoc(Tablas.funcType)
+        dir = mv.getMemoLoc(Tablas.funcType, 1)
     Tablas.insert(p[-1], Tablas.funcType, dir, 1)
     Tablas.insertDirFunc(p[-1], Tablas.funcType)
 
