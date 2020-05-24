@@ -134,6 +134,8 @@ Para crear una variable en Patito ++ se encuentran un par de formas:
 ### Lenguaje báse
 
 ### Librerías usadas YACC & Lex
+* lex.py => reserved, tokens y expresiones regulares
+* yacc.py => gramatica
 
 ### Nuestro Timeline
 
@@ -142,11 +144,3 @@ Para crear una variable en Patito ++ se encuentran un par de formas:
 
 
 
-
-
-
-
-
-
-* lex.py => reserved, tokens y expresiones regulares
-* yacc.py => gramatica
