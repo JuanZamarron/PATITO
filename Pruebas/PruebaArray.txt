@@ -23,7 +23,6 @@ float arr[100];
        {
        arr[0] = arr[i];
        }
-
     }
     escribe("Largest element = " , arr[0]);
 }

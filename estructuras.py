@@ -4,11 +4,12 @@
 # Compiladores
 # ------------------------------------------------------------
 
-#Estructura para dirFunc y varsTable
+# Estructura para dirFunc y varsTable
 class table(object):
     def __init__(self, id, type):
         self.id = id
         self.type = type
+
 
 class cuadruplo(object):
     def __init__(self, count, action, dir1, dir2, result):

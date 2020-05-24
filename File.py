@@ -4,7 +4,6 @@
 # Compiladores
 # ------------------------------------------------------------
 
-
 def export_txt(filename, text):
         file = filename
         with open(file, 'w') as x_file:

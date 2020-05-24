@@ -28,14 +28,16 @@ contParams = 0
 existLocal = False
 existGlobal = False
 
-#Func that defines which insert use
+
+# Func that defines which insert use
 def insert(id, type):
     if isGlobal:
         dirInsert(id, type)
     else:
         varsInsert(id, type)
 
-#Inserts globalvar or func in dirFunc
+
+# Inserts globalvar or func in dirFunc
 def dirInsert(id, type):
     temp = table.table(id, type)
     if len(dirFuncs) > 0 and not repeatedDirId(id):
@@ -43,7 +45,8 @@ def dirInsert(id, type):
     if not dirFuncs:
         dirFuncs[id] = temp
 
-#Checks if repeated id in dirFunc
+
+# Checks if repeated id in dirFunc
 def repeatedDirId(id):
     for ids in dirFuncs:
         if id == ids:
@@ -52,13 +55,15 @@ def repeatedDirId(id):
             return True
     return False
 
-#Insert varibles in local varTable
+
+# Insert varibles in local varTable
 def varsInsert(id, type):
     temp = table.table(id, type)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
     if not varTable:
         varTable[id] = temp
+
 
 # Checks if repeated id in local varTable
 def repeatedVarId(id):
@@ -103,8 +108,8 @@ def getidParam(idFunc):
 
 # Función que actualiza el valor de una variable.
 def updateIdOfFun(id, idOfFunc, valor):
-     print('updateIdOfFun')
-     if validate(valor, id, idOfFunc):
+    print('updateIdOfFun')
+    if validate(valor, id, idOfFunc):
         temp = str(type(valor))
         if temp == "<class 'str'>":
             valor = valor.replace('"', '')
