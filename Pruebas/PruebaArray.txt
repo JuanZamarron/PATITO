@@ -7,7 +7,7 @@ principal()
     escribe("Enter total number of elements(1 to 100): ");
     lee(n);
     i = 0;
-    mientras (i<n) haz
+    mientras( i < n ) haz
     {
        escribe("Enter Number " , i + 1 , " : ");
        lee(arr[i]);
@@ -15,14 +15,13 @@ principal()
     }
 
     i = 0;
-    mientras (i<n) haz
+    mientras(i < n) haz
     {
-       if(arr[0] < arr[i])
+       si(arr[0] < arr[i]) entonces
        {
         arr[0] = arr[i];
        }
        i = i + 1;
     }
-
     escribe("Largest element: " , arr[0]);
 }

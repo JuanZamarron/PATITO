@@ -27,16 +27,19 @@ var
         }
     }
 
-   principal(){
-   lee(p); j=p*2;
+principal(){
+   lee(p);
+   j=p*2;
    inicia(p * j - 5);
+
    desde i = 0 hasta 9 hacer {
-    Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
+        Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
    }
+
    desde j = 0 hasta 2 hacer{
         desde k = 0 hasta 7 hacer{
                 escribe("loop");
-           }
+        }
    }
 
    desde j=0 hasta 2 hacer{
@@ -45,9 +48,10 @@ var
         }
         valor = 2.0;
         escribe("el determinante es:", valor);
-        mientras(i+2 >= 3+0)haz{
+        mientras(i+2 >= 3+0) haz {
             escribe("resultado", Arreglo[i], fact(i+2) * valor);
             i = i - 1;
         }
    }
+}
 

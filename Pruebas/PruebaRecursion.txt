@@ -5,7 +5,7 @@ funcion int fib(int x)
 {
    si((x==1)||(x==0)) entonces
    {
-      regresa(x);
+    regresa(x);
    }sino {
       regresa(fib(x-1)+fib(x-2));
    }
