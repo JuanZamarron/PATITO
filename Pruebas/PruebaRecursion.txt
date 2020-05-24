@@ -1,0 +1,26 @@
+programa fibonacci;
+
+funcion int fib(int x)
+{
+   if((x==1)||(x==0))
+   {
+      regresa(x);
+   }else {
+      regresa(fib(x-1)+fib(x-2));
+   }
+}
+
+principal()
+   var int x , i = 0;
+{
+   escribe("Enter the number of terms of series : ");
+   lee(x);
+   escribe("Fibonnaci Series : ");
+   while(i < x)
+   {
+      escribe(fib(i));
+      i++;
+   }
+}
+
+
