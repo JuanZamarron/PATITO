@@ -1,5 +1,7 @@
 programa basicOperations;
-var int x, y;
+var 
+int x;
+int y;
 
 funcion void suma (int x, int y)
 {

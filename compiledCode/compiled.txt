@@ -1,7 +1,53 @@
 basicOperationsÇNoneÇNoneÇ2,0,0,0,0,0,0Ç0
+sumaÇvoidÇiiÇ2,0,0,1,0,0,0Ç1
+restaÇvoidÇiiÇ2,0,0,1,0,0,0Ç5
+multiplicacionÇvoidÇiiÇ2,0,0,1,0,0,0Ç9
+divisionÇvoidÇiiÇ2,0,0,0,1,0,0Ç13
 /
-"Hemos ter"ÇstringÇ11000
+"Resultado de X + Y es: "ÇstringÇ11000
+"Resultado de X - Y es: "ÇstringÇ11001
+"Resultado de X * Y es: "ÇstringÇ11002
+"Resultado de X / Y es: "ÇstringÇ11003
+"Ingresa el valor inicial de tu variable X (Int): "ÇstringÇ11004
+"Ahora ingresa el valor que calcularemos para cada operacion (Int):"ÇstringÇ11005
+"Hemos terminado."ÇstringÇ11006
 /
-0ÇGotoÇNoneÇNoneÇ1
+0ÇGotoÇNoneÇNoneÇ17
 1ÇescribeÇNoneÇNoneÇ11000
-2ÇEndÇNoneÇNoneÇNone
+2Ç+Ç13000Ç13001Ç16000
+3ÇescribeÇNoneÇNoneÇ16000
+4ÇEndfuncÇNoneÇNoneÇNone
+5ÇescribeÇNoneÇNoneÇ11001
+6Ç-Ç13000Ç13001Ç16000
+7ÇescribeÇNoneÇNoneÇ16000
+8ÇEndfuncÇNoneÇNoneÇNone
+9ÇescribeÇNoneÇNoneÇ11002
+10Ç*Ç13000Ç13001Ç16000
+11ÇescribeÇNoneÇNoneÇ16000
+12ÇEndfuncÇNoneÇNoneÇNone
+13ÇescribeÇNoneÇNoneÇ11003
+14Ç/Ç13000Ç13001Ç17000
+15ÇescribeÇNoneÇNoneÇ17000
+16ÇEndfuncÇNoneÇNoneÇNone
+17ÇescribeÇNoneÇNoneÇ11004
+18ÇleeÇNoneÇNoneÇ1000
+19ÇescribeÇNoneÇNoneÇ11005
+20ÇleeÇNoneÇNoneÇ1001
+21ÇEraÇNoneÇNoneÇsuma
+22ÇParamÇ1000ÇNoneÇparam1
+23ÇParamÇ1001ÇNoneÇparam2
+24ÇGosubÇNoneÇNoneÇsuma
+25ÇEraÇNoneÇNoneÇresta
+26ÇParamÇ1000ÇNoneÇparam1
+27ÇParamÇ1001ÇNoneÇparam2
+28ÇGosubÇNoneÇNoneÇresta
+29ÇEraÇNoneÇNoneÇmultiplicacion
+30ÇParamÇ1000ÇNoneÇparam1
+31ÇParamÇ1001ÇNoneÇparam2
+32ÇGosubÇNoneÇNoneÇmultiplicacion
+33ÇEraÇNoneÇNoneÇdivision
+34ÇParamÇ1000ÇNoneÇparam1
+35ÇParamÇ1001ÇNoneÇparam2
+36ÇGosubÇNoneÇNoneÇdivision
+37ÇescribeÇNoneÇNoneÇ11006
+38ÇEndÇNoneÇNoneÇNone

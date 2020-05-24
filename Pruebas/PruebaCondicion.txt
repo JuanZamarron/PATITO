@@ -1,26 +1,27 @@
 programa condicion;
 var
-    int m, local, mult, Arreglo[10];
+    int m, i;
+    int Arreglo[10];
+    int local,mult;
 
 principal()
    {
-        m = 0;
-        local = 9;
-        mult = 5;
-        desde i = 0 hasta local hacer {
-            Arreglo[i] = i * mult;
-        }
+       desde i = 0 hasta local hacer {
+        Arreglo[i] = i * mult;
+       }
 
-        mientras (m < local) haz {
+        mientras (m <= local) haz {
             escribir(Arreglo[j]);
             m = m + 1;
         }
 
-        si (Arreglo[2] < local) entonces
+      si (Arreglo[2] < local) entonces
+         {
+         escribe(Arreglo[2] , " es menor a: ", mult);
+         }
+      sino
         {
-            escribe(Arreglo[2] , " es menor a: ", mult);
-        }sino{
-            escribe(Arreglo[2] , " es mayoy a: ", mult);
+         escribe(Arreglo[2] , " es mayoy a: ", mult);
         }
-  }
+   }
 
