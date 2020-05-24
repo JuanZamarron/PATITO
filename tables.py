@@ -15,12 +15,19 @@ varTable = {}
 #List of cte
 cteTable = []
 
+#Tablas vectores y matrices
+vectLTable = {}
+vectGTable = {}
+
 #Variables globales
 myType = None
 isGlobal = True
 func = None
 funcType = None
 program = ''
+vectSize = None
+m = None
+isVector = None
 
 #Variables de funciones
 func = ''
@@ -50,21 +57,21 @@ def insertDirFunc(id, type):
     dirFuncs[id] = temp
 
 #Func that defines which insert use
-def insert(id, type, dir):
+def insert(id, type, dir, salto):
     if isGlobal:
-        dirInsert(id, type, dir)
+        dirInsert(id, type, dir, salto)
     else:
-        varsInsert(id, type, dir)
+        varsInsert(id, type, dir, salto)
 
 #Inserts globalvar
-def dirInsert(id, type, dir):
+def dirInsert(id, type, dir, salto):
     temp = table.table(id, type, dir, None, None, None)
     if len(gvarTable) > 0 and not repeatedDirId(id):
         gvarTable[id] = temp
-        gaddSize(type)
+        gaddSize(type, salto)
     if not gvarTable:
         gvarTable[id] = temp
-        gaddSize(type)
+        gaddSize(type, salto)
 
 #Checks if repeated id in gvarTable
 def repeatedDirId(id):
@@ -76,36 +83,36 @@ def repeatedDirId(id):
     return False
 
 #Insert varibles in local varTable
-def varsInsert(id, type, dir):
+def varsInsert(id, type, dir, salto):
     temp = table.table(id, type, dir, None, None, None)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
-        addSize(type)
+        addSize(type, salto)
     if not varTable:
         varTable[id] = temp
-        addSize(type)
+        addSize(type, salto)
 
-def addSize(type):
+def addSize(type, salto):
     global li
     global lf
     global lc
     if type == 'int':
-        li += 1
+        li += salto
     elif type == 'float':
-        lf += 1
+        lf += salto
     elif type == 'char':
-        lc += 1
+        lc += salto
 
-def gaddSize(type):
+def gaddSize(type, salto):
     global gli
     global glf
     global glc
     if type == 'int':
-        gli += 1
+        gli += salto
     elif type == 'float':
-        glf += 1
+        glf += salto
     elif type == 'char':
-        glc += 1
+        glc += salto
 
 def tempAddSize(type):
     global lti
@@ -206,6 +213,7 @@ def findCteVM(id):
     for ids in range(leng):
         if str(cteTable[ids].id) == str(id):
             return cteTable[ids].dir
+    return False
 
 def insertFuncParams(params, func):
     #print(func)
@@ -238,3 +246,17 @@ def insertFuncQuad(quad, func):
     for ids in dirFuncs:
         if ids == func:
             dirFuncs[ids].quad = quad
+
+def gVectPrint():
+    for ids in vectGTable:
+        print('ID: ', ids, ', Lim1: ', vectGTable[ids].lim1, ' Lim2:', vectGTable[ids].lim2, ' M:', vectGTable[ids].m, ' Size:', vectGTable[ids].size)
+
+def dirlVect():
+    for ids in dirFuncs:
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
+
+def findLVector(dir):
+    for ids in vectLTable:
+        if ids == dir:
+            return True
+    return False

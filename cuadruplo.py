@@ -85,6 +85,8 @@ def popAssign():
                 return True
             else:
                 print("ERROR: type mismatch")
+                sys.exit()
+                return False
     return False
 
 def popLog(glob):
@@ -110,6 +112,7 @@ def popLog(glob):
                 return True
             else:
                 print("ERROR: type mismatch")
+                sys.exit()
     return False
 
 def popRel(glob):
@@ -135,6 +138,7 @@ def popRel(glob):
                 return True
             else:
                 print("ERROR: type mismatch")
+                sys.exit()
     return False
 
 def popTerm(glob):
@@ -161,6 +165,7 @@ def popTerm(glob):
                     return True
                 else:
                     print("ERROR: type mismatch")
+                    sys.exit()
     return False
 
 def popFact(glob):
@@ -187,6 +192,7 @@ def popFact(glob):
                     return True
                 else:
                     print("ERROR: type mismatch")
+                    sys.exit()
     return False
 
 def gettipo(cte):
@@ -220,6 +226,7 @@ def GotoF_SI():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
         print('Error: type mismatch')
+        sys.exit()
         return False
     else:
         result = PilaO.pop()
@@ -251,6 +258,7 @@ def GotoF_While():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
         print('Error: type mismatch')
+        sys.exit()
         return False
     else:
         result = PilaO.pop()
@@ -291,6 +299,7 @@ def compareFor(glob):
         return True
     else:
         print("ERROR: type mismatch")
+        sys.exit()
     return False
 
 #Neural point 3 of for same as while2

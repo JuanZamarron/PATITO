@@ -130,8 +130,8 @@ def t_ID(t):
 lex.lex()
 
 #Leer archivo prueba
-prueba = open('Pruebas/operations.txt', "r")
-archivo = 'Pruebas/operations.txt'
+prueba = open('Pruebas/prueba.txt', "r")
+archivo = 'Pruebas/prueba.txt'
 entrada = prueba.read()
 prueba.close()
 

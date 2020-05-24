@@ -30,38 +30,38 @@ ltF = 17000
 ltC = 18000
 ltB = 19000
 
-def getMemoGlob(tipo):
+def getMemoGlob(tipo, salto):
     global gI
     global gF
     global gC
     if tipo == "float":
         temp = gF
-        gF += 1
+        gF += salto
         return temp
     if tipo == "int":
         temp = gI
-        gI +=1
+        gI += salto
         return temp
     if tipo == "char":
         temp = gC
-        gC += 1
+        gC += salto
         return temp
 
-def getMemoLoc(tipo):
+def getMemoLoc(tipo, salto):
     global lI
     global lF
     global lC
     if tipo == "float":
         temp = lF
-        lF += 1
+        lF += salto
         return temp
     if tipo == "int":
         temp = lI
-        lI += 1
+        lI += salto
         return temp
     if tipo == "char":
         temp = lC
-        lC += 1
+        lC += salto
         return temp
 
 def getMemoCte(tipo):
