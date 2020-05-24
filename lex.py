@@ -4,6 +4,8 @@
 # Compiladores
 # ------------------------------------------------------------
 import ply.lex as lex
+import os,inspect
+import pathlib
 import ply.yacc as yacc
 
 archivo = None
@@ -133,18 +135,37 @@ def t_ID(t):
 #Constuir lexer.
 lex.lex()
 
+#prueba = open('Pruebas/PruebaGeneral.txt', "r")
+#archivo = 'Pruebas/PruebaGeneral.txt'
+#entrada = prueba.read()
+#prueba.close()
+
+
 #Leer archivo prueba
-prueba = open('Pruebas/PruebaGeneral.txt', "r")
-archivo = 'Pruebas/PruebaGeneral.txt'
-entrada = prueba.read()
-prueba.close()
+print("=================================")
+print("===== Iniciando Patito ++ =====" )
+x = input('Ingresa el nombre de tu archivo txt: ')
+data = "Pruebas/" + x + ".txt"
+print("Leyendo => " + data )
+try:
+    prueba = open(data, "r")
+    archivo = data
+    entrada = prueba.read()
+    prueba.close()
+    lex.input(entrada)
+    # Muestra tokens
+    while True:
+        tok = lex.token()
+        if not tok:
+            break
+        print(tok)
+    print("===== Finalizando Patito ++ =====")
+    print("=================================")
+except OSError as e:
+    print("===== Finalizando Patito ++ =====")
+    print("=================================")
+    print('Error:')
 
-#Entrada de lexer.
-lex.input(entrada)
 
-#Muestra tokens
-while True:
-    tok = lex.token()
-    if not tok:
-        break
-    #print(tok)
+
+
