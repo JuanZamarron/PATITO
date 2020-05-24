@@ -71,7 +71,7 @@ Para crear una variable en Patito ++ se encuentran un par de formas:
         }
 
 
-### Tipo de Datos
+### Tipo de Datos y Operadores
 
 Dentro del desarrollo de Patitp++ contamos con 6 tipos de datos:
 1. int
@@ -117,11 +117,53 @@ Dentro del desarrollo de Patitp++ contamos con 6 tipos de datos:
             {
                 escribe("Así se instancía un arreglo.")
             }
-    
-### Repeticion
+            
+          
+De igual manera el lenguaje acepta los siguientes operadores logicos:
+- "<"
+- ">"
+- "<="
+- ">="
+- "=="
+- "!="
+- &&
+- ||
 
+### Lectura y Escritura
+El lenguaje soporta los estatutos **escribe()** y **lee()**, los cuales son los encargados de que el usuario pueda imprimir en pantalla y almacenar datos introducidos por el mismo
+
+#### Lectura
+La lectura se realiza a traves de la palabra `lee`, con la cual el usuario podra almacenar un valor ingresado, como se muestra a continuación:
+
+    lee(variable);
+    
+El input solo puede tener una variable previamente declarada dentro del parentesis, en la cual se almacenara el valor introducido
+
+#### Escritura
+La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario sera capaz de imprimir en pantalla el valor de una variable o un string, como se muestra a continuación:
+
+    escribe("Esto imprime un string");
+    
+### Asignacion
+    programa patito;
+        var
+            int i = 0;
+            string j = "Nada";
+            
         principal()
-        int arr[10];
+        {
+        escribe("Valor de i: ",i);
+        escribe("Valor de j: ",j);
+        i=3;
+        j = "valor de j";
+        escribe("Nuevo valor de i: ", i);
+        escribe("Nuevo valor de j: ",j);
+        }
+
+ ### Repeticion
+    programa patito;
+        var int arr[10]; %%Variable gobal
+        principal()
         {
             for(i = 0; i < 10; ++i)
             {
@@ -133,12 +175,20 @@ Dentro del desarrollo de Patitp++ contamos con 6 tipos de datos:
                escribe(arr[i]);
             }
         }
-### Condicionales
+        
 
-### Asignacion
+### Condicionales (si.. sino)
 
+        principal()
+        var int variable 10;
+        {
+             si(variable == 10) entonces{
+                escribe("Es igual a 10");
+             }sino{
+                escribe("Es diferente a 10");
+             }
+        }
 
-### Expresiones
 
 ### Otras caracteríticas
 
