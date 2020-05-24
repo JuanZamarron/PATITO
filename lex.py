@@ -149,8 +149,8 @@ lex.lex()
 #Leer archivo prueba
 print("=================================")
 print("===== Iniciando Patito ++ =====" )
-x = input('Ingresa el nombre de tu archivo txt: ')
-data = "Pruebas/" + x + ".txt"
+x = input('Ingresa el nombre de tu archivo : ')
+data = "Pruebas/" + x
 print("Leyendo => " + data )
 try:
     prueba = open(data, "r")
