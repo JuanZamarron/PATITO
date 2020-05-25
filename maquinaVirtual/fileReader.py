@@ -3,6 +3,7 @@
 # Valentin Alexandro Trujillo García - A01328426
 # Compiladores
 # ------------------------------------------------------------
+from lex import archivo
 
 dirFuncs = []
 cteTable = []
@@ -32,8 +33,7 @@ class cuadruplo(object):
 
 def readFile():
     table = 1
-    filename = 'compiled.txt'
-    file = open('compiledCode/'+filename, 'r')
+    file = open('compiledCode/'+archivo, 'r')
     compiled = file.readlines()
     leng = len(compiled)
     for i in range(leng):

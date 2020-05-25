@@ -7,6 +7,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 archivo = None
+path = None
 
 # List of token names. This is always required
 # RESERVED WORDS
@@ -150,11 +151,11 @@ lex.lex()
 print("=================================")
 print("===== Iniciando Patito ++ =====" )
 x = input('Ingresa el nombre de tu archivo : ')
-data = "Pruebas/" + x
-print("Leyendo => " + data )
+path = "Pruebas/" + x
+print("Leyendo => " + path )
 try:
-    prueba = open(data, "r")
-    archivo = data
+    prueba = open(path, "r")
+    archivo = x
     entrada = prueba.read()
     prueba.close()
     lex.input(entrada)

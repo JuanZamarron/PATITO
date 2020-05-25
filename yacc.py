@@ -5,6 +5,8 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
+from lex import path
+
 import tables as Tablas
 import cuadruplo as quad
 import memoriaVirtual as mv
@@ -20,7 +22,7 @@ Tablas.gvarTable.clear()
 from lex import tokens
 
 #Lee archivo de prueba
-prueba = open(archivo, "r")
+prueba = open(path, "r")
 entrada = prueba.read()
 
 #Creacion del programa
