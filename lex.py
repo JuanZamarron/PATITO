@@ -163,7 +163,7 @@ try:
         tok = lex.token()
         if not tok:
             break
-        print(tok)
+        #print(tok)
     print("===== Finalizando Patito ++ =====")
     print("=================================")
 except OSError as e:
