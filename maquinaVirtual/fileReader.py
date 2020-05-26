@@ -37,7 +37,7 @@ def readFile():
     path = "compiledCode/" + x
     print("compiledCode => " + path)
     table = 1
-    file = open('compiledCode/'+path, 'r')
+    file = open(path, 'r')
     compiled = file.readlines()
     leng = len(compiled)
     for i in range(leng):
@@ -57,4 +57,7 @@ def readFile():
                 func = (line.split('Ç'))
                 temp = cuadruplo(func[0], func[1], func[2], func[3], func[4])
                 Quad.append(temp)
-    file.close
+        file.close
+print("=================================")
+
+readFile()
