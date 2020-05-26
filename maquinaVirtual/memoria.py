@@ -110,9 +110,9 @@ def get(mem1, mem2, mem3, mem4, dir):
 
 def getaux(mem,space,tipo):
     if tipo == 1:
-        return mem.integers[space]
+        return int(mem.integers[space])
     elif tipo == 2:
-        return mem.float[space]
+        return float(mem.float[space])
     elif tipo == 3:
         return mem.char[space]
     else:

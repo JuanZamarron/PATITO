@@ -771,6 +771,7 @@ def p_pushpilao(p):
     '''
     tipo = quad.gettipo(p[-2])
     dir = Tablas.findCteVM(p[-2])
+    print(dir)
     #Cuadruplo
     quad.pushPilaO(dir)
     quad.pushType(tipo)
@@ -831,7 +832,7 @@ def p_endprog(p):
     Tablas.insertFuncSize(size, Tablas.program)
     quad.quadInsert('End', None, None, None)
     cf.export_txt(Tablas.dirFuncs, Tablas.cteTable, quad.Quad)
-    Tablas.gvarPrint()
+    #Tablas.gvarPrint()
     print('DirFunc')
     Tablas.dirPrint()
     print('')
@@ -840,8 +841,8 @@ def p_endprog(p):
     print('')
     print('Cuadruplos')
     quad.imprime()
-    print('')
-    Tablas.gVectPrint()
+    #print('')
+    #Tablas.gVectPrint()
 
 #Build parse
 parser = yacc.yacc()

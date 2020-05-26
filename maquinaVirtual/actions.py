@@ -35,14 +35,12 @@ def findCte(dir):
                 return float(cteTable[i].id)
             return cteTable[i].id
 
-def goto(cuadr, i):
-    return int(cuadr.result)
+def goto(cuad, i):
+    return int(cuad.result)
 
 def sum(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
-    print(dir1)
-    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -51,18 +49,14 @@ def sum(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    print(left_op,'+',right_op)
+    #print(left_op,'+',right_op)
     res = left_op + right_op
-    print(res)
-    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def rest(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
-    print(dir1)
-    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -71,17 +65,14 @@ def rest(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    print(left_op,'-',right_op)
+    #print(left_op,'-',right_op)
     res = left_op - right_op
-    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def div(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
-    print(dir1)
-    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -90,17 +81,14 @@ def div(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    print(left_op,'/',right_op)
+    #print(left_op,'/',right_op)
     res = left_op / right_op
-    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def mult(cuad, i):
     dir1 = int(cuad.dir1)
     dir2 = int(cuad.dir2)
-    print(dir1)
-    print(dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -109,10 +97,185 @@ def mult(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    print(left_op,'*',right_op)
+    #print(left_op,'*',right_op)
     res = left_op * right_op
-    print(cuad.result)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def greater(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'>',right_op)
+    if (left_op > right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def lesser(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'<',right_op)
+    if (left_op < right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def lesser_e(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'<=',right_op)
+    if (left_op <= right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def greater_e(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'>=',right_op)
+    if (left_op >= right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def equal(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'==',right_op)
+    if (left_op == right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def different(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'!=',right_op)
+    if (left_op != right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def andOp(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'&&',right_op)
+    if (left_op and right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def orOp(cuad, i):
+    dir1 = int(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        right_op = findCte(dir2)
+    else:
+        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+    #print(left_op,'||',right_op)
+    if (left_op or right_op):
+        res = True
+    else:
+        res = False
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    return i + 1
+
+def gotofalse(cuad, i):
+    dir1 = int(cuad.dir1)
+    left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    #print('Gotof',left_op,' ',cuad.result)
+    if(left_op):
+        return i + 1
+    else:
+        return int(cuad.result)
+
+def lee(cuad, i):
+    valor = input()
+    dir = int(cuad.result)
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), valor)
+    return i + 1
+
+def escribe(cuad, i):
+    dir1 = int(cuad.result)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    print(left_op)
     return i + 1
 
 def asigna(cuad, i):
@@ -121,7 +284,7 @@ def asigna(cuad, i):
         right_op = findCte(dir1)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir1)
-    print(cuad.result,'=',right_op)
+    #print(cuad.result,'=',right_op)
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), right_op)
     return i + 1
 
@@ -131,18 +294,18 @@ def switch(cuadr, i):
         '-' : rest,
         '/' : div,
         '*' : mult,
-        #'>' : greater,
-        #'<' : lesser,
-        #'<=' : lesser_e,
-        #'>=' : greater_e,
-        #'==' : equal,
-        #'!=' : different,
-        #'&&' : andOp,
-        #'||' : orOp,
-        #'GotoF' : gotofalse,
+        '>' : greater,
+        '<' : lesser,
+        '<=' : lesser_e,
+        '>=' : greater_e,
+        '==' : equal,
+        '!=' : different,
+        '&&' : andOp,
+        '||' : orOp,
+        'GotoF' : gotofalse,
         'Goto' : goto,
-        #'lee' : lee,
-        #'escribe' : escribe,
+        'lee' : lee,
+        'escribe' : escribe,
         '=' : asigna,
         #'regresa' : regresa,
         #'Gosub' : gosub,
@@ -153,7 +316,6 @@ def switch(cuadr, i):
     }
     func = dict.get(cuadr.action, 'null')
     if func != 'null':
-        print(func)
         position = func(cuadr, i)
         return position
     return i+1

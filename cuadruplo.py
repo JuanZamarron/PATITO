@@ -313,7 +313,11 @@ def addToFor(glob):
     else:
         Tabla.tempAddSize(result_type)
     left_operand = desde.pop()
-    right_operand = 1
+    dir = mv.getMemoCte('int')
+    temp = Tabla.cteInsert(1, 'int', dir)
+    if (temp == False):
+        mv.restMemo('int')
+    right_operand = Tabla.findCteVM(1)
     temp = cuadruplo.cuadruplo(count-1, '+', left_operand, right_operand, result)
     desde.append(left_operand)
     desde.append(result)
