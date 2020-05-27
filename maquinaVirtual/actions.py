@@ -7,7 +7,6 @@
 import sys
 import memoria as memo
 import fileReader
-import actionDict as dict
 
 #Directorio de funciones
 dirFuncs = fileReader.dirFuncs
