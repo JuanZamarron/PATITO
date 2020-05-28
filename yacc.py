@@ -450,6 +450,10 @@ def p_ver2(p):
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
     result = mv.getMemoTemp('int',Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
     quad.quadInsert('*', temp, m, result)
     quad.count += 1
     quad.PilaO.append(result)
@@ -469,9 +473,17 @@ def p_ver3(p):
     quad.count += 1
     temp2 = quad.PilaO.pop()
     result = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
     quad.quadInsert('+', temp, temp2, result)
     quad.count += 1
     result2 = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', result, dir, result2)
     quad.count += 1
@@ -843,8 +855,8 @@ def p_endprog(p):
     print('')
     print('Cuadruplos')
     quad.imprime()
-    #print('')
-    #Tablas.gVectPrint()
+    print('')
+    Tablas.gVectPrint()
 
 #Build parse
 parser = yacc.yacc()
