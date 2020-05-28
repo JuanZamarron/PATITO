@@ -1,0 +1,15 @@
+programa patito;
+int n;
+float factorial = 1;
+
+principal()
+{
+    escribe("Enter a positive integer:");
+    lee(n);
+    int i = 1
+    mientras (i <=n) haz {
+       factorial *= i;
+        i = i + 1;
+    }
+    escribe("Factorial of ", n, " = ", factorial);
+}

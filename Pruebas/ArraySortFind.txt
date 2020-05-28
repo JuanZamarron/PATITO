@@ -1,0 +1,68 @@
+programa sortArrayAndFind;
+var int i, n,j,temp,x,
+inr a[100];
+
+int binarySearch(int arr[], int l, int r, int x)
+var int m,
+{
+      mientras(l <= r)haz{
+        m = l + (r - l) / 2;
+
+        si (arr[m] == x) entonces{
+            return m;
+        }
+
+        si (arr[m] < x) entonces{
+         l = m + 1;
+        } sino {
+         r = m - 1;
+        }
+
+
+    }
+
+    return -1;
+}
+
+principal()
+{
+	escribe("Enter the size of array:");
+	lee(n);
+	escribe("Enter the array elements:");
+
+	desde(i=0;) hasta (i<n) haz {
+	    lee(a[i]);
+	    i++;
+	}
+
+
+	desde i=1 hasta i<n haz {
+		desde j=0  hasta j< n-1 haz {
+			if(a[j]>a[j+1])
+			{
+				temp=a[j];
+				a[j]=a[j+1];
+				a[j+1]=temp;
+			}
+			j++;
+		}
+		i++;
+	}
+
+	escribe("Array after bubble sort");
+	desde i=0 hasta i<n haz {
+		escribe(a[i], ", ");
+		i++;
+	}
+
+	    escribe("Ahora ingresa el número que deseas buscar:");
+        lee(x)
+	     int result = binarySearch(arr, 0, n - 1, x);
+	     si(result == -1)entoonces{
+	        esbribe ("el elemento no se encuentra en el arraglo")
+	     }sino{
+	        esbribe (El elemento se encuentra en el index: ", result)
+	     }
+
+
+}
