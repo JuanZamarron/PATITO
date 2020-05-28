@@ -665,8 +665,8 @@ def p_desdeaux(p):
 
 def p_expresion(p):
     '''
-    expresion : expr
-              | expr log expresion
+    expresion : expr poplog
+              | expr poplog log expresion
     '''
 
 def p_poplog(p):
