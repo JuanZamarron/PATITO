@@ -221,7 +221,7 @@ def equal(cuad, i):
         res = True
     else:
         res = False
-    memo.assign(glob, globTemp, local, localTemp, result, res)
+    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
     return i + 1
 
 def different(cuad, i):
