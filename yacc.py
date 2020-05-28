@@ -424,6 +424,10 @@ def p_ver1(p):
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
     result = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', temp, dir, result)
     quad.count += 1

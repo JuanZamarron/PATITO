@@ -49,9 +49,22 @@ def findCte(dir):
 def goto(cuad, i):
     return int(cuad.result)
 
+def apuntador(dir):
+    if dir[0] == '(':
+        dir = dir.rstrip(')')
+        dir = dir.lstrip('(')
+        dir = int(dir)
+        return memo.get(glob, globTemp, local, localTemp, dir)
+    else:
+        if dir == None:
+            return dir
+        else:
+            return int(dir)
+
 def sum(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
+    result = apuntador(cuad.result)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -62,12 +75,13 @@ def sum(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     #print(left_op,'+',right_op)
     res = left_op + right_op
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    memo.assign(glob, globTemp, local, localTemp, result, res)
     return i + 1
 
 def rest(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
+    result = apuntador(cuad.result)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -78,12 +92,13 @@ def rest(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     #print(left_op,'-',right_op)
     res = left_op - right_op
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    memo.assign(glob, globTemp, local, localTemp, result, res)
     return i + 1
 
 def div(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
+    result = apuntador(cuad.result)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -94,12 +109,13 @@ def div(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     #print(left_op,'/',right_op)
     res = left_op / right_op
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    memo.assign(glob, globTemp, local, localTemp, result, res)
     return i + 1
 
 def mult(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
+    result = apuntador(cuad.result)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -110,12 +126,12 @@ def mult(cuad, i):
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
     #print(left_op,'*',right_op)
     res = left_op * right_op
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    memo.assign(glob, globTemp, local, localTemp, result, res)
     return i + 1
 
 def greater(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -133,8 +149,8 @@ def greater(cuad, i):
     return i + 1
 
 def lesser(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -152,8 +168,8 @@ def lesser(cuad, i):
     return i + 1
 
 def lesser_e(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -171,8 +187,8 @@ def lesser_e(cuad, i):
     return i + 1
 
 def greater_e(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -190,8 +206,8 @@ def greater_e(cuad, i):
     return i + 1
 
 def equal(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -205,12 +221,12 @@ def equal(cuad, i):
         res = True
     else:
         res = False
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), res)
+    memo.assign(glob, globTemp, local, localTemp, result, res)
     return i + 1
 
 def different(cuad, i):
-    dir1 = int(cuad.dir1)
-    dir2 = int(cuad.dir2)
+    dir1 = apuntador(cuad.dir1)
+    dir2 = apuntador(cuad.dir2)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -276,12 +292,12 @@ def gotofalse(cuad, i):
 
 def lee(cuad, i):
     valor = input()
-    dir = int(cuad.result)
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), valor)
+    result = apuntador(cuad.result)
+    memo.assign(glob, globTemp, local, localTemp, result, valor)
     return i + 1
 
 def escribe(cuad, i):
-    dir1 = int(cuad.result)
+    dir1 = apuntador(cuad.result)
     if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
@@ -290,19 +306,20 @@ def escribe(cuad, i):
     return i + 1
 
 def asigna(cuad, i):
-    dir1 = int(cuad.dir1)
+    dir1 = apuntador(cuad.dir1)
+    result = apuntador(cuad.result)
     if dir1>=8000 and dir1<13000:
         right_op = findCte(dir1)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir1)
     #print(cuad.result,'=',right_op)
-    memo.assign(glob, globTemp, local, localTemp, int(cuad.result), right_op)
+    memo.assign(glob, globTemp, local, localTemp, result, right_op)
     return i + 1
 
 def regresa(cuad, i):
     global local
     global localTemp
-    dir1 = int(cuad.result)
+    dir1 = apuntador(cuad.dir1)
     reQuad = returnQuad.pop()
     dir = funcId.pop()
     if dir != None:
@@ -368,7 +385,7 @@ def param(cuad, i):
     global intP
     global floatP
     global charP
-    dir1 = int(cuad.dir1)
+    dir1 = apuntador(cuad.dir1)
     space = int(cuad.result) - 1
     memT = memo.indentifyType(dir1)
     if numParams > 0:
@@ -408,7 +425,26 @@ def endfunc(cuad, i):
     localTemp = memo.memTStack.pop()
     return reQuad + 1
 
-#def ver(cuad, i):
+def ver(cuad, i):
+    dir1 = apuntador(cuad.dir1)
+    dir2 = int(cuad.dir2)
+    dir3 = int(cuad.result)
+    if dir1>=8000 and dir1<13000:
+        val = findCte(dir1)
+    else:
+        val = memo.get(glob, globTemp, local, localTemp, dir1)
+    if dir2>=8000 and dir2<13000:
+        lim_inf = findCte(dir2)
+    else:
+        lim_inf = memo.get(glob, globTemp, local, localTemp, dir2)
+    if dir3>=8000 and dir3<13000:
+        lim_sup = findCte(dir3)
+    else:
+        lim_sup = memo.get(glob, globTemp, local, localTemp, dir3)
+    if val >= lim_inf and val <= lim_sup:
+        return i + 1
+    else:
+        print('Error: Varibale dimensionada fuera de rango')
 
 def switch(cuadr, i):
     dict = {
