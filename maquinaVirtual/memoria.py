@@ -26,6 +26,7 @@ ltB = 19000
 
 #Stack de memoria
 memStack = []
+memTStack = []
 
 class memoria(object):
     def __init__(self, integ, float, char, boolean):
@@ -34,13 +35,13 @@ class memoria(object):
         self.char = []
         self.boolean = []
         for i in range(int(integ)):
-            self.integers.append(0)
+            self.integers.append(None)
         for i in range(int(float)):
-            self.float.append(0)
+            self.float.append(None)
         for i in range(int(char)):
-            self.char.append('')
+            self.char.append(None)
         for i in range(int(boolean)):
-            self.boolean.append('')
+            self.boolean.append(None)
     
     def start(self, integ, float, char, boolean):
         for i in range(int(integ)):
@@ -61,7 +62,7 @@ def assign(mem1, mem2, mem3, mem4, dir, val):
     elif mem == 2:
         assignaux(mem2, space, tipo, val)
     elif mem == 3:
-        assignaux(mem3, spcae, tipo, val)
+        assignaux(mem3, space, tipo, val)
     else:
         assignaux(mem4, space, tipo, val)
 
@@ -104,7 +105,7 @@ def get(mem1, mem2, mem3, mem4, dir):
     elif mem == 2:
         return getaux(mem2, space, tipo)
     elif mem == 3:
-        return getaux(mem3, spcae, tipo)
+        return getaux(mem3, space, tipo)
     else:
         return getaux(mem4, space, tipo)
 

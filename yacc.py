@@ -35,7 +35,7 @@ def p_globfunc(p):
     '''
     globfunc :
     '''
-    Tablas.insertDirFunc(p[-1], None)
+    Tablas.insertDirFunc(p[-1], None, None)
     Tablas.dirFuncs[p[-1]].quad = 0
     Tablas.program = p[-1]
 
@@ -291,7 +291,7 @@ def p_dirfuncinsert(p):
     else:
         dir = mv.getMemoLoc(Tablas.funcType, 1)
     Tablas.insert(p[-1], Tablas.funcType, dir, 1)
-    Tablas.insertDirFunc(p[-1], Tablas.funcType)
+    Tablas.insertDirFunc(p[-1], Tablas.funcType, dir)
 
 def p_insertparams(p):
     '''
@@ -426,6 +426,10 @@ def p_ver1(p):
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
     result = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', temp, dir, result)
     quad.count += 1
@@ -771,7 +775,6 @@ def p_pushpilao(p):
     '''
     tipo = quad.gettipo(p[-2])
     dir = Tablas.findCteVM(p[-2])
-    print(dir)
     #Cuadruplo
     quad.pushPilaO(dir)
     quad.pushType(tipo)
@@ -832,7 +835,8 @@ def p_endprog(p):
     Tablas.insertFuncSize(size, Tablas.program)
     quad.quadInsert('End', None, None, None)
     cf.export_txt(Tablas.dirFuncs, Tablas.cteTable, quad.Quad)
-    #Tablas.gvarPrint()
+    Tablas.gvarPrint()
+    print('')
     print('DirFunc')
     Tablas.dirPrint()
     print('')

@@ -9,9 +9,10 @@ cteTable = []
 Quad = []
 
 class dir(object):
-    def __init__(self, id, type, params, size, quad):
+    def __init__(self, id, type, dir, params, size, quad):
         self.id = id
         self.type = type
+        self.dir = dir
         self.params = params
         self.size = size
         self.quad = quad
@@ -47,7 +48,7 @@ def readFile():
         else: 
             if table == 1 :
                 func = (line.split('Ç'))
-                temp = dir(func[0], func[1], func[2], func[3], func[4])
+                temp = dir(func[0], func[1], func[2], func[3], func[4], func[5])
                 dirFuncs.append(temp)
             elif table == 2:
                 func = (line.split('Ç'))
