@@ -22,8 +22,20 @@ tam = (tam.split(','))
 glob = memo.memoria(tam[0], tam[1], tam[2], 0)
 globTemp = memo.memoria(tam[3], tam[4], tam[5], tam[6])
 #Memoria Local
-local = memo.memoria(0,0,0,0)
-localTemp = memo.memoria(0,0,0,0)
+local = None
+localTemp = None
+local2 = None
+localTemp2 = None
+#Variables of function calls
+numParams = None
+funcParams = None
+funcQuad = []
+funcId = []
+intP = 0
+floatP = 0
+charP = 0
+returnQuad = []
+
 
 def findCte(dir):
     for i in range(len(cteTable)):
@@ -287,6 +299,117 @@ def asigna(cuad, i):
     memo.assign(glob, globTemp, local, localTemp, int(cuad.result), right_op)
     return i + 1
 
+def regresa(cuad, i):
+    global local
+    global localTemp
+    dir1 = int(cuad.result)
+    reQuad = returnQuad.pop()
+    dir = funcId.pop()
+    if dir != None:
+        dir = int(dir)
+    if dir1>=8000 and dir1<13000:
+        left_op = findCte(dir1)
+    else:
+        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+    memo.assign(glob, globTemp, local, localTemp, dir, left_op)
+    local = memo.memStack.pop()
+    localTemp = memo.memTStack.pop()
+    return reQuad + 1
+
+def gosub(cuad, i):
+    global local
+    global localTemp
+    global local2
+    global localTemp2
+    global returnQuad
+    gosu = funcQuad.pop()
+    local = local2
+    localTemp = localTemp2
+    local2 = None
+    localTemp2 = None
+    returnQuad.append(i)
+    return gosu
+    
+def era(cuad, i):
+    global local2
+    global localTemp2
+    global funcParams
+    global funcQuad
+    global numParams
+    func = cuad.result
+    exist = 0
+    if local2 != None:
+        memo.memStack.append(local2)
+        memo.memTStack.append(localTemp2)
+        local2 = None
+        localTemp2 = None
+    else:
+        memo.memStack.append(local)
+        memo.memTStack.append(localTemp)
+    for x in range(len(dirFuncs)):
+        if func == dirFuncs[x].id:
+            tam = dirFuncs[x].size
+            tam = (tam.split(','))
+            funcParams = dirFuncs[x].params
+            #funcParams =(funcParams.split(','))
+            numParams = len(funcParams)
+            funcQuad.append(int(dirFuncs[x].quad))
+            funcId.append(dirFuncs[x].dir)
+            local2 = memo.memoria(tam[0], tam[1], tam[2], 0)
+            localTemp2 = memo.memoria(tam[3], tam[4], tam[5], tam[6])
+            exist = 1
+    if exist == 0:
+        print('Error: La funcion no existe')
+        sys.exit()
+    return i + 1
+
+def param(cuad, i):
+    global numParams
+    global intP
+    global floatP
+    global charP
+    dir1 = int(cuad.dir1)
+    space = int(cuad.result) - 1
+    memT = memo.indentifyType(dir1)
+    if numParams > 0:
+        if funcParams[space] == 'i' and memT == 1:
+            dir = 13000 + intP
+            intP += 1
+        elif funcParams[space] == 'f' and memT == 2:
+            dir = 14000 + floatP
+            floatP += 1
+        elif funcParams[space] == 'c' and memT == 3:
+            dir = 15000 + charP
+            charP += 1
+        else:
+            print('Error: Parametros no compatibles')
+            sys.exit()
+        if dir1>=8000 and dir1<13000:
+            left_op = findCte(dir1)
+        else:
+            left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+        memo.assign(glob, globTemp, local2, localTemp2, dir, left_op)
+        numParams -= 1
+        if numParams == 0:
+            intP = 0
+            floatP = 0
+            charP = 0
+        return i + 1
+    else:
+        print('Error: Se esperaban menos parametros')
+        sys.exit()
+
+def endfunc(cuad, i):
+    global local
+    global localTemp
+    reQuad = returnQuad.pop()
+    dir = funcId.pop()
+    local = memo.memStack.pop()
+    localTemp = memo.memTStack.pop()
+    return reQuad + 1
+
+#def ver(cuad, i):
+
 def switch(cuadr, i):
     dict = {
         '+' : sum,
@@ -306,11 +429,11 @@ def switch(cuadr, i):
         'lee' : lee,
         'escribe' : escribe,
         '=' : asigna,
-        #'regresa' : regresa,
-        #'Gosub' : gosub,
-        #'Era' : era,
-        #'Param' : param,
-        #'Endfunc' : endfunc,
+        'regresa' : regresa,
+        'Gosub' : gosub,
+        'Era' : era,
+        'Param' : param,
+        'Endfunc' : endfunc,
         #'Ver' : ver,
     }
     func = dict.get(cuadr.action, 'null')

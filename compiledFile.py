@@ -10,7 +10,7 @@ def export_txt(dirFunc, cte, Quad):
         leng = len(cte)
         file = open('compiledCode/'+filename, 'w')
         for ids in dirFunc:
-            line = str(ids) + 'Ç', str(dirFunc[ids].type) + 'Ç', str(dirFunc[ids].params) + 'Ç', str(dirFunc[ids].size) + 'Ç', str(dirFunc[ids].quad) + '\n'
+            line = str(ids) + 'Ç', str(dirFunc[ids].type) + 'Ç', str(dirFunc[ids].dir) + 'Ç', str(dirFunc[ids].params) + 'Ç', str(dirFunc[ids].size) + 'Ç', str(dirFunc[ids].quad) + '\n'
             file.writelines(line)
         file.write('/\n')
         for i in range(leng):

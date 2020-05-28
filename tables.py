@@ -52,8 +52,8 @@ gltb = 0
 quad = 0
 
 #Func insert in dirFunc
-def insertDirFunc(id, type):
-    temp = table.table(id, type, None, None, None, None)
+def insertDirFunc(id, type, dir):
+    temp = table.table(id, type, dir, None, None, None)
     dirFuncs[id] = temp
 
 #Func that defines which insert use
@@ -153,7 +153,7 @@ def repeatedVarId(id):
 
 def dirPrint():
     for ids in dirFuncs:
-        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, 'Dir: ', dirFuncs[ids].dir,' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
 
 def gvarPrint():
     for ids in gvarTable:

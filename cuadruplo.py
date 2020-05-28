@@ -338,7 +338,7 @@ def assignToFor():
 def paramInsert():
     params = PilaO.pop()
     tipo = Ptypes.pop()
-    num = 'param' + str(param)
+    num = param
     temp = cuadruplo.cuadruplo(count-1, 'Param', params, None, num)
     Quad.append(temp)
 
