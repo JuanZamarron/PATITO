@@ -356,6 +356,10 @@ def parcheguad(func, glob):
                 return False
             else:
                 result = mv.getMemoTemp(tipo, glob)
+                if (glob):
+                    Tabla.gtempAddSize(result_type)
+                else:
+                    Tabla.tempAddSize(result_type)
                 temp = cuadruplo.cuadruplo(count-1, '=', dir, None, result)
                 Quad.append(temp)
                 PilaO.append(result)
