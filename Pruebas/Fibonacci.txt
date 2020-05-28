@@ -1,27 +1,34 @@
 programa fibonacci;
-   var int x , i;
+   var int m;
 
-funcion int fib(int x)
+funcion void fib(int n)
+var int a,b,c,i;
 {
-   si((x==1)||(x==0)) entonces
-   {
-    regresa(x);
-   }sino {
-      regresa( fib(x-1) + fib(x-2));
-   }
+ a = 1;
+ b = 2;
+   desde i = 0 hasta (n) hacer {
+        si(i == 0) entonces {
+            escribe(0);
+        }sino{
+            si(i == 1) entonces{
+             escribe(1);
+            }sino{
+                c = a + b;
+                a = b;
+                b = c;
+                escribe(b);
+            }
+
+        }
+    }
 }
 
 principal()
 {
-   i = 0;
    escribe("Enter the number of terms of series : ");
-   lee(x);
+   lee(m);
    escribe("Fibonnaci Series : ");
-   mientras (i < x) haz
-   {
-      escribe(fib(i));
-      i = i + 1;
-   }
+   fib(m);
 }
 
 

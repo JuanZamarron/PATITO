@@ -481,3 +481,4 @@ def switch(cuadr, i):
 i = 0
 while quad[i].action != 'End':
     i = switch(quad[i], i)
+#print("Dejó el programa.")
