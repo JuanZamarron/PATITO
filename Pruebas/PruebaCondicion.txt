@@ -1,8 +1,6 @@
 programa condicion;
 var
-    int m, i;
-    int Arreglo[10];
-    int local,mult;
+    int m, i, Arreglo[10],local,mult;
 
 principal()
    {
@@ -17,11 +15,11 @@ principal()
 
       si (Arreglo[2] < local) entonces
          {
-         escribe(Arreglo[2] , " es menor a: ", mult);
+            escribe(Arreglo[2] , " es menor a: ", mult);
          }
       sino
         {
-         escribe(Arreglo[2] , " es mayoy a: ", mult);
+            escribe(Arreglo[2] , " es mayoy a: ", mult);
         }
    }
 

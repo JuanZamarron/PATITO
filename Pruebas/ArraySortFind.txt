@@ -1,27 +1,15 @@
 programa sortArrayAndFind;
-var int i, n,j,temp,x,
-inr a[100];
+var
+    float i, n,j,temp,a[100], result, x,f,v ;
 
-int binarySearch(int arr[], int l, int r, int x)
-var int m,
+funcion float searchNumber(float x, float len)
 {
-      mientras(l <= r)haz{
-        m = l + (r - l) / 2;
-
-        si (arr[m] == x) entonces{
-            return m;
+    desde i = 0.0 hasta (n - 1.0) hacer {
+        si(a[i] == x) entonces {
+            regresa(i);
         }
-
-        si (arr[m] < x) entonces{
-         l = m + 1;
-        } sino {
-         r = m - 1;
-        }
-
-
     }
-
-    return -1;
+    regresa(9999.0);
 }
 
 principal()
@@ -30,39 +18,35 @@ principal()
 	lee(n);
 	escribe("Enter the array elements:");
 
-	desde(i=0;) hasta (i<n) haz {
+	desde i=0.0 hasta (n-1.0) hacer {
 	    lee(a[i]);
-	    i++;
 	}
 
-
-	desde i=1 hasta i<n haz {
-		desde j=0  hasta j< n-1 haz {
-			if(a[j]>a[j+1])
+	desde i=1.0 hasta (n-2.0) hacer {
+		desde j=0.0 hasta (n-2.0) hacer {
+			si(a[j] > a[j+1.0]) entonces
 			{
 				temp=a[j];
-				a[j]=a[j+1];
-				a[j+1]=temp;
+				a[j]=a[j+1.0];
+				a[j+1.0]=temp;
 			}
-			j++;
 		}
-		i++;
 	}
 
 	escribe("Array after bubble sort");
-	desde i=0 hasta i<n haz {
-		escribe(a[i], ", ");
-		i++;
+	desde i=0.0 hasta (n-1.0) hacer {
+		escribe(a[i]);
 	}
 
-	    escribe("Ahora ingresa el número que deseas buscar:");
-        lee(x)
-	     int result = binarySearch(arr, 0, n - 1, x);
-	     si(result == -1)entoonces{
-	        esbribe ("el elemento no se encuentra en el arraglo")
-	     }sino{
-	        esbribe (El elemento se encuentra en el index: ", result)
-	     }
-
+    escribe("Ahora ingresa el número que deseas buscar:");
+    lee(x);
+    f = 0.0;
+    v = n - 1.0;
+    result = searchNumber(x, n);
+    si(result < 9999.0) entonces {
+        escribe("el elemento no se encuentra en la posición:",result);
+    }sino{
+        escribe("El elemento se encuentra en el index: ", result);
+    }
 
 }
