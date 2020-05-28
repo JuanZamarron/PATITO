@@ -6,20 +6,15 @@ var int a,b,c,i;
 {
  a = 1;
  b = 2;
-   desde i = 0 hasta (n) hacer {
-        si(i == 0) entonces {
-            escribe(0);
+   desde i = 0 hasta (n-1) hacer {
+        si(i == 0 || i == 1) entonces {
+            escribe(i);
         }sino{
-            si(i == 1) entonces{
-             escribe(1);
-            }sino{
-                c = a + b;
-                a = b;
-                b = c;
-                escribe(b);
+            c = a + b;
+            a = b;
+            b = c;
+            escribe(b);
             }
-
-        }
     }
 }
 
