@@ -261,5 +261,3 @@ La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario
 ### Conclusiones
 
 
-
-
