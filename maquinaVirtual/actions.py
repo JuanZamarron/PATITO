@@ -319,7 +319,7 @@ def asigna(cuad, i):
 def regresa(cuad, i):
     global local
     global localTemp
-    dir1 = apuntador(cuad.dir1)
+    dir1 = apuntador(cuad.result)
     reQuad = returnQuad.pop()
     dir = funcId.pop()
     if dir != None:
