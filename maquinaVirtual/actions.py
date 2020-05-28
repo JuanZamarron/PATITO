@@ -470,7 +470,7 @@ def switch(cuadr, i):
         'Era' : era,
         'Param' : param,
         'Endfunc' : endfunc,
-        #'Ver' : ver,
+        'Ver' : ver,
     }
     func = dict.get(cuadr.action, 'null')
     if func != 'null':
