@@ -7,7 +7,7 @@ funcion int fib(int x)
    {
     regresa(x);
    }sino {
-      regresa(fib(x-1)+fib(x-2));
+      regresa( fib(x-1) + fib(x-2));
    }
 }
 

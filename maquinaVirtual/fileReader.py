@@ -59,6 +59,3 @@ def readFile():
                 temp = cuadruplo(func[0], func[1], func[2], func[3], func[4])
                 Quad.append(temp)
         file.close
-print("=================================")
-
-readFile()
