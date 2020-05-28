@@ -1,5 +1,5 @@
 programa fibonacci;
-   var int x , i = 0;
+   var int x , i;
 
 funcion int fib(int x)
 {
@@ -13,13 +13,14 @@ funcion int fib(int x)
 
 principal()
 {
+    i = 0;
    escribe("Enter the number of terms of series : ");
    lee(x);
    escribe("Fibonnaci Series : ");
-   mientras (i < x)
+   mientras (i < x) haz
    {
       escribe(fib(i));
-      i++;
+      i = i + 1;
    }
 }
 
