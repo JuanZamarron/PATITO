@@ -324,7 +324,7 @@ def regresa(cuad, i):
     dir = funcId.pop()
     if dir != None:
         dir = int(dir)
-    if dir1>=8000 and gi adir1<13000:
+    if dir1>=8000 and dir1<13000:
         left_op = findCte(dir1)
     else:
         left_op = memo.get(glob, globTemp, local, localTemp, dir1)

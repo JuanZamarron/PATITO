@@ -13,7 +13,7 @@ funcion int fib(int x)
 
 principal()
 {
-    i = 0;
+   i = 0;
    escribe("Enter the number of terms of series : ");
    lee(x);
    escribe("Fibonnaci Series : ");
