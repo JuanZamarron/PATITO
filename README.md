@@ -18,9 +18,20 @@ cada programa escrito en patito ++ debe contener un nombre de programa y
 una "función" obligatoria llamada principal.
 
 ### Compilación y Running de Patito++
+#### Last update: 23 may 2020 (esto puede cambiar)
 Para ejecutar un probrama en patito++ es necesario:
+- Crear un archivo **txt**  en la carpeta /Pruebas y dentro del archivo
+'lex.py', en la linea  137 agregar el nuevo nombre del archivo como se ve 
+a continuación:
 
+        prueba = open('Pruebas/MiNuevaPrueba.txt', "r")
+        archivo = 'Pruebas/MiNuevaPrueba.txt'
+Una vez cambiados el archivo .txt, procederemos a ejecutar el comando:
+         
+         python3 yacc.py    
 
+Enseguida laterminal ejecutará lo que se encuentra en el código y mostrará si
+las validaciones semanticas y sintácticas se ejecutan de maneta exitosa o no.
 
 ### Declaración de variables
 Para crear una variable en Patito ++ se encuentran un par de formas:
@@ -60,19 +71,127 @@ Para crear una variable en Patito ++ se encuentran un par de formas:
         }
 
 
-### Tipo de Datos
+### Tipo de Datos y Operadores
 
-### Strings
+Dentro del desarrollo de Patitp++ contamos con 6 tipos de datos:
+1. int
+    
+            principal()
+            var int variable = 1;
+            {
+                escribe(variable)
+            }
+    
+2. string
+    
+            principal()
+            var string variable = "hola string";
+            {
+                escribe(variable)
+            }
+3. char
+    
+            principal()
+            var char variable = "a";
+            {
+                escribe(variable)
+            }
+4. float
+    
+            principal()
+            var float variable = 45.0;
+            {
+                escribe(variable)
+            }
+5. boolean
+    
+            principal()
+            var boolean variable = true;
+            {
+                escribe(variable)
+            }
+6. arreglos
+    
+            principal()
+            int arr[10];
+            {
+                escribe("Así se instancía un arreglo.")
+            }
+            
+          
+De igual manera el lenguaje acepta los siguientes operadores logicos:
+- "<"
+- ">"
+- "<="
+- ">="
+- "=="
+- "!="
+- &&
+- ||
 
-### Condicionales
+### Lectura y Escritura
+El lenguaje soporta los estatutos **escribe()** y **lee()**, los cuales son los encargados de que el usuario pueda imprimir en pantalla y almacenar datos introducidos por el mismo
 
+#### Lectura
+La lectura se realiza a traves de la palabra `lee`, con la cual el usuario podra almacenar un valor ingresado, como se muestra a continuación:
+
+    lee(variable);
+    
+El input solo puede tener una variable previamente declarada dentro del parentesis, en la cual se almacenara el valor introducido
+
+#### Escritura
+La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario sera capaz de imprimir en pantalla el valor de una variable o un string, como se muestra a continuación:
+
+    escribe("Esto imprime un string");
+    
 ### Asignacion
+    programa patito;
+        var
+            int i = 0;
+            string j = "Nada";
+            
+        principal()
+        {
+        escribe("Valor de i: ",i);
+        escribe("Valor de j: ",j);
+        i=3;
+        j = "valor de j";
+        escribe("Nuevo valor de i: ", i);
+        escribe("Nuevo valor de j: ",j);
+        }
 
-### Repeticion
+ ### Repeticion
+    programa patito;
+        var int arr[10]; %%Variable gobal
+        principal()
+        {
+            for(i = 0; i < 10; ++i)
+            {
+               arr[i] = i;
+            }
+            
+            for(i = 0; i < 10; ++i)
+            {
+               escribe(arr[i]);
+            }
+        }
+        
 
-### Expresiones
+### Condicionales (si.. sino)
+
+        principal()
+        var int variable 10;
+        {
+             si(variable == 10) entonces{
+                escribe("Es igual a 10");
+             }sino{
+                escribe("Es diferente a 10");
+             }
+        }
+
 
 ### Otras caracteríticas
+
 
 ### Ejemplo General
         programa patito;
@@ -134,19 +253,11 @@ Para crear una variable en Patito ++ se encuentran un par de formas:
 ### Lenguaje báse
 
 ### Librerías usadas YACC & Lex
+* lex.py => reserved, tokens y expresiones regulares
+* yacc.py => gramatica
 
 ### Nuestro Timeline
 
 ### Conclusiones
 
 
-
-
-
-
-
-
-
-
-* lex.py => reserved, tokens y expresiones regulares
-* yacc.py => gramatica

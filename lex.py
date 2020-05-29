@@ -7,6 +7,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 archivo = None
+path = None
 
 # List of token names. This is always required
 # RESERVED WORDS
@@ -66,8 +67,6 @@ tokens = [
     'MENORIGUAL',
     'LCORCH',
     'RCORCH',
-    'CTE_STRING',
-    'CTE_CH',
 ] + list(reserved.values())
 
 #Delimeters
@@ -80,7 +79,6 @@ t_RCORCH = r'\]'
 t_COMMA = r'\,'
 t_COLON = r'\:'
 t_SEMICOLON = r'\;'
-t_CTE_CH    = r'\'[A-Za-z]\''
 
 #Operators
 t_MAS = r'\+'
@@ -102,7 +100,6 @@ t_OR = r'\|\|'
 t_MOD = r'%'
 t_NOT = r'!'
 t_COMMENT = r'%%.*'
-t_CTE_STRING= r'".*."'
 
 t_CTE_S = r'\"([^\\\n]|(\\.))*?\"'
 t_CTE_C = r'\'[A-Za-z]\''
@@ -130,21 +127,51 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')
     return t
 
-#Constuir lexer.
+##Constuir lexer.
+#lex.lex()
+#
+##Leer archivo prueba
+#prueba = open('Pruebas/prueba.txt', "r")
+#archivo = 'Pruebas/prueba.txt'
+#entrada = prueba.read()
+#prueba.close()
+#
+##Entrada de lexer.
+#lex.input(entrada)
+#
+##Muestra tokens
+#while True:
+#    tok = lex.token()
+#    if not tok:
+#        break
+#    #print(tok)
 lex.lex()
 
 #Leer archivo prueba
-prueba = open('Pruebas/PruebaGeneral.txt', "r")
-archivo = 'Pruebas/PruebaGeneral.txt'
-entrada = prueba.read()
-prueba.close()
+print("=================================")
+print("===== Iniciando Patito ++ =====" )
+x = input('Ingresa el nombre de tu archivo : ')
+path = "Pruebas/" + x
+print("Leyendo => " + path )
+try:
+    prueba = open(path, "r")
+    archivo = x
+    entrada = prueba.read()
+    prueba.close()
+    lex.input(entrada)
+    # Muestra tokens
+    while True:
+        tok = lex.token()
+        if not tok:
+            break
+        #print(tok)
+    print("===== Finalizando Patito ++ =====")
+    print("=================================")
+except OSError as e:
+    print("===== Finalizando Patito ++ =====")
+    print("=================================")
+    print('Error:')
 
-#Entrada de lexer.
-lex.input(entrada)
 
-#Muestra tokens
-while True:
-    tok = lex.token()
-    if not tok:
-        break
-    #print(tok)
+
+

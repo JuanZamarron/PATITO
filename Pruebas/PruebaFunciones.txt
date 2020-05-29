@@ -1,5 +1,7 @@
 programa basicOperations;
-var int x;
+var 
+int x;
+int y;
 
 funcion void suma (int x, int y)
 {
@@ -18,11 +20,10 @@ funcion void multiplicacion (int x, int y)
 
 funcion void division (int x, int y)
 {
-escribe("Resultado de X / Y es: " , x/y );
+    escribe("Resultado de X / Y es: " , x/y );
 }
 
 principal()
-var int y;
 {
     escribe("Ingresa el valor inicial de tu variable X (Int): ");
     lee(x);

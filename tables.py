@@ -6,84 +6,162 @@
 import sys
 import estructuras as table
 
-# List of ids in dirFunc
+#List of global variables
+gvarTable = {}
+#List of ids in dirFunc
 dirFuncs = {}
-# List of ids in varsTable
-varTable = {}  # simbolos
+#List of ids in varsTable
+varTable = {}
+#List of cte
+cteTable = []
 
-# Array of pa
-# ramethers
-paramArray = []
+#Tablas vectores y matrices
+vectLTable = {}
+vectGTable = {}
 
-# Variables globales
+#Variables globales
 myType = None
-
 isGlobal = True
 func = None
 funcType = None
-funcParam = None
-isParam = False
-isGlobal = False
-contParams = 0
-existLocal = False
-existGlobal = False
+program = ''
+vectSize = None
+m = None
+isVector = None
 
+#Variables de funciones
+func = ''
+params = ''
+#Contadores de variables locales
+li = 0
+lf = 0
+lc = 0
+lti = 0
+ltf = 0
+ltc = 0
+ltb = 0
+#Contadores de variables globales
+gli = 0
+glf = 0
+glc = 0
+glti = 0
+gltf = 0
+gltc = 0
+gltb = 0
+#Contador de cuadruplos
+quad = 0
 
-# Func that defines which insert use
-def insert(id, type):
+#Func insert in dirFunc
+def insertDirFunc(id, type, dir):
+    temp = table.table(id, type, dir, None, None, None)
+    dirFuncs[id] = temp
+
+#Func that defines which insert use
+def insert(id, type, dir, salto):
     if isGlobal:
-        dirInsert(id, type)
+        dirInsert(id, type, dir, salto)
     else:
-        varsInsert(id, type)
+        varsInsert(id, type, dir, salto)
 
+#Inserts globalvar
+def dirInsert(id, type, dir, salto):
+    temp = table.table(id, type, dir, None, None, None)
+    if len(gvarTable) > 0 and not repeatedDirId(id):
+        gvarTable[id] = temp
+        gaddSize(type, salto)
+    if not gvarTable:
+        gvarTable[id] = temp
+        gaddSize(type, salto)
 
-# Inserts globalvar or func in dirFunc
-def dirInsert(id, type):
-    temp = table.table(id, type)
-    if len(dirFuncs) > 0 and not repeatedDirId(id):
-        dirFuncs[id] = temp
-    if not dirFuncs:
-        dirFuncs[id] = temp
-
-
-# Checks if repeated id in dirFunc
+#Checks if repeated id in gvarTable
 def repeatedDirId(id):
-    for ids in dirFuncs:
+    for ids in gvarTable:
         if id == ids:
             print('Id en uso: ', id)
             sys.exit()
             return True
     return False
 
-
-# Insert varibles in local varTable
-def varsInsert(id, type):
-    temp = table.table(id, type)
+#Insert varibles in local varTable
+def varsInsert(id, type, dir, salto):
+    temp = table.table(id, type, dir, None, None, None)
     if len(varTable) > 0 and not repeatedVarId(id):
         varTable[id] = temp
+        addSize(type, salto)
     if not varTable:
         varTable[id] = temp
+        addSize(type, salto)
 
+def addSize(type, salto):
+    global li
+    global lf
+    global lc
+    if type == 'int':
+        li += salto
+    elif type == 'float':
+        lf += salto
+    elif type == 'char':
+        lc += salto
 
-# Checks if repeated id in local varTable
+def gaddSize(type, salto):
+    global gli
+    global glf
+    global glc
+    if type == 'int':
+        gli += salto
+    elif type == 'float':
+        glf += salto
+    elif type == 'char':
+        glc += salto
+
+def tempAddSize(type):
+    global lti
+    global ltf
+    global ltc
+    global ltb
+    if type == 'int':
+        lti += 1
+    elif type == 'float':
+        ltf += 1
+    elif type == 'char':
+        ltc += 1
+    elif type == 'boolean':
+        ltb += 1
+
+def gtempAddSize(type):
+    global glti
+    global gltf
+    global gltc
+    global gltb
+    if type == 'int':
+        glti += 1
+    elif type == 'float':
+        gltf += 1
+    elif type == 'char':
+        gltc += 1
+    elif type == 'boolean':
+        gltb += 1
+
+#Checks if repeated id in local varTable
 def repeatedVarId(id):
     for ids in varTable:
         if id == ids:
-            print('ERROR: Var Id en uso: ', id)
+            print('Id en uso: ', id)
             sys.exit()
             return True
     return False
 
-
 def dirPrint():
     for ids in dirFuncs:
-        print('ID: ', ids, ', Type: ', dirFuncs[ids].type)
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, 'Dir: ', dirFuncs[ids].dir,' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
 
+def gvarPrint():
+    for ids in gvarTable:
+        print('ID: ', ids, ', Type: ', gvarTable[ids].type, ' Dir: ', gvarTable[ids].dir)
 
 def varsPrint():
     for ids in varTable:
-        print('ID: ', ids, ', Type: ', varTable[ids].type)
-
+        print('ID: ', ids, ', Type: ', varTable[ids].type, ' Dir: ', varTable[ids].dir)
 
 def getIdType(id):
     tipo = None
@@ -91,71 +169,94 @@ def getIdType(id):
         if id == ids:
             tipo = varTable[ids].type
     if (tipo == None):
-        for ids in dirFuncs:
+        for ids in gvarTable:
             if id == ids:
-                tipo = dirFuncs[ids].type
+                tipo = gvarTable[ids].type
     return tipo
 
-
-# Función que retorna una lista con las variables que son parámetros dentro de la función.
-def getidParam(idFunc):
-    temp = []
-    for id in varTable[idFunc].value:
-        if varTable[idFunc].value[id].param:
-            temp.append(id)
-    return temp
-
-
-# Función que actualiza el valor de una variable.
-def updateIdOfFun(id, idOfFunc, valor):
-    print('updateIdOfFun')
-    if validate(valor, id, idOfFunc):
-        temp = str(type(valor))
-        if temp == "<class 'str'>":
-            valor = valor.replace('"', '')
-            varTable[idOfFunc].value[id].value = valor
-        else:
-            varTable[idOfFunc].value[id].value = valor
-
-
-# Función que valida que el valor ingresado y el tipo de la variable
-# sean iguales.
-def validate(dato, id, idOfFunc):
-    temp = volverFloat(dato, id, idOfFunc)
-    aux = None
-    existLocal = False
-    existGlobal = False
-    if id in varTable[idOfFunc].value:
-        aux = varTable[idOfFunc].value[id].type_data
-        existLocal = True
-    if "global" in varTable.keys():
-        if id in varTable["global"].value:
-            aux = varTable["global"].value[id].type_data
-            existGlobal = True
-    if not existLocal and not existGlobal:
-        print('ERROR: ID no declarado:', id)
-        sys.exit()
-
-    if dato == 'true' or dato == 'false':
-        temp = "<class 'bool'>"
-    if temp == "<class 'float'>" and aux == 'float':
+#Table de constantes
+def cteInsert(id, type, dir):
+    cte = id
+    temp = table.table(cte, type, dir, None, None, None)
+    if len(cteTable) > 0 and not repeatedCte(cte):
+        cteTable.append(temp)
         return True
-    if temp == "<class 'int'>" and aux == 'int':
+    if not cteTable:
+        cteTable.append(temp)
         return True
-    if temp == "<class 'str'>" and aux == 'string':
-        return True
-    if temp == "<class 'bool'>" and aux == 'bool':
-        return True
-    if temp == None:
-        print(id, "Debes Asignar un Valor")
-        sys.exit()
-    else:
-        print("ERROR: Dato no válido.", dato, id, idOfFunc)
-        sys.exit()
+    return False
 
+def repeatedCte(id):
+    leng = len(cteTable)
+    for ids in range(leng):
+        if str(cteTable[ids].id) == str(id):
+            return True
+    return False
 
-def volverFloat(dato, id, idOfFunc):
-    temp = str(type(dato))
-    if varTable[idOfFunc].value[id].type_data == 'float' and temp == "<class 'int'>":
-        temp = "<class 'float'>"
-    return temp
+def ctePrint():
+    leng = len(cteTable)
+    for ids in range(leng):
+        print('ID: ', cteTable[ids].id, ', Type: ', cteTable[ids].type, ' Dir: ', cteTable[ids].dir)
+
+#Find associated memory
+def findVM(id):
+    for ids in varTable:
+        if id == ids:
+            return varTable[id].dir
+    for ids in gvarTable:
+        if id == ids:
+            return gvarTable[id].dir
+
+#Find associtaed memory of constants
+def findCteVM(id):
+    leng = len(cteTable)
+    for ids in range(leng):
+        if str(cteTable[ids].id) == str(id):
+            return cteTable[ids].dir
+    return False
+
+def insertFuncParams(params, func):
+    #print(func)
+    for ids in dirFuncs:
+        if ids == func:
+            dirFuncs[ids].params = params
+
+def insertFuncSize(size, func):
+    for ids in dirFuncs:
+        if ids == func:
+            dirFuncs[ids].size = size
+
+def clearVarSize():
+    global li
+    global lf
+    global lc
+    global lti
+    global ltf
+    global ltc
+    global ltb
+    li = 0
+    lf = 0
+    lc = 0
+    lti = 0
+    ltf = 0
+    ltc = 0
+    ltb = 0
+    
+def insertFuncQuad(quad, func):
+    for ids in dirFuncs:
+        if ids == func:
+            dirFuncs[ids].quad = quad
+
+def gVectPrint():
+    for ids in vectGTable:
+        print('ID: ', ids, ', Lim1: ', vectGTable[ids].lim1, ' Lim2:', vectGTable[ids].lim2, ' M:', vectGTable[ids].m, ' Size:', vectGTable[ids].size)
+
+def dirlVect():
+    for ids in dirFuncs:
+        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
+
+def findLVector(dir):
+    for ids in vectLTable:
+        if ids == dir:
+            return True
+    return False
