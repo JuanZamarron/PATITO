@@ -23,23 +23,28 @@ count = 1
 semantic_cube = semantic.SemanticCube().cube
 param = 1
 
-#Func that defines which insert use
+#Funcione que inserta un cuadruplo
 def quadInsert(action, dir1, dir2, result):
     temp = cuadruplo.cuadruplo(count-1, action, dir1, dir2, result)
     Quad.append(temp)
 
+#Funcion que agrega el cuadruplo donde empieza al funcion pricipla al Goto del inicio
 def gotoMain():
     Quad[0].result = count-1
 
+#Funcion que agrega memoria asociada de variable a la pila de operadores
 def pushPilaO(id):
     PilaO.append(id)
 
+#Funcion que agrega el tipo de variable a la pila de tipos
 def pushType(type):
     Ptypes.append(type)
 
+#Funcion que agrega la operacion a la pila de operaciones
 def pushPoper(action):
     Poper.append(action)
 
+#Funcion que agrega cuadruplos de lee y escribe
 def popIO():
     size = len(Poper)
     if size > 0:
@@ -53,6 +58,7 @@ def popIO():
             return True
     return False
 
+#Funcion que agrega cuadruplo de regresa
 def popRet():
     size = len(Poper)
     if size > 0:
@@ -65,7 +71,8 @@ def popRet():
             Quad.append(temp)
             return True
     return False
-    
+
+#Funcion que agrega cuadruplo de =
 def popAssign():
     size = len(Poper)
     if size > 0:
@@ -89,6 +96,7 @@ def popAssign():
                 return False
     return False
 
+#Funcion que agrega cuadruplos de and(&&) y or(||)
 def popLog(glob):
     size = len(Poper)
     if size > 0:
@@ -115,6 +123,7 @@ def popLog(glob):
                 sys.exit()
     return False
 
+#Funcion que agrega cuadruplos de comparaciones
 def popRel(glob):
     size = len(Poper)
     if size > 0:
@@ -141,6 +150,7 @@ def popRel(glob):
                 sys.exit()
     return False
 
+#Funcion que agrega cuadruplos de suma(+) y resta(-)
 def popTerm(glob):
     size = len(Poper)
     if size > 0:
@@ -168,6 +178,7 @@ def popTerm(glob):
                     sys.exit()
     return False
 
+#Funcion que agrega cuadruplos de multiplicacion(*) y division(/)
 def popFact(glob):
     size = len(Poper)
     if size > 0:
@@ -195,6 +206,7 @@ def popFact(glob):
                     sys.exit()
     return False
 
+#Funcion que identifica el tipo de la constante
 def gettipo(cte):
     tipo = str(type(cte))
     temp = None
@@ -214,14 +226,16 @@ def gettipo(cte):
         temp = 'char'
         return temp
 
+#Funcion que imprime los cuadruplos generados
 def imprime():
     for i in range(0, len(Quad)):
         print(Quad[i].count, Quad[i].action, Quad[i].dir1, Quad[i].dir2, Quad[i].result)
 
+#Funcion que quita el fondo falso de la pila de operaciones
 def popFalseBottom():
     Poper.pop()
 
-#Neural point 1 of if
+#Punto neural 1 de si
 def GotoF_SI():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
@@ -235,12 +249,12 @@ def GotoF_SI():
         Pjumps.append(count-1)
         return True
 
-#Neural point 2 of if
+#Punto neural 2 de si
 def fillGoto():
     end = Pjumps.pop()
     Quad[end].result = count-1
 
-#Nueral point 3 of if-else
+#Punto neural 1 de sino
 def Goto_SI():
     temp = cuadruplo.cuadruplo(count-1, 'Goto', None, None, None)
     Quad.append(temp)
@@ -249,11 +263,11 @@ def Goto_SI():
     Quad[false].result = count
     return True
 
-#Neural point 1 of while
+#Punto neural 1 de mientras
 def pushJumps():
     Pjumps.append(count-1)
 
-#Nueral point 2 of while
+#Punto neural 2 de mientras
 def GotoF_While():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
@@ -267,7 +281,7 @@ def GotoF_While():
         Pjumps.append(count-1)
         return True
 
-#Nueral point 3 of while
+#Punto neural 3 de mientras
 def Goto_While():
     end = Pjumps.pop()
     retur = Pjumps.pop()
@@ -276,9 +290,9 @@ def Goto_While():
     Quad[end].result = count
     return True
 
-#Neural point 1 of for is the same as while1
+#Punto neural 1 de desde es igual al punto neural 1 de mientras
 
-#Neural point 2 of for
+#Punto neural 2 de desde
 def compareFor(glob):
     right_operand = PilaO.pop()
     right_type = Ptypes.pop()
@@ -302,9 +316,9 @@ def compareFor(glob):
         sys.exit()
     return False
 
-#Neural point 3 of for same as while2
+#Punto neural 3 de desde es igual al punto neural 2 de mientras
 
-#Neural point 4 of for
+#Punto neural 4 de desde
 def addToFor(glob):
     result_type = 'int'
     result = mv.getMemoTemp(result_type, glob)
@@ -324,7 +338,7 @@ def addToFor(glob):
     Quad.append(temp)
     return True
 
-#Neural point 5 of for
+#Punto neural 5 de desde
 def assignToFor():
     right_operand = desde.pop()
     left_operand = desde.pop()
@@ -332,9 +346,9 @@ def assignToFor():
     Quad.append(temp)
     return True
 
-#Neural point 6 of for same as while 3
+#Punto neural 6 de desde es igual al punto neural 3 de mientras
 
-#Param insert
+#Funcion que agrega el cuadruplo de Param
 def paramInsert():
     params = PilaO.pop()
     tipo = Ptypes.pop()
@@ -342,10 +356,12 @@ def paramInsert():
     temp = cuadruplo.cuadruplo(count-1, 'Param', params, None, num)
     Quad.append(temp)
 
+#Funcion que agrega el cuadruplo de Gosub
 def gosub(func):
     temp = cuadruplo.cuadruplo(count-1, 'Gosub', None, None, func)
     Quad.append(temp)
 
+#Funcion que asigna el valor de retorno de una funcion a una variable local
 def parcheguad(func, glob):
     gvarTable = Tabla.gvarTable
     for ids in gvarTable:
