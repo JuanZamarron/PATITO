@@ -4,7 +4,7 @@
 # Compiladores
 # ------------------------------------------------------------
 
-#Estructura para dirFunc y varsTable
+#Estructura para directorio de funciones y tabla de variables
 class table(object):
     def __init__(self, id, type, dir, params, size, quad):
         self.id = id
@@ -14,6 +14,7 @@ class table(object):
         self.size = size
         self.quad = quad
 
+#Estructura de cuadruplos
 class cuadruplo(object):
     def __init__(self, count, action, dir1, dir2, result):
         self.count = count
@@ -22,6 +23,7 @@ class cuadruplo(object):
         self.dir2 = dir2
         self.result = result
 
+#Estructura de tabla de variables dimensionadas
 class vector(object):
     def __init__(self, id, lim1, lim2, m, size):
         self.id = id
