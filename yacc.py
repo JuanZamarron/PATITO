@@ -5,9 +5,14 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
+from lex import path
+
 import tables as Tablas
 import cuadruplo as quad
 import memoriaVirtual as mv
+import compiledFile as cf
+import estructuras as vect
+import sys
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
@@ -17,7 +22,7 @@ Tablas.gvarTable.clear()
 from lex import tokens
 
 #Lee archivo de prueba
-prueba = open(archivo, "r")
+prueba = open(path, "r")
 entrada = prueba.read()
 
 #Creacion del programa
@@ -30,7 +35,7 @@ def p_globfunc(p):
     '''
     globfunc :
     '''
-    Tablas.insertDirFunc(p[-1], None)
+    Tablas.insertDirFunc(p[-1], None, None)
     Tablas.dirFuncs[p[-1]].quad = 0
     Tablas.program = p[-1]
 
@@ -44,6 +49,7 @@ def p_gotomain(p):
 def p_vars(p):
     '''
     vars : VAR varaux
+         | empty
     '''
     
 def p_varaux(p):
@@ -55,24 +61,156 @@ def p_varaux(p):
 def p_varaux2(p):
     '''
     varaux2 : varaux3
-            | varaux3 varaux2
+            | varaux3 COMMA varaux2
     '''
 
 def p_varaux3(p):
     '''
     varaux3 : ID
-            | ID COMMA
-            | ID LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH COMMA
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA
+            | ID LCORCH vardim CTE_I RCORCH tamvector
+            | ID LCORCH vardim CTE_I RCORCH LCORCH CTE_I tammatriz RCORCH
     '''
+    salto = 1
     if Tablas.isGlobal == True:
-        dir = mv.getMemoGlob(Tablas.myType)
+        if Tablas.isVector != None:
+            if Tablas.isVector == 1:
+                if p[4]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,None, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoGlob(Tablas.myType, salto)
+                Tablas.vectGTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+            elif Tablas.isVector == 2:
+                if p[4]<1 or p[7]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                dir2 = Tablas.findCteVM(p[7])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,dir2, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoGlob(Tablas.myType, salto)
+                Tablas.vectGTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+        else:
+            dir = mv.getMemoGlob(Tablas.myType, salto)
     else:
-        dir = mv.getMemoLoc(Tablas.myType)
-    Tablas.insert(p[1], Tablas.myType, dir)
+        if Tablas.isVector != None:
+            if Tablas.isVector == 1:
+                if p[4]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,None, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoLoc(Tablas.myType, salto)
+                Tablas.vectLTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+            elif Tablas.isVector == 2:
+                if p[4]<1 or p[7]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                dir2 = Tablas.findCteVM(p[7])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,dir2, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoLoc(Tablas.myType, salto)
+                Tablas.vectLTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+        else:
+            dir = mv.getMemoLoc(Tablas.myType, salto)
+    Tablas.insert(p[1], Tablas.myType, dir, salto)
+    Tablas.isVector = None
 
+def p_vardim(p):
+    '''
+    vardim :
+    '''
+    Tablas.isVector = p[-2]
+    tipo = quad.gettipo(0)
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(0, tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+
+def p_tamvector(p):
+    '''
+    tamvector :
+    '''
+    tipo = quad.gettipo(p[-2])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-2], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    Tablas.vectSize = p[-2]
+    Tablas.m = 1
+    tipo = quad.gettipo(Tablas.vectSize)
+    tipo2 = quad.gettipo(Tablas.m)
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(Tablas.vectSize, tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    dir2 = mv.getMemoCte(tipo2)
+    temp2 = Tablas.cteInsert(Tablas.m, tipo2, dir2)
+    if (temp2 == False):
+        mv.restMemo(tipo2)
+    Tablas.isVector = 1
+
+def p_tammatriz(p):
+    '''
+    tammatriz :
+    '''
+    tipo = quad.gettipo(p[-1])
+    tipo2 = quad.gettipo(p[-4])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-1], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    dir2 = mv.getMemoCte(tipo2)
+    temp2 = Tablas.cteInsert(p[-4], tipo2, dir2)
+    if (temp2 == False):
+        mv.restMemo(tipo2)
+    Tablas.vectSize = (p[-1]+1)*(p[-4]+1)
+    Tablas.m = Tablas.vectSize/(p[-4]-0+1)
+    tipo = quad.gettipo(Tablas.vectSize)
+    tipo2 = quad.gettipo(Tablas.m)
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(Tablas.vectSize, tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    dir2 = mv.getMemoCte(tipo2)
+    temp2 = Tablas.cteInsert(Tablas.m, tipo2, dir2)
+    if (temp2 == False):
+        mv.restMemo(tipo2)
+    Tablas.isVector = 2
 def p_functipo(p):
     '''
     functipo : INT
@@ -149,11 +287,11 @@ def p_dirfuncinsert(p):
     '''
     Tablas.func = p[-1]
     if (Tablas.isGlobal == True):
-        dir = mv.getMemoGlob(Tablas.funcType)
+        dir = mv.getMemoGlob(Tablas.funcType, 1)
     else:
-        dir = mv.getMemoLoc(Tablas.funcType)
-    Tablas.insert(p[-1], Tablas.funcType, dir)
-    Tablas.insertDirFunc(p[-1], Tablas.funcType)
+        dir = mv.getMemoLoc(Tablas.funcType, 1)
+    Tablas.insert(p[-1], Tablas.funcType, dir, 1)
+    Tablas.insertDirFunc(p[-1], Tablas.funcType, dir)
 
 def p_insertparams(p):
     '''
@@ -165,6 +303,7 @@ def p_insertparams(p):
     Tablas.insertFuncSize(size, Tablas.func)
     Tablas.clearVarSize()
     Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
+    Tablas.func = ''
 
 def p_funcaux3(p):
     '''
@@ -184,10 +323,10 @@ def p_funcaux5(p):
              | ID COMMA
     '''
     if (Tablas.isGlobal == True):
-        dir = mv.getMemoGlob(Tablas.myType)
+        dir = mv.getMemoGlob(Tablas.myType, 1)
     else:
-        dir = mv.getMemoLoc(Tablas.myType)
-    Tablas.insert(p[1], Tablas.myType, dir)
+        dir = mv.getMemoLoc(Tablas.myType, 1)
+    Tablas.insert(p[1], Tablas.myType, dir, 1)
     Tablas.params = str(Tablas.params) + Tablas.myType[0]
 
 def p_bloque(p):
@@ -268,9 +407,103 @@ def p_asignacionaux(p):
 
 def p_dimensiones(p):
     '''
-    dimensiones : LCORCH pos RCORCH
-                | LCORCH pos COMMA pos RCORCH
+    dimensiones : addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver1 RCORCH removefalsebottom
+                | addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver2 COMMA addfalsebottom exp removefalsebottom ver3 RCORCH removefalsebottom
     '''
+
+def p_ver1(p):
+    '''
+    ver1 :
+    '''
+    temp = quad.PilaO.pop()
+    #quad.PilaO.append(temp)
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
+    dir = Tablas.findCteVM(Tablas.isVector)
+    quad.quadInsert('+', temp, dir, result)
+    quad.count += 1
+    quad.PilaO.append('('+str(result)+')')
+
+def p_ver2(p):
+    '''
+    ver2 :
+    '''
+    temp = quad.PilaO.pop()
+    #quad.PilaO.append(temp)
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+        m = Tablas.vectLTable[Tablas.isVector].m
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+        m = Tablas.vectGTable[Tablas.isVector].m
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    result = mv.getMemoTemp('int',Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
+    quad.quadInsert('*', temp, m, result)
+    quad.count += 1
+    quad.PilaO.append(result)
+
+def p_ver3(p):
+    '''
+    ver3 :
+    '''
+    temp = quad.PilaO.pop()
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    temp2 = quad.PilaO.pop()
+    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
+    quad.quadInsert('+', temp, temp2, result)
+    quad.count += 1
+    result2 = mv.getMemoTemp('int', Tablas.isGlobal)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int')
+    else:
+        Tablas.tempAddSize('int')
+    dir = Tablas.findCteVM(Tablas.isVector)
+    quad.quadInsert('+', result, dir, result2)
+    quad.count += 1
+    quad.PilaO.append('('+str(result2)+')')
+
+def p_removeid(p):
+    '''
+    removeid :
+    '''
+    idDir = quad.PilaO.pop()
+    tipo = quad.Ptypes.pop()
+    temp = Tablas.findCteVM(idDir)
+    if temp == False:
+        print('Error: No es variable dimensionada')
+        sys.exit()
+    else:
+        Tablas.isVector = idDir
+
 
 def p_pos(p):
     '''
@@ -280,20 +513,35 @@ def p_pos(p):
 
 def p_retorno(p):
     '''
-    retorno : REGRESA LPARENT exp RPARENT SEMICOLON
+    retorno : REGRESA pushpoper LPARENT exp RPARENT popret SEMICOLON
     '''
+
+def p_popret(p):
+    '''
+    popret :
+    '''
+    temp = quad.popRet()
+    if temp:
+        quad.count += 1
 
 def p_lectura(p):
     '''
-    lectura : LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+    lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
     '''
 
 def p_lecturaaux(p):
     '''
-    lecturaaux : ID pushpilaid
-               | ID pushpilaid dimensiones
-               | ID pushpilaid dimensiones COMMA lecturaaux
+    lecturaaux : ID pushpilaid popio
+               | ID pushpilaid popio COMMA lequad lecturaaux
+               | ID pushpilaid dimensiones popio
+               | ID pushpilaid dimensiones popio COMMA lequad lecturaaux
     '''
+
+def p_lequad(p):
+    '''
+    lequad :
+    '''
+    quad.pushPoper('lee')
 
 def p_fcall(p):
     '''
@@ -330,7 +578,7 @@ def p_paraminsert(p):
 
 def p_escritura(p):
     '''
-    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
     '''
 
 def p_popio(p):
@@ -343,11 +591,17 @@ def p_popio(p):
 
 def p_escrituraaux(p):
     '''
-    escrituraaux : CTE_S ctemem
-                 | expresion
-                 | CTE_S ctemem COMMA escrituraaux
-                 | expresion COMMA escrituraaux
+    escrituraaux : CTE_S ctemem pushpilao popio
+                 | expresion popio
+                 | CTE_S ctemem pushpilao popio COMMA escquad escrituraaux
+                 | expresion popio COMMA escquad escrituraaux
     '''
+
+def p_escquad(p):
+    '''
+    escquad :
+    '''
+    quad.pushPoper('escribe')
 
 def p_mientras(p):
     '''
@@ -413,8 +667,8 @@ def p_desdeaux(p):
 
 def p_expresion(p):
     '''
-    expresion : expr
-              | expr log expresion
+    expresion : expr poplog
+              | expr poplog log expresion
     '''
 
 def p_poplog(p):
@@ -559,14 +813,15 @@ def p_dirfunctrue(p):
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    Tablas.varsPrint()
-    print('')
+    #Tablas.varsPrint()
+    #print('')
     mv.lI = 13000
     mv.ltI = 16000
     mv.ltF = 17000
     mv.ltC = 18000
     mv.ltB = 19000
     Tablas.varTable.clear()
+    Tablas.vectLTable.clear()
 
 def p_dirfuncfalse(p):
     '''
@@ -588,16 +843,22 @@ def p_endprog(p):
     '''
     endprog :
     '''
-    print(Tablas.program)
     size = str(Tablas.gli) + ',' + str(Tablas.glf) + ',' + str(Tablas.glc) + ',' + str(Tablas.glti) + ',' + str(Tablas.gltf) + ',' + str(Tablas.gltc) + ',' + str(Tablas.gltb)
     Tablas.insertFuncSize(size, Tablas.program)
     quad.quadInsert('End', None, None, None)
+    cf.export_txt(Tablas.dirFuncs, Tablas.cteTable, quad.Quad)
     Tablas.gvarPrint()
     print('')
+    print('DirFunc')
     Tablas.dirPrint()
-    #print('Constantes')
-    #Tablas.ctePrint()
+    print('')
+    print('Constantes')
+    Tablas.ctePrint()
+    print('')
+    print('Cuadruplos')
     quad.imprime()
+    print('')
+    Tablas.gVectPrint()
 
 #Build parse
 parser = yacc.yacc()

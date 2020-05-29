@@ -1,0 +1,50 @@
+programa fibonacci;
+   var int x , i, des;
+
+funcion int fibrecursive(int j)
+{
+   si(j <= 1) entonces
+   {
+    regresa(j);
+   }sino {
+      regresa( fibrecursive(j-1) + fibrecursive(j-2));
+   }
+
+}
+
+funcion void fib(int n)
+ var int x, y, z;
+{
+    x = 0;
+    y = 1;
+    z = 0;
+   desde i = 0 hasta (n-1) hacer {
+      escribe(x);
+      z = x + y;
+      x = y;
+      y = z;
+    }
+}
+
+principal()
+{
+   i = 0;
+   escribe("Ingresa en número de repeticiones de la serie:");
+   lee(x);
+   escribe("Ingresa 1 si quieres que la función sea recursiva ó cualquier otro número si quieres que sea iterativa:");
+    lee(des);
+    escribe("Fibonnaci Serie: ");
+    si(des == 1) entonces{
+        mientras (i < x) haz
+           {
+              escribe(fibrecursive(i));
+              i = i + 1;
+           }
+    }sino{
+        escribe("Fibonnaci Series : ");
+        fib(x);
+    }
+
+}
+
+

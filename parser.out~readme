@@ -1,0 +1,4134 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COLON
+    COMMENT
+    MOD
+    NOT
+    NULL
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAMA ID SEMICOLON vars funcs
+Rule 2     vars -> VAR varaux
+Rule 3     varaux -> tipo varaux2 SEMICOLON varaux
+Rule 4     varaux -> tipo varaux2 SEMICOLON
+Rule 5     varaux2 -> ID
+Rule 6     varaux2 -> ID COMMA varaux2
+Rule 7     varaux2 -> ID LCORCH CTE_I RCORCH
+Rule 8     varaux2 -> ID LCORCH CTE_I RCORCH COMMA varaux2
+Rule 9     varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+Rule 10    varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+Rule 11    funcs -> principal
+Rule 12    funcs -> funcsaux principal
+Rule 13    principal -> PRINCIPAL LPARENT RPARENT bloque
+Rule 14    funcsaux -> func
+Rule 15    funcsaux -> func funcsaux
+Rule 16    func -> FUNCION funcaux
+Rule 17    funcaux -> functipo funcaux2
+Rule 18    tipo -> INT
+Rule 19    tipo -> FLOAT
+Rule 20    tipo -> CHAR
+Rule 21    tipo -> STRING
+Rule 22    functipo -> INT
+Rule 23    functipo -> FLOAT
+Rule 24    functipo -> CHAR
+Rule 25    functipo -> STRING
+Rule 26    functipo -> VOID
+Rule 27    funcaux2 -> ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
+Rule 28    funcaux3 -> dirfuncfalse tipo ID
+Rule 29    funcaux3 -> dirfuncfalse tipo ID COMMA funcaux3
+Rule 30    bloque -> LBRACE RBRACE
+Rule 31    bloque -> LBRACE bloqueaux RBRACE
+Rule 32    bloqueaux -> estatuto
+Rule 33    bloqueaux -> estatuto bloqueaux
+Rule 34    bloqueaux -> retorno
+Rule 35    estatuto -> asignacion
+Rule 36    estatuto -> si si2
+Rule 37    estatuto -> mientras
+Rule 38    estatuto -> desde
+Rule 39    estatuto -> lectura
+Rule 40    estatuto -> fcall SEMICOLON
+Rule 41    estatuto -> escritura
+Rule 42    si -> siaux
+Rule 43    si -> siaux si3 SINO bloque
+Rule 44    si3 -> <empty>
+Rule 45    siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque
+Rule 46    si1 -> <empty>
+Rule 47    si2 -> <empty>
+Rule 48    asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON
+Rule 49    popassign -> <empty>
+Rule 50    asignacionaux -> IGUAL pushpoper expresion
+Rule 51    asignacionaux -> dimensiones IGUAL pushpoper expresion
+Rule 52    dimensiones -> LCORCH pos RCORCH
+Rule 53    dimensiones -> LCORCH pos COMMA pos RCORCH
+Rule 54    pos -> ID
+Rule 55    pos -> CTE_I
+Rule 56    retorno -> REGRESA LPARENT exp RPARENT SEMICOLON
+Rule 57    lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+Rule 58    lecturaaux -> ID pushpilaid
+Rule 59    lecturaaux -> ID pushpilaid dimensiones
+Rule 60    lecturaaux -> ID pushpilaid dimensiones COMMA lecturaaux
+Rule 61    fcall -> ID pushfunId LPARENT era checkParameter RPARENT
+Rule 62    fcall -> ID LPARENT fcallaux RPARENT
+Rule 63    pushfunId -> <empty>
+Rule 64    era -> <empty>
+Rule 65    checkParameter -> exp checkArg
+Rule 66    checkParameter -> exp checkArg COMMA addParameter checkParameter
+Rule 67    addParameter -> <empty>
+Rule 68    checkArg -> <empty>
+Rule 69    fcallaux -> expresion
+Rule 70    fcallaux -> expresion COMMA fcallaux
+Rule 71    escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+Rule 72    popio -> <empty>
+Rule 73    escrituraaux -> CTE_S
+Rule 74    escrituraaux -> expresion
+Rule 75    escrituraaux -> CTE_S COMMA escrituraaux
+Rule 76    escrituraaux -> expresion COMMA escrituraaux
+Rule 77    mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
+Rule 78    while1 -> <empty>
+Rule 79    while2 -> <empty>
+Rule 80    while3 -> <empty>
+Rule 81    desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+Rule 82    for2 -> <empty>
+Rule 83    for4 -> <empty>
+Rule 84    for5 -> <empty>
+Rule 85    desdeaux -> ID pushpilaid IGUAL pushpoper exp
+Rule 86    desdeaux -> ID pushpilaid dimensiones IGUAL pushpoper exp
+Rule 87    expresion -> expr
+Rule 88    expresion -> expr log expresion
+Rule 89    poplog -> <empty>
+Rule 90    expr -> exp poprel
+Rule 91    expr -> exp poprel rel expr
+Rule 92    poprel -> <empty>
+Rule 93    exp -> termino popterm
+Rule 94    exp -> termino popterm MAS pushpoper exp
+Rule 95    exp -> termino popterm MENOS pushpoper exp
+Rule 96    pushpoper -> <empty>
+Rule 97    popterm -> <empty>
+Rule 98    termino -> factor popfact
+Rule 99    termino -> factor popfact MULT pushpoper termino
+Rule 100   termino -> factor popfact DIV pushpoper termino
+Rule 101   popfact -> <empty>
+Rule 102   factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom
+Rule 103   factor -> var_cte
+Rule 104   factor -> MAS pushpoper var_cte
+Rule 105   factor -> MENOS pushpoper var_cte
+Rule 106   addfalsebottom -> <empty>
+Rule 107   removefalsebottom -> <empty>
+Rule 108   var_cte -> ID pushpilaid
+Rule 109   var_cte -> ID pushpilaid dimensiones
+Rule 110   var_cte -> CTE_I pushpilao
+Rule 111   var_cte -> CTE_F pushpilao
+Rule 112   var_cte -> CTE_S pushpilao
+Rule 113   var_cte -> CTE_C pushpilao
+Rule 114   var_cte -> fcall
+Rule 115   pushpilaid -> <empty>
+Rule 116   pushpilao -> <empty>
+Rule 117   log -> AND pushpoper
+Rule 118   log -> OR pushpoper
+Rule 119   rel -> MENOR pushpoper
+Rule 120   rel -> MAYOR pushpoper
+Rule 121   rel -> MENORIGUAL pushpoper
+Rule 122   rel -> MAYORIGUAL pushpoper
+Rule 123   rel -> COMPARE pushpoper
+Rule 124   rel -> DIFFERENT pushpoper
+Rule 125   CTE -> CTE_I
+Rule 126   CTE -> CTE_F
+Rule 127   CTE -> CTE_CH
+Rule 128   CTE -> CTE_STRING
+Rule 129   CTE -> FUNCION
+Rule 130   dirfunctrue -> <empty>
+Rule 131   dirfuncfalse -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 117
+CHAR                 : 20 24
+COLON                : 
+COMMA                : 6 8 10 29 53 60 66 70 75 76
+COMMENT              : 
+COMPARE              : 123
+CTE_C                : 113
+CTE_CH               : 127
+CTE_F                : 111 126
+CTE_I                : 7 8 9 9 10 10 55 110 125
+CTE_S                : 73 75 112
+CTE_STRING           : 128
+DESDE                : 81
+DIFFERENT            : 124
+DIV                  : 100
+ENTONCES             : 45
+ESCRIBE              : 71
+FLOAT                : 19 23
+FUNCION              : 16 129
+HACER                : 81
+HASTA                : 81
+HAZ                  : 77
+ID                   : 1 5 6 7 8 9 10 27 28 29 48 54 58 59 60 61 62 85 86 108 109
+IGUAL                : 50 51 85 86
+INT                  : 18 22
+LBRACE               : 30 31
+LCORCH               : 7 8 9 9 10 10 52 53
+LEE                  : 57
+LPARENT              : 13 27 45 56 57 61 62 71 77 102
+MAS                  : 94 104
+MAYOR                : 120
+MAYORIGUAL           : 122
+MENOR                : 119
+MENORIGUAL           : 121
+MENOS                : 95 105
+MIENTRAS             : 77
+MOD                  : 
+MULT                 : 99
+NOT                  : 
+NULL                 : 
+OR                   : 118
+PRINCIPAL            : 13
+PROGRAMA             : 1
+RBRACE               : 30 31
+RCORCH               : 7 8 9 9 10 10 52 53
+REGRESA              : 56
+RPARENT              : 13 27 45 56 57 61 62 71 77 102
+SEMICOLON            : 1 3 4 40 48 56 57 71
+SI                   : 45
+SINO                 : 43
+STRING               : 21 25
+VAR                  : 2
+VOID                 : 26
+error                : 
+
+Nonterminals, with rules where they appear
+
+CTE                  : 
+addParameter         : 66
+addfalsebottom       : 102
+asignacion           : 35
+asignacionaux        : 48
+bloque               : 13 27 43 45 77 81
+bloqueaux            : 31 33
+checkArg             : 65 66
+checkParameter       : 61 66
+desde                : 38
+desdeaux             : 81
+dimensiones          : 51 59 60 86 109
+dirfuncfalse         : 28 29
+dirfunctrue          : 27
+era                  : 61
+escritura            : 41
+escrituraaux         : 71 75 76
+estatuto             : 32 33
+exp                  : 56 65 66 81 85 86 90 91 94 95
+expr                 : 87 88 91
+expresion            : 45 50 51 69 70 74 76 77 88 102
+factor               : 98 99 100
+fcall                : 40 114
+fcallaux             : 62 70
+for2                 : 81
+for4                 : 81
+for5                 : 81
+func                 : 14 15
+funcaux              : 16
+funcaux2             : 17
+funcaux3             : 27 29
+funcs                : 1
+funcsaux             : 12 15
+functipo             : 17
+lectura              : 39
+lecturaaux           : 57 60
+log                  : 88
+mientras             : 37
+popassign            : 48 81
+popfact              : 98 99 100
+popio                : 57 71
+poplog               : 
+poprel               : 90 91
+popterm              : 93 94 95
+pos                  : 52 53 53
+principal            : 11 12
+programa             : 0
+pushfunId            : 61
+pushpilaid           : 48 58 59 60 85 86 108 109
+pushpilao            : 110 111 112 113
+pushpoper            : 50 51 57 71 85 86 94 95 99 100 104 105 117 118 119 120 121 122 123 124
+rel                  : 91
+removefalsebottom    : 102
+retorno              : 34
+si                   : 36
+si1                  : 45
+si2                  : 36
+si3                  : 43
+siaux                : 42 43
+termino              : 93 94 95 99 100
+tipo                 : 3 4 28 29
+var_cte              : 103 104 105
+varaux               : 2 3
+varaux2              : 3 4 6 8 10
+vars                 : 1 27
+while1               : 77 81
+while2               : 77 81
+while3               : 77 81
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAMA ID SEMICOLON vars funcs
+
+    PROGRAMA        shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAMA . ID SEMICOLON vars funcs
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) programa -> PROGRAMA ID . SEMICOLON vars funcs
+
+    SEMICOLON       shift and go to state 4
+
+
+state 4
+
+    (1) programa -> PROGRAMA ID SEMICOLON . vars funcs
+    (2) vars -> . VAR varaux
+
+    VAR             shift and go to state 6
+
+    vars                           shift and go to state 5
+
+state 5
+
+    (1) programa -> PROGRAMA ID SEMICOLON vars . funcs
+    (11) funcs -> . principal
+    (12) funcs -> . funcsaux principal
+    (13) principal -> . PRINCIPAL LPARENT RPARENT bloque
+    (14) funcsaux -> . func
+    (15) funcsaux -> . func funcsaux
+    (16) func -> . FUNCION funcaux
+
+    PRINCIPAL       shift and go to state 10
+    FUNCION         shift and go to state 12
+
+    funcs                          shift and go to state 7
+    principal                      shift and go to state 8
+    funcsaux                       shift and go to state 9
+    func                           shift and go to state 11
+
+state 6
+
+    (2) vars -> VAR . varaux
+    (3) varaux -> . tipo varaux2 SEMICOLON varaux
+    (4) varaux -> . tipo varaux2 SEMICOLON
+    (18) tipo -> . INT
+    (19) tipo -> . FLOAT
+    (20) tipo -> . CHAR
+    (21) tipo -> . STRING
+
+    INT             shift and go to state 15
+    FLOAT           shift and go to state 16
+    CHAR            shift and go to state 17
+    STRING          shift and go to state 18
+
+    varaux                         shift and go to state 13
+    tipo                           shift and go to state 14
+
+state 7
+
+    (1) programa -> PROGRAMA ID SEMICOLON vars funcs .
+
+    $end            reduce using rule 1 (programa -> PROGRAMA ID SEMICOLON vars funcs .)
+
+
+state 8
+
+    (11) funcs -> principal .
+
+    $end            reduce using rule 11 (funcs -> principal .)
+
+
+state 9
+
+    (12) funcs -> funcsaux . principal
+    (13) principal -> . PRINCIPAL LPARENT RPARENT bloque
+
+    PRINCIPAL       shift and go to state 10
+
+    principal                      shift and go to state 19
+
+state 10
+
+    (13) principal -> PRINCIPAL . LPARENT RPARENT bloque
+
+    LPARENT         shift and go to state 20
+
+
+state 11
+
+    (14) funcsaux -> func .
+    (15) funcsaux -> func . funcsaux
+    (14) funcsaux -> . func
+    (15) funcsaux -> . func funcsaux
+    (16) func -> . FUNCION funcaux
+
+    PRINCIPAL       reduce using rule 14 (funcsaux -> func .)
+    FUNCION         shift and go to state 12
+
+    func                           shift and go to state 11
+    funcsaux                       shift and go to state 21
+
+state 12
+
+    (16) func -> FUNCION . funcaux
+    (17) funcaux -> . functipo funcaux2
+    (22) functipo -> . INT
+    (23) functipo -> . FLOAT
+    (24) functipo -> . CHAR
+    (25) functipo -> . STRING
+    (26) functipo -> . VOID
+
+    INT             shift and go to state 24
+    FLOAT           shift and go to state 25
+    CHAR            shift and go to state 26
+    STRING          shift and go to state 27
+    VOID            shift and go to state 28
+
+    funcaux                        shift and go to state 22
+    functipo                       shift and go to state 23
+
+state 13
+
+    (2) vars -> VAR varaux .
+
+    PRINCIPAL       reduce using rule 2 (vars -> VAR varaux .)
+    FUNCION         reduce using rule 2 (vars -> VAR varaux .)
+    LBRACE          reduce using rule 2 (vars -> VAR varaux .)
+
+
+state 14
+
+    (3) varaux -> tipo . varaux2 SEMICOLON varaux
+    (4) varaux -> tipo . varaux2 SEMICOLON
+    (5) varaux2 -> . ID
+    (6) varaux2 -> . ID COMMA varaux2
+    (7) varaux2 -> . ID LCORCH CTE_I RCORCH
+    (8) varaux2 -> . ID LCORCH CTE_I RCORCH COMMA varaux2
+    (9) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    ID              shift and go to state 30
+
+    varaux2                        shift and go to state 29
+
+state 15
+
+    (18) tipo -> INT .
+
+    ID              reduce using rule 18 (tipo -> INT .)
+
+
+state 16
+
+    (19) tipo -> FLOAT .
+
+    ID              reduce using rule 19 (tipo -> FLOAT .)
+
+
+state 17
+
+    (20) tipo -> CHAR .
+
+    ID              reduce using rule 20 (tipo -> CHAR .)
+
+
+state 18
+
+    (21) tipo -> STRING .
+
+    ID              reduce using rule 21 (tipo -> STRING .)
+
+
+state 19
+
+    (12) funcs -> funcsaux principal .
+
+    $end            reduce using rule 12 (funcs -> funcsaux principal .)
+
+
+state 20
+
+    (13) principal -> PRINCIPAL LPARENT . RPARENT bloque
+
+    RPARENT         shift and go to state 31
+
+
+state 21
+
+    (15) funcsaux -> func funcsaux .
+
+    PRINCIPAL       reduce using rule 15 (funcsaux -> func funcsaux .)
+
+
+state 22
+
+    (16) func -> FUNCION funcaux .
+
+    FUNCION         reduce using rule 16 (func -> FUNCION funcaux .)
+    PRINCIPAL       reduce using rule 16 (func -> FUNCION funcaux .)
+
+
+state 23
+
+    (17) funcaux -> functipo . funcaux2
+    (27) funcaux2 -> . ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue
+
+    ID              shift and go to state 33
+
+    funcaux2                       shift and go to state 32
+
+state 24
+
+    (22) functipo -> INT .
+
+    ID              reduce using rule 22 (functipo -> INT .)
+
+
+state 25
+
+    (23) functipo -> FLOAT .
+
+    ID              reduce using rule 23 (functipo -> FLOAT .)
+
+
+state 26
+
+    (24) functipo -> CHAR .
+
+    ID              reduce using rule 24 (functipo -> CHAR .)
+
+
+state 27
+
+    (25) functipo -> STRING .
+
+    ID              reduce using rule 25 (functipo -> STRING .)
+
+
+state 28
+
+    (26) functipo -> VOID .
+
+    ID              reduce using rule 26 (functipo -> VOID .)
+
+
+state 29
+
+    (3) varaux -> tipo varaux2 . SEMICOLON varaux
+    (4) varaux -> tipo varaux2 . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+
+state 30
+
+    (5) varaux2 -> ID .
+    (6) varaux2 -> ID . COMMA varaux2
+    (7) varaux2 -> ID . LCORCH CTE_I RCORCH
+    (8) varaux2 -> ID . LCORCH CTE_I RCORCH COMMA varaux2
+    (9) varaux2 -> ID . LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> ID . LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    SEMICOLON       reduce using rule 5 (varaux2 -> ID .)
+    COMMA           shift and go to state 35
+    LCORCH          shift and go to state 36
+
+
+state 31
+
+    (13) principal -> PRINCIPAL LPARENT RPARENT . bloque
+    (30) bloque -> . LBRACE RBRACE
+    (31) bloque -> . LBRACE bloqueaux RBRACE
+
+    LBRACE          shift and go to state 38
+
+    bloque                         shift and go to state 37
+
+state 32
+
+    (17) funcaux -> functipo funcaux2 .
+
+    FUNCION         reduce using rule 17 (funcaux -> functipo funcaux2 .)
+    PRINCIPAL       reduce using rule 17 (funcaux -> functipo funcaux2 .)
+
+
+state 33
+
+    (27) funcaux2 -> ID . LPARENT funcaux3 RPARENT vars bloque dirfunctrue
+
+    LPARENT         shift and go to state 39
+
+
+state 34
+
+    (3) varaux -> tipo varaux2 SEMICOLON . varaux
+    (4) varaux -> tipo varaux2 SEMICOLON .
+    (3) varaux -> . tipo varaux2 SEMICOLON varaux
+    (4) varaux -> . tipo varaux2 SEMICOLON
+    (18) tipo -> . INT
+    (19) tipo -> . FLOAT
+    (20) tipo -> . CHAR
+    (21) tipo -> . STRING
+
+    PRINCIPAL       reduce using rule 4 (varaux -> tipo varaux2 SEMICOLON .)
+    FUNCION         reduce using rule 4 (varaux -> tipo varaux2 SEMICOLON .)
+    LBRACE          reduce using rule 4 (varaux -> tipo varaux2 SEMICOLON .)
+    INT             shift and go to state 15
+    FLOAT           shift and go to state 16
+    CHAR            shift and go to state 17
+    STRING          shift and go to state 18
+
+    tipo                           shift and go to state 14
+    varaux                         shift and go to state 40
+
+state 35
+
+    (6) varaux2 -> ID COMMA . varaux2
+    (5) varaux2 -> . ID
+    (6) varaux2 -> . ID COMMA varaux2
+    (7) varaux2 -> . ID LCORCH CTE_I RCORCH
+    (8) varaux2 -> . ID LCORCH CTE_I RCORCH COMMA varaux2
+    (9) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    ID              shift and go to state 30
+
+    varaux2                        shift and go to state 41
+
+state 36
+
+    (7) varaux2 -> ID LCORCH . CTE_I RCORCH
+    (8) varaux2 -> ID LCORCH . CTE_I RCORCH COMMA varaux2
+    (9) varaux2 -> ID LCORCH . CTE_I RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> ID LCORCH . CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    CTE_I           shift and go to state 42
+
+
+state 37
+
+    (13) principal -> PRINCIPAL LPARENT RPARENT bloque .
+
+    $end            reduce using rule 13 (principal -> PRINCIPAL LPARENT RPARENT bloque .)
+
+
+state 38
+
+    (30) bloque -> LBRACE . RBRACE
+    (31) bloque -> LBRACE . bloqueaux RBRACE
+    (32) bloqueaux -> . estatuto
+    (33) bloqueaux -> . estatuto bloqueaux
+    (34) bloqueaux -> . retorno
+    (35) estatuto -> . asignacion
+    (36) estatuto -> . si si2
+    (37) estatuto -> . mientras
+    (38) estatuto -> . desde
+    (39) estatuto -> . lectura
+    (40) estatuto -> . fcall SEMICOLON
+    (41) estatuto -> . escritura
+    (56) retorno -> . REGRESA LPARENT exp RPARENT SEMICOLON
+    (48) asignacion -> . ID pushpilaid asignacionaux popassign SEMICOLON
+    (42) si -> . siaux
+    (43) si -> . siaux si3 SINO bloque
+    (77) mientras -> . MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
+    (81) desde -> . DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    (57) lectura -> . LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+    (71) escritura -> . ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+    (45) siaux -> . SI LPARENT expresion RPARENT si1 ENTONCES bloque
+
+    RBRACE          shift and go to state 43
+    REGRESA         shift and go to state 54
+    ID              shift and go to state 55
+    MIENTRAS        shift and go to state 57
+    DESDE           shift and go to state 58
+    LEE             shift and go to state 59
+    ESCRIBE         shift and go to state 60
+    SI              shift and go to state 61
+
+    bloqueaux                      shift and go to state 44
+    estatuto                       shift and go to state 45
+    retorno                        shift and go to state 46
+    asignacion                     shift and go to state 47
+    si                             shift and go to state 48
+    mientras                       shift and go to state 49
+    desde                          shift and go to state 50
+    lectura                        shift and go to state 51
+    fcall                          shift and go to state 52
+    escritura                      shift and go to state 53
+    siaux                          shift and go to state 56
+
+state 39
+
+    (27) funcaux2 -> ID LPARENT . funcaux3 RPARENT vars bloque dirfunctrue
+    (28) funcaux3 -> . dirfuncfalse tipo ID
+    (29) funcaux3 -> . dirfuncfalse tipo ID COMMA funcaux3
+    (131) dirfuncfalse -> .
+
+    INT             reduce using rule 131 (dirfuncfalse -> .)
+    FLOAT           reduce using rule 131 (dirfuncfalse -> .)
+    CHAR            reduce using rule 131 (dirfuncfalse -> .)
+    STRING          reduce using rule 131 (dirfuncfalse -> .)
+
+    funcaux3                       shift and go to state 62
+    dirfuncfalse                   shift and go to state 63
+
+state 40
+
+    (3) varaux -> tipo varaux2 SEMICOLON varaux .
+
+    PRINCIPAL       reduce using rule 3 (varaux -> tipo varaux2 SEMICOLON varaux .)
+    FUNCION         reduce using rule 3 (varaux -> tipo varaux2 SEMICOLON varaux .)
+    LBRACE          reduce using rule 3 (varaux -> tipo varaux2 SEMICOLON varaux .)
+
+
+state 41
+
+    (6) varaux2 -> ID COMMA varaux2 .
+
+    SEMICOLON       reduce using rule 6 (varaux2 -> ID COMMA varaux2 .)
+
+
+state 42
+
+    (7) varaux2 -> ID LCORCH CTE_I . RCORCH
+    (8) varaux2 -> ID LCORCH CTE_I . RCORCH COMMA varaux2
+    (9) varaux2 -> ID LCORCH CTE_I . RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> ID LCORCH CTE_I . RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    RCORCH          shift and go to state 64
+
+
+state 43
+
+    (30) bloque -> LBRACE RBRACE .
+
+    $end            reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    REGRESA         reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    ID              reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    MIENTRAS        reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    DESDE           reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    LEE             reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    ESCRIBE         reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    SI              reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    RBRACE          reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    FUNCION         reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    PRINCIPAL       reduce using rule 30 (bloque -> LBRACE RBRACE .)
+    SINO            reduce using rule 30 (bloque -> LBRACE RBRACE .)
+
+
+state 44
+
+    (31) bloque -> LBRACE bloqueaux . RBRACE
+
+    RBRACE          shift and go to state 65
+
+
+state 45
+
+    (32) bloqueaux -> estatuto .
+    (33) bloqueaux -> estatuto . bloqueaux
+    (32) bloqueaux -> . estatuto
+    (33) bloqueaux -> . estatuto bloqueaux
+    (34) bloqueaux -> . retorno
+    (35) estatuto -> . asignacion
+    (36) estatuto -> . si si2
+    (37) estatuto -> . mientras
+    (38) estatuto -> . desde
+    (39) estatuto -> . lectura
+    (40) estatuto -> . fcall SEMICOLON
+    (41) estatuto -> . escritura
+    (56) retorno -> . REGRESA LPARENT exp RPARENT SEMICOLON
+    (48) asignacion -> . ID pushpilaid asignacionaux popassign SEMICOLON
+    (42) si -> . siaux
+    (43) si -> . siaux si3 SINO bloque
+    (77) mientras -> . MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
+    (81) desde -> . DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    (57) lectura -> . LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+    (71) escritura -> . ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+    (45) siaux -> . SI LPARENT expresion RPARENT si1 ENTONCES bloque
+
+    RBRACE          reduce using rule 32 (bloqueaux -> estatuto .)
+    REGRESA         shift and go to state 54
+    ID              shift and go to state 55
+    MIENTRAS        shift and go to state 57
+    DESDE           shift and go to state 58
+    LEE             shift and go to state 59
+    ESCRIBE         shift and go to state 60
+    SI              shift and go to state 61
+
+    estatuto                       shift and go to state 45
+    bloqueaux                      shift and go to state 66
+    retorno                        shift and go to state 46
+    asignacion                     shift and go to state 47
+    si                             shift and go to state 48
+    mientras                       shift and go to state 49
+    desde                          shift and go to state 50
+    lectura                        shift and go to state 51
+    fcall                          shift and go to state 52
+    escritura                      shift and go to state 53
+    siaux                          shift and go to state 56
+
+state 46
+
+    (34) bloqueaux -> retorno .
+
+    RBRACE          reduce using rule 34 (bloqueaux -> retorno .)
+
+
+state 47
+
+    (35) estatuto -> asignacion .
+
+    REGRESA         reduce using rule 35 (estatuto -> asignacion .)
+    ID              reduce using rule 35 (estatuto -> asignacion .)
+    MIENTRAS        reduce using rule 35 (estatuto -> asignacion .)
+    DESDE           reduce using rule 35 (estatuto -> asignacion .)
+    LEE             reduce using rule 35 (estatuto -> asignacion .)
+    ESCRIBE         reduce using rule 35 (estatuto -> asignacion .)
+    SI              reduce using rule 35 (estatuto -> asignacion .)
+    RBRACE          reduce using rule 35 (estatuto -> asignacion .)
+
+
+state 48
+
+    (36) estatuto -> si . si2
+    (47) si2 -> .
+
+    REGRESA         reduce using rule 47 (si2 -> .)
+    ID              reduce using rule 47 (si2 -> .)
+    MIENTRAS        reduce using rule 47 (si2 -> .)
+    DESDE           reduce using rule 47 (si2 -> .)
+    LEE             reduce using rule 47 (si2 -> .)
+    ESCRIBE         reduce using rule 47 (si2 -> .)
+    SI              reduce using rule 47 (si2 -> .)
+    RBRACE          reduce using rule 47 (si2 -> .)
+
+    si2                            shift and go to state 67
+
+state 49
+
+    (37) estatuto -> mientras .
+
+    REGRESA         reduce using rule 37 (estatuto -> mientras .)
+    ID              reduce using rule 37 (estatuto -> mientras .)
+    MIENTRAS        reduce using rule 37 (estatuto -> mientras .)
+    DESDE           reduce using rule 37 (estatuto -> mientras .)
+    LEE             reduce using rule 37 (estatuto -> mientras .)
+    ESCRIBE         reduce using rule 37 (estatuto -> mientras .)
+    SI              reduce using rule 37 (estatuto -> mientras .)
+    RBRACE          reduce using rule 37 (estatuto -> mientras .)
+
+
+state 50
+
+    (38) estatuto -> desde .
+
+    REGRESA         reduce using rule 38 (estatuto -> desde .)
+    ID              reduce using rule 38 (estatuto -> desde .)
+    MIENTRAS        reduce using rule 38 (estatuto -> desde .)
+    DESDE           reduce using rule 38 (estatuto -> desde .)
+    LEE             reduce using rule 38 (estatuto -> desde .)
+    ESCRIBE         reduce using rule 38 (estatuto -> desde .)
+    SI              reduce using rule 38 (estatuto -> desde .)
+    RBRACE          reduce using rule 38 (estatuto -> desde .)
+
+
+state 51
+
+    (39) estatuto -> lectura .
+
+    REGRESA         reduce using rule 39 (estatuto -> lectura .)
+    ID              reduce using rule 39 (estatuto -> lectura .)
+    MIENTRAS        reduce using rule 39 (estatuto -> lectura .)
+    DESDE           reduce using rule 39 (estatuto -> lectura .)
+    LEE             reduce using rule 39 (estatuto -> lectura .)
+    ESCRIBE         reduce using rule 39 (estatuto -> lectura .)
+    SI              reduce using rule 39 (estatuto -> lectura .)
+    RBRACE          reduce using rule 39 (estatuto -> lectura .)
+
+
+state 52
+
+    (40) estatuto -> fcall . SEMICOLON
+
+    SEMICOLON       shift and go to state 68
+
+
+state 53
+
+    (41) estatuto -> escritura .
+
+    REGRESA         reduce using rule 41 (estatuto -> escritura .)
+    ID              reduce using rule 41 (estatuto -> escritura .)
+    MIENTRAS        reduce using rule 41 (estatuto -> escritura .)
+    DESDE           reduce using rule 41 (estatuto -> escritura .)
+    LEE             reduce using rule 41 (estatuto -> escritura .)
+    ESCRIBE         reduce using rule 41 (estatuto -> escritura .)
+    SI              reduce using rule 41 (estatuto -> escritura .)
+    RBRACE          reduce using rule 41 (estatuto -> escritura .)
+
+
+state 54
+
+    (56) retorno -> REGRESA . LPARENT exp RPARENT SEMICOLON
+
+    LPARENT         shift and go to state 69
+
+
+state 55
+
+    (48) asignacion -> ID . pushpilaid asignacionaux popassign SEMICOLON
+    (61) fcall -> ID . pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> ID . LPARENT fcallaux RPARENT
+    (115) pushpilaid -> .
+    (63) pushfunId -> .
+
+  ! shift/reduce conflict for LPARENT resolved as shift
+    LPARENT         shift and go to state 72
+    IGUAL           reduce using rule 115 (pushpilaid -> .)
+    LCORCH          reduce using rule 115 (pushpilaid -> .)
+
+  ! LPARENT         [ reduce using rule 63 (pushfunId -> .) ]
+
+    pushpilaid                     shift and go to state 70
+    pushfunId                      shift and go to state 71
+
+state 56
+
+    (42) si -> siaux .
+    (43) si -> siaux . si3 SINO bloque
+    (44) si3 -> .
+
+    REGRESA         reduce using rule 42 (si -> siaux .)
+    ID              reduce using rule 42 (si -> siaux .)
+    MIENTRAS        reduce using rule 42 (si -> siaux .)
+    DESDE           reduce using rule 42 (si -> siaux .)
+    LEE             reduce using rule 42 (si -> siaux .)
+    ESCRIBE         reduce using rule 42 (si -> siaux .)
+    SI              reduce using rule 42 (si -> siaux .)
+    RBRACE          reduce using rule 42 (si -> siaux .)
+    SINO            reduce using rule 44 (si3 -> .)
+
+    si3                            shift and go to state 73
+
+state 57
+
+    (77) mientras -> MIENTRAS . while1 LPARENT expresion RPARENT while2 HAZ bloque while3
+    (78) while1 -> .
+
+    LPARENT         reduce using rule 78 (while1 -> .)
+
+    while1                         shift and go to state 74
+
+state 58
+
+    (81) desde -> DESDE . desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    (85) desdeaux -> . ID pushpilaid IGUAL pushpoper exp
+    (86) desdeaux -> . ID pushpilaid dimensiones IGUAL pushpoper exp
+
+    ID              shift and go to state 76
+
+    desdeaux                       shift and go to state 75
+
+state 59
+
+    (57) lectura -> LEE . pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 77
+
+state 60
+
+    (71) escritura -> ESCRIBE . pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 78
+
+state 61
+
+    (45) siaux -> SI . LPARENT expresion RPARENT si1 ENTONCES bloque
+
+    LPARENT         shift and go to state 79
+
+
+state 62
+
+    (27) funcaux2 -> ID LPARENT funcaux3 . RPARENT vars bloque dirfunctrue
+
+    RPARENT         shift and go to state 80
+
+
+state 63
+
+    (28) funcaux3 -> dirfuncfalse . tipo ID
+    (29) funcaux3 -> dirfuncfalse . tipo ID COMMA funcaux3
+    (18) tipo -> . INT
+    (19) tipo -> . FLOAT
+    (20) tipo -> . CHAR
+    (21) tipo -> . STRING
+
+    INT             shift and go to state 15
+    FLOAT           shift and go to state 16
+    CHAR            shift and go to state 17
+    STRING          shift and go to state 18
+
+    tipo                           shift and go to state 81
+
+state 64
+
+    (7) varaux2 -> ID LCORCH CTE_I RCORCH .
+    (8) varaux2 -> ID LCORCH CTE_I RCORCH . COMMA varaux2
+    (9) varaux2 -> ID LCORCH CTE_I RCORCH . LCORCH CTE_I RCORCH
+    (10) varaux2 -> ID LCORCH CTE_I RCORCH . LCORCH CTE_I RCORCH COMMA varaux2
+
+    SEMICOLON       reduce using rule 7 (varaux2 -> ID LCORCH CTE_I RCORCH .)
+    COMMA           shift and go to state 83
+    LCORCH          shift and go to state 82
+
+
+state 65
+
+    (31) bloque -> LBRACE bloqueaux RBRACE .
+
+    $end            reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    REGRESA         reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    ID              reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    MIENTRAS        reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    DESDE           reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    LEE             reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    ESCRIBE         reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    SI              reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    RBRACE          reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    FUNCION         reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    PRINCIPAL       reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+    SINO            reduce using rule 31 (bloque -> LBRACE bloqueaux RBRACE .)
+
+
+state 66
+
+    (33) bloqueaux -> estatuto bloqueaux .
+
+    RBRACE          reduce using rule 33 (bloqueaux -> estatuto bloqueaux .)
+
+
+state 67
+
+    (36) estatuto -> si si2 .
+
+    REGRESA         reduce using rule 36 (estatuto -> si si2 .)
+    ID              reduce using rule 36 (estatuto -> si si2 .)
+    MIENTRAS        reduce using rule 36 (estatuto -> si si2 .)
+    DESDE           reduce using rule 36 (estatuto -> si si2 .)
+    LEE             reduce using rule 36 (estatuto -> si si2 .)
+    ESCRIBE         reduce using rule 36 (estatuto -> si si2 .)
+    SI              reduce using rule 36 (estatuto -> si si2 .)
+    RBRACE          reduce using rule 36 (estatuto -> si si2 .)
+
+
+state 68
+
+    (40) estatuto -> fcall SEMICOLON .
+
+    REGRESA         reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    ID              reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    MIENTRAS        reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    DESDE           reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    LEE             reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    ESCRIBE         reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    SI              reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+    RBRACE          reduce using rule 40 (estatuto -> fcall SEMICOLON .)
+
+
+state 69
+
+    (56) retorno -> REGRESA LPARENT . exp RPARENT SEMICOLON
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    exp                            shift and go to state 85
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 70
+
+    (48) asignacion -> ID pushpilaid . asignacionaux popassign SEMICOLON
+    (50) asignacionaux -> . IGUAL pushpoper expresion
+    (51) asignacionaux -> . dimensiones IGUAL pushpoper expresion
+    (52) dimensiones -> . LCORCH pos RCORCH
+    (53) dimensiones -> . LCORCH pos COMMA pos RCORCH
+
+    IGUAL           shift and go to state 98
+    LCORCH          shift and go to state 100
+
+    asignacionaux                  shift and go to state 97
+    dimensiones                    shift and go to state 99
+
+state 71
+
+    (61) fcall -> ID pushfunId . LPARENT era checkParameter RPARENT
+
+    LPARENT         shift and go to state 101
+
+
+state 72
+
+    (62) fcall -> ID LPARENT . fcallaux RPARENT
+    (69) fcallaux -> . expresion
+    (70) fcallaux -> . expresion COMMA fcallaux
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    fcallaux                       shift and go to state 102
+    expresion                      shift and go to state 103
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 73
+
+    (43) si -> siaux si3 . SINO bloque
+
+    SINO            shift and go to state 106
+
+
+state 74
+
+    (77) mientras -> MIENTRAS while1 . LPARENT expresion RPARENT while2 HAZ bloque while3
+
+    LPARENT         shift and go to state 107
+
+
+state 75
+
+    (81) desde -> DESDE desdeaux . popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    (49) popassign -> .
+
+    HASTA           reduce using rule 49 (popassign -> .)
+
+    popassign                      shift and go to state 108
+
+state 76
+
+    (85) desdeaux -> ID . pushpilaid IGUAL pushpoper exp
+    (86) desdeaux -> ID . pushpilaid dimensiones IGUAL pushpoper exp
+    (115) pushpilaid -> .
+
+    IGUAL           reduce using rule 115 (pushpilaid -> .)
+    LCORCH          reduce using rule 115 (pushpilaid -> .)
+
+    pushpilaid                     shift and go to state 109
+
+state 77
+
+    (57) lectura -> LEE pushpoper . LPARENT lecturaaux RPARENT popio SEMICOLON
+
+    LPARENT         shift and go to state 110
+
+
+state 78
+
+    (71) escritura -> ESCRIBE pushpoper . LPARENT escrituraaux RPARENT popio SEMICOLON
+
+    LPARENT         shift and go to state 111
+
+
+state 79
+
+    (45) siaux -> SI LPARENT . expresion RPARENT si1 ENTONCES bloque
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 112
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 80
+
+    (27) funcaux2 -> ID LPARENT funcaux3 RPARENT . vars bloque dirfunctrue
+    (2) vars -> . VAR varaux
+
+    VAR             shift and go to state 6
+
+    vars                           shift and go to state 113
+
+state 81
+
+    (28) funcaux3 -> dirfuncfalse tipo . ID
+    (29) funcaux3 -> dirfuncfalse tipo . ID COMMA funcaux3
+
+    ID              shift and go to state 114
+
+
+state 82
+
+    (9) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH . CTE_I RCORCH
+    (10) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH . CTE_I RCORCH COMMA varaux2
+
+    CTE_I           shift and go to state 115
+
+
+state 83
+
+    (8) varaux2 -> ID LCORCH CTE_I RCORCH COMMA . varaux2
+    (5) varaux2 -> . ID
+    (6) varaux2 -> . ID COMMA varaux2
+    (7) varaux2 -> . ID LCORCH CTE_I RCORCH
+    (8) varaux2 -> . ID LCORCH CTE_I RCORCH COMMA varaux2
+    (9) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    ID              shift and go to state 30
+
+    varaux2                        shift and go to state 116
+
+state 84
+
+    (102) factor -> LPARENT . addfalsebottom expresion RPARENT removefalsebottom
+    (106) addfalsebottom -> .
+
+    LPARENT         reduce using rule 106 (addfalsebottom -> .)
+    MAS             reduce using rule 106 (addfalsebottom -> .)
+    MENOS           reduce using rule 106 (addfalsebottom -> .)
+    ID              reduce using rule 106 (addfalsebottom -> .)
+    CTE_I           reduce using rule 106 (addfalsebottom -> .)
+    CTE_F           reduce using rule 106 (addfalsebottom -> .)
+    CTE_S           reduce using rule 106 (addfalsebottom -> .)
+    CTE_C           reduce using rule 106 (addfalsebottom -> .)
+
+    addfalsebottom                 shift and go to state 117
+
+state 85
+
+    (56) retorno -> REGRESA LPARENT exp . RPARENT SEMICOLON
+
+    RPARENT         shift and go to state 118
+
+
+state 86
+
+    (93) exp -> termino . popterm
+    (94) exp -> termino . popterm MAS pushpoper exp
+    (95) exp -> termino . popterm MENOS pushpoper exp
+    (97) popterm -> .
+
+    MAS             reduce using rule 97 (popterm -> .)
+    MENOS           reduce using rule 97 (popterm -> .)
+    RPARENT         reduce using rule 97 (popterm -> .)
+    MENOR           reduce using rule 97 (popterm -> .)
+    MAYOR           reduce using rule 97 (popterm -> .)
+    MENORIGUAL      reduce using rule 97 (popterm -> .)
+    MAYORIGUAL      reduce using rule 97 (popterm -> .)
+    COMPARE         reduce using rule 97 (popterm -> .)
+    DIFFERENT       reduce using rule 97 (popterm -> .)
+    AND             reduce using rule 97 (popterm -> .)
+    OR              reduce using rule 97 (popterm -> .)
+    COMMA           reduce using rule 97 (popterm -> .)
+    SEMICOLON       reduce using rule 97 (popterm -> .)
+    HACER           reduce using rule 97 (popterm -> .)
+    HASTA           reduce using rule 97 (popterm -> .)
+
+    popterm                        shift and go to state 119
+
+state 87
+
+    (104) factor -> MAS . pushpoper var_cte
+    (96) pushpoper -> .
+
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 120
+
+state 88
+
+    (105) factor -> MENOS . pushpoper var_cte
+    (96) pushpoper -> .
+
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 121
+
+state 89
+
+    (98) termino -> factor . popfact
+    (99) termino -> factor . popfact MULT pushpoper termino
+    (100) termino -> factor . popfact DIV pushpoper termino
+    (101) popfact -> .
+
+    MULT            reduce using rule 101 (popfact -> .)
+    DIV             reduce using rule 101 (popfact -> .)
+    MAS             reduce using rule 101 (popfact -> .)
+    MENOS           reduce using rule 101 (popfact -> .)
+    RPARENT         reduce using rule 101 (popfact -> .)
+    MENOR           reduce using rule 101 (popfact -> .)
+    MAYOR           reduce using rule 101 (popfact -> .)
+    MENORIGUAL      reduce using rule 101 (popfact -> .)
+    MAYORIGUAL      reduce using rule 101 (popfact -> .)
+    COMPARE         reduce using rule 101 (popfact -> .)
+    DIFFERENT       reduce using rule 101 (popfact -> .)
+    AND             reduce using rule 101 (popfact -> .)
+    OR              reduce using rule 101 (popfact -> .)
+    COMMA           reduce using rule 101 (popfact -> .)
+    SEMICOLON       reduce using rule 101 (popfact -> .)
+    HACER           reduce using rule 101 (popfact -> .)
+    HASTA           reduce using rule 101 (popfact -> .)
+
+    popfact                        shift and go to state 122
+
+state 90
+
+    (103) factor -> var_cte .
+
+    MULT            reduce using rule 103 (factor -> var_cte .)
+    DIV             reduce using rule 103 (factor -> var_cte .)
+    MAS             reduce using rule 103 (factor -> var_cte .)
+    MENOS           reduce using rule 103 (factor -> var_cte .)
+    RPARENT         reduce using rule 103 (factor -> var_cte .)
+    MENOR           reduce using rule 103 (factor -> var_cte .)
+    MAYOR           reduce using rule 103 (factor -> var_cte .)
+    MENORIGUAL      reduce using rule 103 (factor -> var_cte .)
+    MAYORIGUAL      reduce using rule 103 (factor -> var_cte .)
+    COMPARE         reduce using rule 103 (factor -> var_cte .)
+    DIFFERENT       reduce using rule 103 (factor -> var_cte .)
+    AND             reduce using rule 103 (factor -> var_cte .)
+    OR              reduce using rule 103 (factor -> var_cte .)
+    COMMA           reduce using rule 103 (factor -> var_cte .)
+    SEMICOLON       reduce using rule 103 (factor -> var_cte .)
+    HACER           reduce using rule 103 (factor -> var_cte .)
+    HASTA           reduce using rule 103 (factor -> var_cte .)
+
+
+state 91
+
+    (108) var_cte -> ID . pushpilaid
+    (109) var_cte -> ID . pushpilaid dimensiones
+    (61) fcall -> ID . pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> ID . LPARENT fcallaux RPARENT
+    (115) pushpilaid -> .
+    (63) pushfunId -> .
+
+  ! shift/reduce conflict for LPARENT resolved as shift
+    LPARENT         shift and go to state 72
+    LCORCH          reduce using rule 115 (pushpilaid -> .)
+    MULT            reduce using rule 115 (pushpilaid -> .)
+    DIV             reduce using rule 115 (pushpilaid -> .)
+    MAS             reduce using rule 115 (pushpilaid -> .)
+    MENOS           reduce using rule 115 (pushpilaid -> .)
+    RPARENT         reduce using rule 115 (pushpilaid -> .)
+    MENOR           reduce using rule 115 (pushpilaid -> .)
+    MAYOR           reduce using rule 115 (pushpilaid -> .)
+    MENORIGUAL      reduce using rule 115 (pushpilaid -> .)
+    MAYORIGUAL      reduce using rule 115 (pushpilaid -> .)
+    COMPARE         reduce using rule 115 (pushpilaid -> .)
+    DIFFERENT       reduce using rule 115 (pushpilaid -> .)
+    AND             reduce using rule 115 (pushpilaid -> .)
+    OR              reduce using rule 115 (pushpilaid -> .)
+    COMMA           reduce using rule 115 (pushpilaid -> .)
+    SEMICOLON       reduce using rule 115 (pushpilaid -> .)
+    HACER           reduce using rule 115 (pushpilaid -> .)
+    HASTA           reduce using rule 115 (pushpilaid -> .)
+
+  ! LPARENT         [ reduce using rule 63 (pushfunId -> .) ]
+
+    pushpilaid                     shift and go to state 123
+    pushfunId                      shift and go to state 71
+
+state 92
+
+    (110) var_cte -> CTE_I . pushpilao
+    (116) pushpilao -> .
+
+    MULT            reduce using rule 116 (pushpilao -> .)
+    DIV             reduce using rule 116 (pushpilao -> .)
+    MAS             reduce using rule 116 (pushpilao -> .)
+    MENOS           reduce using rule 116 (pushpilao -> .)
+    RPARENT         reduce using rule 116 (pushpilao -> .)
+    MENOR           reduce using rule 116 (pushpilao -> .)
+    MAYOR           reduce using rule 116 (pushpilao -> .)
+    MENORIGUAL      reduce using rule 116 (pushpilao -> .)
+    MAYORIGUAL      reduce using rule 116 (pushpilao -> .)
+    COMPARE         reduce using rule 116 (pushpilao -> .)
+    DIFFERENT       reduce using rule 116 (pushpilao -> .)
+    AND             reduce using rule 116 (pushpilao -> .)
+    OR              reduce using rule 116 (pushpilao -> .)
+    COMMA           reduce using rule 116 (pushpilao -> .)
+    SEMICOLON       reduce using rule 116 (pushpilao -> .)
+    HACER           reduce using rule 116 (pushpilao -> .)
+    HASTA           reduce using rule 116 (pushpilao -> .)
+
+    pushpilao                      shift and go to state 124
+
+state 93
+
+    (111) var_cte -> CTE_F . pushpilao
+    (116) pushpilao -> .
+
+    MULT            reduce using rule 116 (pushpilao -> .)
+    DIV             reduce using rule 116 (pushpilao -> .)
+    MAS             reduce using rule 116 (pushpilao -> .)
+    MENOS           reduce using rule 116 (pushpilao -> .)
+    RPARENT         reduce using rule 116 (pushpilao -> .)
+    MENOR           reduce using rule 116 (pushpilao -> .)
+    MAYOR           reduce using rule 116 (pushpilao -> .)
+    MENORIGUAL      reduce using rule 116 (pushpilao -> .)
+    MAYORIGUAL      reduce using rule 116 (pushpilao -> .)
+    COMPARE         reduce using rule 116 (pushpilao -> .)
+    DIFFERENT       reduce using rule 116 (pushpilao -> .)
+    AND             reduce using rule 116 (pushpilao -> .)
+    OR              reduce using rule 116 (pushpilao -> .)
+    COMMA           reduce using rule 116 (pushpilao -> .)
+    SEMICOLON       reduce using rule 116 (pushpilao -> .)
+    HACER           reduce using rule 116 (pushpilao -> .)
+    HASTA           reduce using rule 116 (pushpilao -> .)
+
+    pushpilao                      shift and go to state 125
+
+state 94
+
+    (112) var_cte -> CTE_S . pushpilao
+    (116) pushpilao -> .
+
+    MULT            reduce using rule 116 (pushpilao -> .)
+    DIV             reduce using rule 116 (pushpilao -> .)
+    MAS             reduce using rule 116 (pushpilao -> .)
+    MENOS           reduce using rule 116 (pushpilao -> .)
+    RPARENT         reduce using rule 116 (pushpilao -> .)
+    MENOR           reduce using rule 116 (pushpilao -> .)
+    MAYOR           reduce using rule 116 (pushpilao -> .)
+    MENORIGUAL      reduce using rule 116 (pushpilao -> .)
+    MAYORIGUAL      reduce using rule 116 (pushpilao -> .)
+    COMPARE         reduce using rule 116 (pushpilao -> .)
+    DIFFERENT       reduce using rule 116 (pushpilao -> .)
+    AND             reduce using rule 116 (pushpilao -> .)
+    OR              reduce using rule 116 (pushpilao -> .)
+    COMMA           reduce using rule 116 (pushpilao -> .)
+    SEMICOLON       reduce using rule 116 (pushpilao -> .)
+    HACER           reduce using rule 116 (pushpilao -> .)
+    HASTA           reduce using rule 116 (pushpilao -> .)
+
+    pushpilao                      shift and go to state 126
+
+state 95
+
+    (113) var_cte -> CTE_C . pushpilao
+    (116) pushpilao -> .
+
+    MULT            reduce using rule 116 (pushpilao -> .)
+    DIV             reduce using rule 116 (pushpilao -> .)
+    MAS             reduce using rule 116 (pushpilao -> .)
+    MENOS           reduce using rule 116 (pushpilao -> .)
+    RPARENT         reduce using rule 116 (pushpilao -> .)
+    MENOR           reduce using rule 116 (pushpilao -> .)
+    MAYOR           reduce using rule 116 (pushpilao -> .)
+    MENORIGUAL      reduce using rule 116 (pushpilao -> .)
+    MAYORIGUAL      reduce using rule 116 (pushpilao -> .)
+    COMPARE         reduce using rule 116 (pushpilao -> .)
+    DIFFERENT       reduce using rule 116 (pushpilao -> .)
+    AND             reduce using rule 116 (pushpilao -> .)
+    OR              reduce using rule 116 (pushpilao -> .)
+    COMMA           reduce using rule 116 (pushpilao -> .)
+    SEMICOLON       reduce using rule 116 (pushpilao -> .)
+    HACER           reduce using rule 116 (pushpilao -> .)
+    HASTA           reduce using rule 116 (pushpilao -> .)
+
+    pushpilao                      shift and go to state 127
+
+state 96
+
+    (114) var_cte -> fcall .
+
+    MULT            reduce using rule 114 (var_cte -> fcall .)
+    DIV             reduce using rule 114 (var_cte -> fcall .)
+    MAS             reduce using rule 114 (var_cte -> fcall .)
+    MENOS           reduce using rule 114 (var_cte -> fcall .)
+    RPARENT         reduce using rule 114 (var_cte -> fcall .)
+    MENOR           reduce using rule 114 (var_cte -> fcall .)
+    MAYOR           reduce using rule 114 (var_cte -> fcall .)
+    MENORIGUAL      reduce using rule 114 (var_cte -> fcall .)
+    MAYORIGUAL      reduce using rule 114 (var_cte -> fcall .)
+    COMPARE         reduce using rule 114 (var_cte -> fcall .)
+    DIFFERENT       reduce using rule 114 (var_cte -> fcall .)
+    AND             reduce using rule 114 (var_cte -> fcall .)
+    OR              reduce using rule 114 (var_cte -> fcall .)
+    COMMA           reduce using rule 114 (var_cte -> fcall .)
+    SEMICOLON       reduce using rule 114 (var_cte -> fcall .)
+    HACER           reduce using rule 114 (var_cte -> fcall .)
+    HASTA           reduce using rule 114 (var_cte -> fcall .)
+
+
+state 97
+
+    (48) asignacion -> ID pushpilaid asignacionaux . popassign SEMICOLON
+    (49) popassign -> .
+
+    SEMICOLON       reduce using rule 49 (popassign -> .)
+
+    popassign                      shift and go to state 128
+
+state 98
+
+    (50) asignacionaux -> IGUAL . pushpoper expresion
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 129
+
+state 99
+
+    (51) asignacionaux -> dimensiones . IGUAL pushpoper expresion
+
+    IGUAL           shift and go to state 130
+
+
+state 100
+
+    (52) dimensiones -> LCORCH . pos RCORCH
+    (53) dimensiones -> LCORCH . pos COMMA pos RCORCH
+    (54) pos -> . ID
+    (55) pos -> . CTE_I
+
+    ID              shift and go to state 132
+    CTE_I           shift and go to state 133
+
+    pos                            shift and go to state 131
+
+state 101
+
+    (61) fcall -> ID pushfunId LPARENT . era checkParameter RPARENT
+    (64) era -> .
+
+    LPARENT         reduce using rule 64 (era -> .)
+    MAS             reduce using rule 64 (era -> .)
+    MENOS           reduce using rule 64 (era -> .)
+    ID              reduce using rule 64 (era -> .)
+    CTE_I           reduce using rule 64 (era -> .)
+    CTE_F           reduce using rule 64 (era -> .)
+    CTE_S           reduce using rule 64 (era -> .)
+    CTE_C           reduce using rule 64 (era -> .)
+
+    era                            shift and go to state 134
+
+state 102
+
+    (62) fcall -> ID LPARENT fcallaux . RPARENT
+
+    RPARENT         shift and go to state 135
+
+
+state 103
+
+    (69) fcallaux -> expresion .
+    (70) fcallaux -> expresion . COMMA fcallaux
+
+    RPARENT         reduce using rule 69 (fcallaux -> expresion .)
+    COMMA           shift and go to state 136
+
+
+state 104
+
+    (87) expresion -> expr .
+    (88) expresion -> expr . log expresion
+    (117) log -> . AND pushpoper
+    (118) log -> . OR pushpoper
+
+    COMMA           reduce using rule 87 (expresion -> expr .)
+    RPARENT         reduce using rule 87 (expresion -> expr .)
+    SEMICOLON       reduce using rule 87 (expresion -> expr .)
+    AND             shift and go to state 138
+    OR              shift and go to state 139
+
+    log                            shift and go to state 137
+
+state 105
+
+    (90) expr -> exp . poprel
+    (91) expr -> exp . poprel rel expr
+    (92) poprel -> .
+
+    MENOR           reduce using rule 92 (poprel -> .)
+    MAYOR           reduce using rule 92 (poprel -> .)
+    MENORIGUAL      reduce using rule 92 (poprel -> .)
+    MAYORIGUAL      reduce using rule 92 (poprel -> .)
+    COMPARE         reduce using rule 92 (poprel -> .)
+    DIFFERENT       reduce using rule 92 (poprel -> .)
+    AND             reduce using rule 92 (poprel -> .)
+    OR              reduce using rule 92 (poprel -> .)
+    COMMA           reduce using rule 92 (poprel -> .)
+    RPARENT         reduce using rule 92 (poprel -> .)
+    SEMICOLON       reduce using rule 92 (poprel -> .)
+
+    poprel                         shift and go to state 140
+
+state 106
+
+    (43) si -> siaux si3 SINO . bloque
+    (30) bloque -> . LBRACE RBRACE
+    (31) bloque -> . LBRACE bloqueaux RBRACE
+
+    LBRACE          shift and go to state 38
+
+    bloque                         shift and go to state 141
+
+state 107
+
+    (77) mientras -> MIENTRAS while1 LPARENT . expresion RPARENT while2 HAZ bloque while3
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 142
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 108
+
+    (81) desde -> DESDE desdeaux popassign . while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    (78) while1 -> .
+
+    HASTA           reduce using rule 78 (while1 -> .)
+
+    while1                         shift and go to state 143
+
+state 109
+
+    (85) desdeaux -> ID pushpilaid . IGUAL pushpoper exp
+    (86) desdeaux -> ID pushpilaid . dimensiones IGUAL pushpoper exp
+    (52) dimensiones -> . LCORCH pos RCORCH
+    (53) dimensiones -> . LCORCH pos COMMA pos RCORCH
+
+    IGUAL           shift and go to state 144
+    LCORCH          shift and go to state 100
+
+    dimensiones                    shift and go to state 145
+
+state 110
+
+    (57) lectura -> LEE pushpoper LPARENT . lecturaaux RPARENT popio SEMICOLON
+    (58) lecturaaux -> . ID pushpilaid
+    (59) lecturaaux -> . ID pushpilaid dimensiones
+    (60) lecturaaux -> . ID pushpilaid dimensiones COMMA lecturaaux
+
+    ID              shift and go to state 147
+
+    lecturaaux                     shift and go to state 146
+
+state 111
+
+    (71) escritura -> ESCRIBE pushpoper LPARENT . escrituraaux RPARENT popio SEMICOLON
+    (73) escrituraaux -> . CTE_S
+    (74) escrituraaux -> . expresion
+    (75) escrituraaux -> . CTE_S COMMA escrituraaux
+    (76) escrituraaux -> . expresion COMMA escrituraaux
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    CTE_S           shift and go to state 149
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_C           shift and go to state 95
+
+    escrituraaux                   shift and go to state 148
+    expresion                      shift and go to state 150
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 112
+
+    (45) siaux -> SI LPARENT expresion . RPARENT si1 ENTONCES bloque
+
+    RPARENT         shift and go to state 151
+
+
+state 113
+
+    (27) funcaux2 -> ID LPARENT funcaux3 RPARENT vars . bloque dirfunctrue
+    (30) bloque -> . LBRACE RBRACE
+    (31) bloque -> . LBRACE bloqueaux RBRACE
+
+    LBRACE          shift and go to state 38
+
+    bloque                         shift and go to state 152
+
+state 114
+
+    (28) funcaux3 -> dirfuncfalse tipo ID .
+    (29) funcaux3 -> dirfuncfalse tipo ID . COMMA funcaux3
+
+    RPARENT         reduce using rule 28 (funcaux3 -> dirfuncfalse tipo ID .)
+    COMMA           shift and go to state 153
+
+
+state 115
+
+    (9) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I . RCORCH
+    (10) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I . RCORCH COMMA varaux2
+
+    RCORCH          shift and go to state 154
+
+
+state 116
+
+    (8) varaux2 -> ID LCORCH CTE_I RCORCH COMMA varaux2 .
+
+    SEMICOLON       reduce using rule 8 (varaux2 -> ID LCORCH CTE_I RCORCH COMMA varaux2 .)
+
+
+state 117
+
+    (102) factor -> LPARENT addfalsebottom . expresion RPARENT removefalsebottom
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 155
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 118
+
+    (56) retorno -> REGRESA LPARENT exp RPARENT . SEMICOLON
+
+    SEMICOLON       shift and go to state 156
+
+
+state 119
+
+    (93) exp -> termino popterm .
+    (94) exp -> termino popterm . MAS pushpoper exp
+    (95) exp -> termino popterm . MENOS pushpoper exp
+
+    RPARENT         reduce using rule 93 (exp -> termino popterm .)
+    MENOR           reduce using rule 93 (exp -> termino popterm .)
+    MAYOR           reduce using rule 93 (exp -> termino popterm .)
+    MENORIGUAL      reduce using rule 93 (exp -> termino popterm .)
+    MAYORIGUAL      reduce using rule 93 (exp -> termino popterm .)
+    COMPARE         reduce using rule 93 (exp -> termino popterm .)
+    DIFFERENT       reduce using rule 93 (exp -> termino popterm .)
+    AND             reduce using rule 93 (exp -> termino popterm .)
+    OR              reduce using rule 93 (exp -> termino popterm .)
+    COMMA           reduce using rule 93 (exp -> termino popterm .)
+    SEMICOLON       reduce using rule 93 (exp -> termino popterm .)
+    HACER           reduce using rule 93 (exp -> termino popterm .)
+    HASTA           reduce using rule 93 (exp -> termino popterm .)
+    MAS             shift and go to state 157
+    MENOS           shift and go to state 158
+
+
+state 120
+
+    (104) factor -> MAS pushpoper . var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    var_cte                        shift and go to state 159
+    fcall                          shift and go to state 96
+
+state 121
+
+    (105) factor -> MENOS pushpoper . var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    var_cte                        shift and go to state 160
+    fcall                          shift and go to state 96
+
+state 122
+
+    (98) termino -> factor popfact .
+    (99) termino -> factor popfact . MULT pushpoper termino
+    (100) termino -> factor popfact . DIV pushpoper termino
+
+    MAS             reduce using rule 98 (termino -> factor popfact .)
+    MENOS           reduce using rule 98 (termino -> factor popfact .)
+    RPARENT         reduce using rule 98 (termino -> factor popfact .)
+    MENOR           reduce using rule 98 (termino -> factor popfact .)
+    MAYOR           reduce using rule 98 (termino -> factor popfact .)
+    MENORIGUAL      reduce using rule 98 (termino -> factor popfact .)
+    MAYORIGUAL      reduce using rule 98 (termino -> factor popfact .)
+    COMPARE         reduce using rule 98 (termino -> factor popfact .)
+    DIFFERENT       reduce using rule 98 (termino -> factor popfact .)
+    AND             reduce using rule 98 (termino -> factor popfact .)
+    OR              reduce using rule 98 (termino -> factor popfact .)
+    COMMA           reduce using rule 98 (termino -> factor popfact .)
+    SEMICOLON       reduce using rule 98 (termino -> factor popfact .)
+    HACER           reduce using rule 98 (termino -> factor popfact .)
+    HASTA           reduce using rule 98 (termino -> factor popfact .)
+    MULT            shift and go to state 161
+    DIV             shift and go to state 162
+
+
+state 123
+
+    (108) var_cte -> ID pushpilaid .
+    (109) var_cte -> ID pushpilaid . dimensiones
+    (52) dimensiones -> . LCORCH pos RCORCH
+    (53) dimensiones -> . LCORCH pos COMMA pos RCORCH
+
+    MULT            reduce using rule 108 (var_cte -> ID pushpilaid .)
+    DIV             reduce using rule 108 (var_cte -> ID pushpilaid .)
+    MAS             reduce using rule 108 (var_cte -> ID pushpilaid .)
+    MENOS           reduce using rule 108 (var_cte -> ID pushpilaid .)
+    RPARENT         reduce using rule 108 (var_cte -> ID pushpilaid .)
+    MENOR           reduce using rule 108 (var_cte -> ID pushpilaid .)
+    MAYOR           reduce using rule 108 (var_cte -> ID pushpilaid .)
+    MENORIGUAL      reduce using rule 108 (var_cte -> ID pushpilaid .)
+    MAYORIGUAL      reduce using rule 108 (var_cte -> ID pushpilaid .)
+    COMPARE         reduce using rule 108 (var_cte -> ID pushpilaid .)
+    DIFFERENT       reduce using rule 108 (var_cte -> ID pushpilaid .)
+    AND             reduce using rule 108 (var_cte -> ID pushpilaid .)
+    OR              reduce using rule 108 (var_cte -> ID pushpilaid .)
+    COMMA           reduce using rule 108 (var_cte -> ID pushpilaid .)
+    SEMICOLON       reduce using rule 108 (var_cte -> ID pushpilaid .)
+    HACER           reduce using rule 108 (var_cte -> ID pushpilaid .)
+    HASTA           reduce using rule 108 (var_cte -> ID pushpilaid .)
+    LCORCH          shift and go to state 100
+
+    dimensiones                    shift and go to state 163
+
+state 124
+
+    (110) var_cte -> CTE_I pushpilao .
+
+    MULT            reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    DIV             reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    MAS             reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    MENOS           reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    RPARENT         reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    MENOR           reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    MAYOR           reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    MENORIGUAL      reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    MAYORIGUAL      reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    COMPARE         reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    DIFFERENT       reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    AND             reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    OR              reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    COMMA           reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    SEMICOLON       reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    HACER           reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+    HASTA           reduce using rule 110 (var_cte -> CTE_I pushpilao .)
+
+
+state 125
+
+    (111) var_cte -> CTE_F pushpilao .
+
+    MULT            reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    DIV             reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    MAS             reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    MENOS           reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    RPARENT         reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    MENOR           reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    MAYOR           reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    MENORIGUAL      reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    MAYORIGUAL      reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    COMPARE         reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    DIFFERENT       reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    AND             reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    OR              reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    COMMA           reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    SEMICOLON       reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    HACER           reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+    HASTA           reduce using rule 111 (var_cte -> CTE_F pushpilao .)
+
+
+state 126
+
+    (112) var_cte -> CTE_S pushpilao .
+
+    MULT            reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    DIV             reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    MAS             reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    MENOS           reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    RPARENT         reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    MENOR           reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    MAYOR           reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    MENORIGUAL      reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    MAYORIGUAL      reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    COMPARE         reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    DIFFERENT       reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    AND             reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    OR              reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    COMMA           reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    SEMICOLON       reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    HACER           reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+    HASTA           reduce using rule 112 (var_cte -> CTE_S pushpilao .)
+
+
+state 127
+
+    (113) var_cte -> CTE_C pushpilao .
+
+    MULT            reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    DIV             reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    MAS             reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    MENOS           reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    RPARENT         reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    MENOR           reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    MAYOR           reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    MENORIGUAL      reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    MAYORIGUAL      reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    COMPARE         reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    DIFFERENT       reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    AND             reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    OR              reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    COMMA           reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    SEMICOLON       reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    HACER           reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+    HASTA           reduce using rule 113 (var_cte -> CTE_C pushpilao .)
+
+
+state 128
+
+    (48) asignacion -> ID pushpilaid asignacionaux popassign . SEMICOLON
+
+    SEMICOLON       shift and go to state 164
+
+
+state 129
+
+    (50) asignacionaux -> IGUAL pushpoper . expresion
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 165
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 130
+
+    (51) asignacionaux -> dimensiones IGUAL . pushpoper expresion
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 166
+
+state 131
+
+    (52) dimensiones -> LCORCH pos . RCORCH
+    (53) dimensiones -> LCORCH pos . COMMA pos RCORCH
+
+    RCORCH          shift and go to state 167
+    COMMA           shift and go to state 168
+
+
+state 132
+
+    (54) pos -> ID .
+
+    RCORCH          reduce using rule 54 (pos -> ID .)
+    COMMA           reduce using rule 54 (pos -> ID .)
+
+
+state 133
+
+    (55) pos -> CTE_I .
+
+    RCORCH          reduce using rule 55 (pos -> CTE_I .)
+    COMMA           reduce using rule 55 (pos -> CTE_I .)
+
+
+state 134
+
+    (61) fcall -> ID pushfunId LPARENT era . checkParameter RPARENT
+    (65) checkParameter -> . exp checkArg
+    (66) checkParameter -> . exp checkArg COMMA addParameter checkParameter
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    checkParameter                 shift and go to state 169
+    exp                            shift and go to state 170
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 135
+
+    (62) fcall -> ID LPARENT fcallaux RPARENT .
+
+    SEMICOLON       reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MULT            reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    DIV             reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MAS             reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MENOS           reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    RPARENT         reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MENOR           reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MAYOR           reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MENORIGUAL      reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    MAYORIGUAL      reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    COMPARE         reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    DIFFERENT       reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    AND             reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    OR              reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    COMMA           reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    HACER           reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+    HASTA           reduce using rule 62 (fcall -> ID LPARENT fcallaux RPARENT .)
+
+
+state 136
+
+    (70) fcallaux -> expresion COMMA . fcallaux
+    (69) fcallaux -> . expresion
+    (70) fcallaux -> . expresion COMMA fcallaux
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 103
+    fcallaux                       shift and go to state 171
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 137
+
+    (88) expresion -> expr log . expresion
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expr                           shift and go to state 104
+    expresion                      shift and go to state 172
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 138
+
+    (117) log -> AND . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 173
+
+state 139
+
+    (118) log -> OR . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 174
+
+state 140
+
+    (90) expr -> exp poprel .
+    (91) expr -> exp poprel . rel expr
+    (119) rel -> . MENOR pushpoper
+    (120) rel -> . MAYOR pushpoper
+    (121) rel -> . MENORIGUAL pushpoper
+    (122) rel -> . MAYORIGUAL pushpoper
+    (123) rel -> . COMPARE pushpoper
+    (124) rel -> . DIFFERENT pushpoper
+
+    AND             reduce using rule 90 (expr -> exp poprel .)
+    OR              reduce using rule 90 (expr -> exp poprel .)
+    COMMA           reduce using rule 90 (expr -> exp poprel .)
+    RPARENT         reduce using rule 90 (expr -> exp poprel .)
+    SEMICOLON       reduce using rule 90 (expr -> exp poprel .)
+    MENOR           shift and go to state 176
+    MAYOR           shift and go to state 177
+    MENORIGUAL      shift and go to state 178
+    MAYORIGUAL      shift and go to state 179
+    COMPARE         shift and go to state 180
+    DIFFERENT       shift and go to state 181
+
+    rel                            shift and go to state 175
+
+state 141
+
+    (43) si -> siaux si3 SINO bloque .
+
+    REGRESA         reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    ID              reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    MIENTRAS        reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    DESDE           reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    LEE             reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    ESCRIBE         reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    SI              reduce using rule 43 (si -> siaux si3 SINO bloque .)
+    RBRACE          reduce using rule 43 (si -> siaux si3 SINO bloque .)
+
+
+state 142
+
+    (77) mientras -> MIENTRAS while1 LPARENT expresion . RPARENT while2 HAZ bloque while3
+
+    RPARENT         shift and go to state 182
+
+
+state 143
+
+    (81) desde -> DESDE desdeaux popassign while1 . HASTA exp for2 while2 HACER bloque for4 for5 while3
+
+    HASTA           shift and go to state 183
+
+
+state 144
+
+    (85) desdeaux -> ID pushpilaid IGUAL . pushpoper exp
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 184
+
+state 145
+
+    (86) desdeaux -> ID pushpilaid dimensiones . IGUAL pushpoper exp
+
+    IGUAL           shift and go to state 185
+
+
+state 146
+
+    (57) lectura -> LEE pushpoper LPARENT lecturaaux . RPARENT popio SEMICOLON
+
+    RPARENT         shift and go to state 186
+
+
+state 147
+
+    (58) lecturaaux -> ID . pushpilaid
+    (59) lecturaaux -> ID . pushpilaid dimensiones
+    (60) lecturaaux -> ID . pushpilaid dimensiones COMMA lecturaaux
+    (115) pushpilaid -> .
+
+    LCORCH          reduce using rule 115 (pushpilaid -> .)
+    RPARENT         reduce using rule 115 (pushpilaid -> .)
+
+    pushpilaid                     shift and go to state 187
+
+state 148
+
+    (71) escritura -> ESCRIBE pushpoper LPARENT escrituraaux . RPARENT popio SEMICOLON
+
+    RPARENT         shift and go to state 188
+
+
+state 149
+
+    (73) escrituraaux -> CTE_S .
+    (75) escrituraaux -> CTE_S . COMMA escrituraaux
+    (112) var_cte -> CTE_S . pushpilao
+    (116) pushpilao -> .
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! reduce/reduce conflict for RPARENT resolved using rule 73 (escrituraaux -> CTE_S .)
+    RPARENT         reduce using rule 73 (escrituraaux -> CTE_S .)
+    COMMA           shift and go to state 189
+    MULT            reduce using rule 116 (pushpilao -> .)
+    DIV             reduce using rule 116 (pushpilao -> .)
+    MAS             reduce using rule 116 (pushpilao -> .)
+    MENOS           reduce using rule 116 (pushpilao -> .)
+    MENOR           reduce using rule 116 (pushpilao -> .)
+    MAYOR           reduce using rule 116 (pushpilao -> .)
+    MENORIGUAL      reduce using rule 116 (pushpilao -> .)
+    MAYORIGUAL      reduce using rule 116 (pushpilao -> .)
+    COMPARE         reduce using rule 116 (pushpilao -> .)
+    DIFFERENT       reduce using rule 116 (pushpilao -> .)
+    AND             reduce using rule 116 (pushpilao -> .)
+    OR              reduce using rule 116 (pushpilao -> .)
+
+  ! COMMA           [ reduce using rule 116 (pushpilao -> .) ]
+  ! RPARENT         [ reduce using rule 116 (pushpilao -> .) ]
+
+    pushpilao                      shift and go to state 126
+
+state 150
+
+    (74) escrituraaux -> expresion .
+    (76) escrituraaux -> expresion . COMMA escrituraaux
+
+    RPARENT         reduce using rule 74 (escrituraaux -> expresion .)
+    COMMA           shift and go to state 190
+
+
+state 151
+
+    (45) siaux -> SI LPARENT expresion RPARENT . si1 ENTONCES bloque
+    (46) si1 -> .
+
+    ENTONCES        reduce using rule 46 (si1 -> .)
+
+    si1                            shift and go to state 191
+
+state 152
+
+    (27) funcaux2 -> ID LPARENT funcaux3 RPARENT vars bloque . dirfunctrue
+    (130) dirfunctrue -> .
+
+    FUNCION         reduce using rule 130 (dirfunctrue -> .)
+    PRINCIPAL       reduce using rule 130 (dirfunctrue -> .)
+
+    dirfunctrue                    shift and go to state 192
+
+state 153
+
+    (29) funcaux3 -> dirfuncfalse tipo ID COMMA . funcaux3
+    (28) funcaux3 -> . dirfuncfalse tipo ID
+    (29) funcaux3 -> . dirfuncfalse tipo ID COMMA funcaux3
+    (131) dirfuncfalse -> .
+
+    INT             reduce using rule 131 (dirfuncfalse -> .)
+    FLOAT           reduce using rule 131 (dirfuncfalse -> .)
+    CHAR            reduce using rule 131 (dirfuncfalse -> .)
+    STRING          reduce using rule 131 (dirfuncfalse -> .)
+
+    dirfuncfalse                   shift and go to state 63
+    funcaux3                       shift and go to state 193
+
+state 154
+
+    (9) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH .
+    (10) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH . COMMA varaux2
+
+    SEMICOLON       reduce using rule 9 (varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH .)
+    COMMA           shift and go to state 194
+
+
+state 155
+
+    (102) factor -> LPARENT addfalsebottom expresion . RPARENT removefalsebottom
+
+    RPARENT         shift and go to state 195
+
+
+state 156
+
+    (56) retorno -> REGRESA LPARENT exp RPARENT SEMICOLON .
+
+    RBRACE          reduce using rule 56 (retorno -> REGRESA LPARENT exp RPARENT SEMICOLON .)
+
+
+state 157
+
+    (94) exp -> termino popterm MAS . pushpoper exp
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 196
+
+state 158
+
+    (95) exp -> termino popterm MENOS . pushpoper exp
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 197
+
+state 159
+
+    (104) factor -> MAS pushpoper var_cte .
+
+    MULT            reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    DIV             reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    MAS             reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    MENOS           reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    RPARENT         reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    MENOR           reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    MAYOR           reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    MENORIGUAL      reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    MAYORIGUAL      reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    COMPARE         reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    DIFFERENT       reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    AND             reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    OR              reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    COMMA           reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    SEMICOLON       reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    HACER           reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+    HASTA           reduce using rule 104 (factor -> MAS pushpoper var_cte .)
+
+
+state 160
+
+    (105) factor -> MENOS pushpoper var_cte .
+
+    MULT            reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    DIV             reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    MAS             reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    MENOS           reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    RPARENT         reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    MENOR           reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    MAYOR           reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    MENORIGUAL      reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    MAYORIGUAL      reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    COMPARE         reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    DIFFERENT       reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    AND             reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    OR              reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    COMMA           reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    SEMICOLON       reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    HACER           reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+    HASTA           reduce using rule 105 (factor -> MENOS pushpoper var_cte .)
+
+
+state 161
+
+    (99) termino -> factor popfact MULT . pushpoper termino
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 198
+
+state 162
+
+    (100) termino -> factor popfact DIV . pushpoper termino
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 199
+
+state 163
+
+    (109) var_cte -> ID pushpilaid dimensiones .
+
+    MULT            reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    DIV             reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    MAS             reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    MENOS           reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    RPARENT         reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    MENOR           reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    MAYOR           reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    MENORIGUAL      reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    MAYORIGUAL      reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    COMPARE         reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    DIFFERENT       reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    AND             reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    OR              reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    COMMA           reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    SEMICOLON       reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    HACER           reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+    HASTA           reduce using rule 109 (var_cte -> ID pushpilaid dimensiones .)
+
+
+state 164
+
+    (48) asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .
+
+    REGRESA         reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    ID              reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    MIENTRAS        reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    DESDE           reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    LEE             reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    ESCRIBE         reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    SI              reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+    RBRACE          reduce using rule 48 (asignacion -> ID pushpilaid asignacionaux popassign SEMICOLON .)
+
+
+state 165
+
+    (50) asignacionaux -> IGUAL pushpoper expresion .
+
+    SEMICOLON       reduce using rule 50 (asignacionaux -> IGUAL pushpoper expresion .)
+
+
+state 166
+
+    (51) asignacionaux -> dimensiones IGUAL pushpoper . expresion
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 200
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 167
+
+    (52) dimensiones -> LCORCH pos RCORCH .
+
+    IGUAL           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MULT            reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    DIV             reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MAS             reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MENOS           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    RPARENT         reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MENOR           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MAYOR           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MENORIGUAL      reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    MAYORIGUAL      reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    COMPARE         reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    DIFFERENT       reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    AND             reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    OR              reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    COMMA           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    SEMICOLON       reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    HACER           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+    HASTA           reduce using rule 52 (dimensiones -> LCORCH pos RCORCH .)
+
+
+state 168
+
+    (53) dimensiones -> LCORCH pos COMMA . pos RCORCH
+    (54) pos -> . ID
+    (55) pos -> . CTE_I
+
+    ID              shift and go to state 132
+    CTE_I           shift and go to state 133
+
+    pos                            shift and go to state 201
+
+state 169
+
+    (61) fcall -> ID pushfunId LPARENT era checkParameter . RPARENT
+
+    RPARENT         shift and go to state 202
+
+
+state 170
+
+    (65) checkParameter -> exp . checkArg
+    (66) checkParameter -> exp . checkArg COMMA addParameter checkParameter
+    (68) checkArg -> .
+
+    COMMA           reduce using rule 68 (checkArg -> .)
+    RPARENT         reduce using rule 68 (checkArg -> .)
+
+    checkArg                       shift and go to state 203
+
+state 171
+
+    (70) fcallaux -> expresion COMMA fcallaux .
+
+    RPARENT         reduce using rule 70 (fcallaux -> expresion COMMA fcallaux .)
+
+
+state 172
+
+    (88) expresion -> expr log expresion .
+
+    COMMA           reduce using rule 88 (expresion -> expr log expresion .)
+    RPARENT         reduce using rule 88 (expresion -> expr log expresion .)
+    SEMICOLON       reduce using rule 88 (expresion -> expr log expresion .)
+
+
+state 173
+
+    (117) log -> AND pushpoper .
+
+    LPARENT         reduce using rule 117 (log -> AND pushpoper .)
+    MAS             reduce using rule 117 (log -> AND pushpoper .)
+    MENOS           reduce using rule 117 (log -> AND pushpoper .)
+    ID              reduce using rule 117 (log -> AND pushpoper .)
+    CTE_I           reduce using rule 117 (log -> AND pushpoper .)
+    CTE_F           reduce using rule 117 (log -> AND pushpoper .)
+    CTE_S           reduce using rule 117 (log -> AND pushpoper .)
+    CTE_C           reduce using rule 117 (log -> AND pushpoper .)
+
+
+state 174
+
+    (118) log -> OR pushpoper .
+
+    LPARENT         reduce using rule 118 (log -> OR pushpoper .)
+    MAS             reduce using rule 118 (log -> OR pushpoper .)
+    MENOS           reduce using rule 118 (log -> OR pushpoper .)
+    ID              reduce using rule 118 (log -> OR pushpoper .)
+    CTE_I           reduce using rule 118 (log -> OR pushpoper .)
+    CTE_F           reduce using rule 118 (log -> OR pushpoper .)
+    CTE_S           reduce using rule 118 (log -> OR pushpoper .)
+    CTE_C           reduce using rule 118 (log -> OR pushpoper .)
+
+
+state 175
+
+    (91) expr -> exp poprel rel . expr
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    exp                            shift and go to state 105
+    expr                           shift and go to state 204
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 176
+
+    (119) rel -> MENOR . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 205
+
+state 177
+
+    (120) rel -> MAYOR . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 206
+
+state 178
+
+    (121) rel -> MENORIGUAL . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 207
+
+state 179
+
+    (122) rel -> MAYORIGUAL . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 208
+
+state 180
+
+    (123) rel -> COMPARE . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 209
+
+state 181
+
+    (124) rel -> DIFFERENT . pushpoper
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 210
+
+state 182
+
+    (77) mientras -> MIENTRAS while1 LPARENT expresion RPARENT . while2 HAZ bloque while3
+    (79) while2 -> .
+
+    HAZ             reduce using rule 79 (while2 -> .)
+
+    while2                         shift and go to state 211
+
+state 183
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA . exp for2 while2 HACER bloque for4 for5 while3
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    exp                            shift and go to state 212
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 184
+
+    (85) desdeaux -> ID pushpilaid IGUAL pushpoper . exp
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    exp                            shift and go to state 213
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 185
+
+    (86) desdeaux -> ID pushpilaid dimensiones IGUAL . pushpoper exp
+    (96) pushpoper -> .
+
+    LPARENT         reduce using rule 96 (pushpoper -> .)
+    MAS             reduce using rule 96 (pushpoper -> .)
+    MENOS           reduce using rule 96 (pushpoper -> .)
+    ID              reduce using rule 96 (pushpoper -> .)
+    CTE_I           reduce using rule 96 (pushpoper -> .)
+    CTE_F           reduce using rule 96 (pushpoper -> .)
+    CTE_S           reduce using rule 96 (pushpoper -> .)
+    CTE_C           reduce using rule 96 (pushpoper -> .)
+
+    pushpoper                      shift and go to state 214
+
+state 186
+
+    (57) lectura -> LEE pushpoper LPARENT lecturaaux RPARENT . popio SEMICOLON
+    (72) popio -> .
+
+    SEMICOLON       reduce using rule 72 (popio -> .)
+
+    popio                          shift and go to state 215
+
+state 187
+
+    (58) lecturaaux -> ID pushpilaid .
+    (59) lecturaaux -> ID pushpilaid . dimensiones
+    (60) lecturaaux -> ID pushpilaid . dimensiones COMMA lecturaaux
+    (52) dimensiones -> . LCORCH pos RCORCH
+    (53) dimensiones -> . LCORCH pos COMMA pos RCORCH
+
+    RPARENT         reduce using rule 58 (lecturaaux -> ID pushpilaid .)
+    LCORCH          shift and go to state 100
+
+    dimensiones                    shift and go to state 216
+
+state 188
+
+    (71) escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT . popio SEMICOLON
+    (72) popio -> .
+
+    SEMICOLON       reduce using rule 72 (popio -> .)
+
+    popio                          shift and go to state 217
+
+state 189
+
+    (75) escrituraaux -> CTE_S COMMA . escrituraaux
+    (73) escrituraaux -> . CTE_S
+    (74) escrituraaux -> . expresion
+    (75) escrituraaux -> . CTE_S COMMA escrituraaux
+    (76) escrituraaux -> . expresion COMMA escrituraaux
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    CTE_S           shift and go to state 149
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_C           shift and go to state 95
+
+    escrituraaux                   shift and go to state 218
+    expresion                      shift and go to state 150
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 190
+
+    (76) escrituraaux -> expresion COMMA . escrituraaux
+    (73) escrituraaux -> . CTE_S
+    (74) escrituraaux -> . expresion
+    (75) escrituraaux -> . CTE_S COMMA escrituraaux
+    (76) escrituraaux -> . expresion COMMA escrituraaux
+    (87) expresion -> . expr
+    (88) expresion -> . expr log expresion
+    (90) expr -> . exp poprel
+    (91) expr -> . exp poprel rel expr
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    CTE_S           shift and go to state 149
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_C           shift and go to state 95
+
+    expresion                      shift and go to state 150
+    escrituraaux                   shift and go to state 219
+    expr                           shift and go to state 104
+    exp                            shift and go to state 105
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 191
+
+    (45) siaux -> SI LPARENT expresion RPARENT si1 . ENTONCES bloque
+
+    ENTONCES        shift and go to state 220
+
+
+state 192
+
+    (27) funcaux2 -> ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue .
+
+    FUNCION         reduce using rule 27 (funcaux2 -> ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue .)
+    PRINCIPAL       reduce using rule 27 (funcaux2 -> ID LPARENT funcaux3 RPARENT vars bloque dirfunctrue .)
+
+
+state 193
+
+    (29) funcaux3 -> dirfuncfalse tipo ID COMMA funcaux3 .
+
+    RPARENT         reduce using rule 29 (funcaux3 -> dirfuncfalse tipo ID COMMA funcaux3 .)
+
+
+state 194
+
+    (10) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA . varaux2
+    (5) varaux2 -> . ID
+    (6) varaux2 -> . ID COMMA varaux2
+    (7) varaux2 -> . ID LCORCH CTE_I RCORCH
+    (8) varaux2 -> . ID LCORCH CTE_I RCORCH COMMA varaux2
+    (9) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
+    (10) varaux2 -> . ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2
+
+    ID              shift and go to state 30
+
+    varaux2                        shift and go to state 221
+
+state 195
+
+    (102) factor -> LPARENT addfalsebottom expresion RPARENT . removefalsebottom
+    (107) removefalsebottom -> .
+
+    MULT            reduce using rule 107 (removefalsebottom -> .)
+    DIV             reduce using rule 107 (removefalsebottom -> .)
+    MAS             reduce using rule 107 (removefalsebottom -> .)
+    MENOS           reduce using rule 107 (removefalsebottom -> .)
+    RPARENT         reduce using rule 107 (removefalsebottom -> .)
+    MENOR           reduce using rule 107 (removefalsebottom -> .)
+    MAYOR           reduce using rule 107 (removefalsebottom -> .)
+    MENORIGUAL      reduce using rule 107 (removefalsebottom -> .)
+    MAYORIGUAL      reduce using rule 107 (removefalsebottom -> .)
+    COMPARE         reduce using rule 107 (removefalsebottom -> .)
+    DIFFERENT       reduce using rule 107 (removefalsebottom -> .)
+    AND             reduce using rule 107 (removefalsebottom -> .)
+    OR              reduce using rule 107 (removefalsebottom -> .)
+    COMMA           reduce using rule 107 (removefalsebottom -> .)
+    SEMICOLON       reduce using rule 107 (removefalsebottom -> .)
+    HACER           reduce using rule 107 (removefalsebottom -> .)
+    HASTA           reduce using rule 107 (removefalsebottom -> .)
+
+    removefalsebottom              shift and go to state 222
+
+state 196
+
+    (94) exp -> termino popterm MAS pushpoper . exp
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    termino                        shift and go to state 86
+    exp                            shift and go to state 223
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 197
+
+    (95) exp -> termino popterm MENOS pushpoper . exp
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    termino                        shift and go to state 86
+    exp                            shift and go to state 224
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 198
+
+    (99) termino -> factor popfact MULT pushpoper . termino
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    factor                         shift and go to state 89
+    termino                        shift and go to state 225
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 199
+
+    (100) termino -> factor popfact DIV pushpoper . termino
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    factor                         shift and go to state 89
+    termino                        shift and go to state 226
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 200
+
+    (51) asignacionaux -> dimensiones IGUAL pushpoper expresion .
+
+    SEMICOLON       reduce using rule 51 (asignacionaux -> dimensiones IGUAL pushpoper expresion .)
+
+
+state 201
+
+    (53) dimensiones -> LCORCH pos COMMA pos . RCORCH
+
+    RCORCH          shift and go to state 227
+
+
+state 202
+
+    (61) fcall -> ID pushfunId LPARENT era checkParameter RPARENT .
+
+    SEMICOLON       reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MULT            reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    DIV             reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MAS             reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MENOS           reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    RPARENT         reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MENOR           reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MAYOR           reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MENORIGUAL      reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    MAYORIGUAL      reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    COMPARE         reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    DIFFERENT       reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    AND             reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    OR              reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    COMMA           reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    HACER           reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+    HASTA           reduce using rule 61 (fcall -> ID pushfunId LPARENT era checkParameter RPARENT .)
+
+
+state 203
+
+    (65) checkParameter -> exp checkArg .
+    (66) checkParameter -> exp checkArg . COMMA addParameter checkParameter
+
+    RPARENT         reduce using rule 65 (checkParameter -> exp checkArg .)
+    COMMA           shift and go to state 228
+
+
+state 204
+
+    (91) expr -> exp poprel rel expr .
+
+    AND             reduce using rule 91 (expr -> exp poprel rel expr .)
+    OR              reduce using rule 91 (expr -> exp poprel rel expr .)
+    COMMA           reduce using rule 91 (expr -> exp poprel rel expr .)
+    RPARENT         reduce using rule 91 (expr -> exp poprel rel expr .)
+    SEMICOLON       reduce using rule 91 (expr -> exp poprel rel expr .)
+
+
+state 205
+
+    (119) rel -> MENOR pushpoper .
+
+    LPARENT         reduce using rule 119 (rel -> MENOR pushpoper .)
+    MAS             reduce using rule 119 (rel -> MENOR pushpoper .)
+    MENOS           reduce using rule 119 (rel -> MENOR pushpoper .)
+    ID              reduce using rule 119 (rel -> MENOR pushpoper .)
+    CTE_I           reduce using rule 119 (rel -> MENOR pushpoper .)
+    CTE_F           reduce using rule 119 (rel -> MENOR pushpoper .)
+    CTE_S           reduce using rule 119 (rel -> MENOR pushpoper .)
+    CTE_C           reduce using rule 119 (rel -> MENOR pushpoper .)
+
+
+state 206
+
+    (120) rel -> MAYOR pushpoper .
+
+    LPARENT         reduce using rule 120 (rel -> MAYOR pushpoper .)
+    MAS             reduce using rule 120 (rel -> MAYOR pushpoper .)
+    MENOS           reduce using rule 120 (rel -> MAYOR pushpoper .)
+    ID              reduce using rule 120 (rel -> MAYOR pushpoper .)
+    CTE_I           reduce using rule 120 (rel -> MAYOR pushpoper .)
+    CTE_F           reduce using rule 120 (rel -> MAYOR pushpoper .)
+    CTE_S           reduce using rule 120 (rel -> MAYOR pushpoper .)
+    CTE_C           reduce using rule 120 (rel -> MAYOR pushpoper .)
+
+
+state 207
+
+    (121) rel -> MENORIGUAL pushpoper .
+
+    LPARENT         reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    MAS             reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    MENOS           reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    ID              reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    CTE_I           reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    CTE_F           reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    CTE_S           reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+    CTE_C           reduce using rule 121 (rel -> MENORIGUAL pushpoper .)
+
+
+state 208
+
+    (122) rel -> MAYORIGUAL pushpoper .
+
+    LPARENT         reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    MAS             reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    MENOS           reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    ID              reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    CTE_I           reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    CTE_F           reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    CTE_S           reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+    CTE_C           reduce using rule 122 (rel -> MAYORIGUAL pushpoper .)
+
+
+state 209
+
+    (123) rel -> COMPARE pushpoper .
+
+    LPARENT         reduce using rule 123 (rel -> COMPARE pushpoper .)
+    MAS             reduce using rule 123 (rel -> COMPARE pushpoper .)
+    MENOS           reduce using rule 123 (rel -> COMPARE pushpoper .)
+    ID              reduce using rule 123 (rel -> COMPARE pushpoper .)
+    CTE_I           reduce using rule 123 (rel -> COMPARE pushpoper .)
+    CTE_F           reduce using rule 123 (rel -> COMPARE pushpoper .)
+    CTE_S           reduce using rule 123 (rel -> COMPARE pushpoper .)
+    CTE_C           reduce using rule 123 (rel -> COMPARE pushpoper .)
+
+
+state 210
+
+    (124) rel -> DIFFERENT pushpoper .
+
+    LPARENT         reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    MAS             reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    MENOS           reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    ID              reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    CTE_I           reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    CTE_F           reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    CTE_S           reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+    CTE_C           reduce using rule 124 (rel -> DIFFERENT pushpoper .)
+
+
+state 211
+
+    (77) mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 . HAZ bloque while3
+
+    HAZ             shift and go to state 229
+
+
+state 212
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp . for2 while2 HACER bloque for4 for5 while3
+    (82) for2 -> .
+
+    HACER           reduce using rule 82 (for2 -> .)
+
+    for2                           shift and go to state 230
+
+state 213
+
+    (85) desdeaux -> ID pushpilaid IGUAL pushpoper exp .
+
+    HASTA           reduce using rule 85 (desdeaux -> ID pushpilaid IGUAL pushpoper exp .)
+
+
+state 214
+
+    (86) desdeaux -> ID pushpilaid dimensiones IGUAL pushpoper . exp
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    exp                            shift and go to state 231
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 215
+
+    (57) lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio . SEMICOLON
+
+    SEMICOLON       shift and go to state 232
+
+
+state 216
+
+    (59) lecturaaux -> ID pushpilaid dimensiones .
+    (60) lecturaaux -> ID pushpilaid dimensiones . COMMA lecturaaux
+
+    RPARENT         reduce using rule 59 (lecturaaux -> ID pushpilaid dimensiones .)
+    COMMA           shift and go to state 233
+
+
+state 217
+
+    (71) escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio . SEMICOLON
+
+    SEMICOLON       shift and go to state 234
+
+
+state 218
+
+    (75) escrituraaux -> CTE_S COMMA escrituraaux .
+
+    RPARENT         reduce using rule 75 (escrituraaux -> CTE_S COMMA escrituraaux .)
+
+
+state 219
+
+    (76) escrituraaux -> expresion COMMA escrituraaux .
+
+    RPARENT         reduce using rule 76 (escrituraaux -> expresion COMMA escrituraaux .)
+
+
+state 220
+
+    (45) siaux -> SI LPARENT expresion RPARENT si1 ENTONCES . bloque
+    (30) bloque -> . LBRACE RBRACE
+    (31) bloque -> . LBRACE bloqueaux RBRACE
+
+    LBRACE          shift and go to state 38
+
+    bloque                         shift and go to state 235
+
+state 221
+
+    (10) varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2 .
+
+    SEMICOLON       reduce using rule 10 (varaux2 -> ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH COMMA varaux2 .)
+
+
+state 222
+
+    (102) factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .
+
+    MULT            reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    DIV             reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    MAS             reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    MENOS           reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    RPARENT         reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    MENOR           reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    MAYOR           reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    MENORIGUAL      reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    MAYORIGUAL      reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    COMPARE         reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    DIFFERENT       reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    AND             reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    OR              reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    COMMA           reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    SEMICOLON       reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    HACER           reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+    HASTA           reduce using rule 102 (factor -> LPARENT addfalsebottom expresion RPARENT removefalsebottom .)
+
+
+state 223
+
+    (94) exp -> termino popterm MAS pushpoper exp .
+
+    RPARENT         reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    MENOR           reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    MAYOR           reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    MENORIGUAL      reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    MAYORIGUAL      reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    COMPARE         reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    DIFFERENT       reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    AND             reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    OR              reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    COMMA           reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    SEMICOLON       reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    HACER           reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+    HASTA           reduce using rule 94 (exp -> termino popterm MAS pushpoper exp .)
+
+
+state 224
+
+    (95) exp -> termino popterm MENOS pushpoper exp .
+
+    RPARENT         reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    MENOR           reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    MAYOR           reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    MENORIGUAL      reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    MAYORIGUAL      reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    COMPARE         reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    DIFFERENT       reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    AND             reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    OR              reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    COMMA           reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    SEMICOLON       reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    HACER           reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+    HASTA           reduce using rule 95 (exp -> termino popterm MENOS pushpoper exp .)
+
+
+state 225
+
+    (99) termino -> factor popfact MULT pushpoper termino .
+
+    MAS             reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    MENOS           reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    RPARENT         reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    MENOR           reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    MAYOR           reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    MENORIGUAL      reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    MAYORIGUAL      reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    COMPARE         reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    DIFFERENT       reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    AND             reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    OR              reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    COMMA           reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    SEMICOLON       reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    HACER           reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+    HASTA           reduce using rule 99 (termino -> factor popfact MULT pushpoper termino .)
+
+
+state 226
+
+    (100) termino -> factor popfact DIV pushpoper termino .
+
+    MAS             reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    MENOS           reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    RPARENT         reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    MENOR           reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    MAYOR           reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    MENORIGUAL      reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    MAYORIGUAL      reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    COMPARE         reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    DIFFERENT       reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    AND             reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    OR              reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    COMMA           reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    SEMICOLON       reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    HACER           reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+    HASTA           reduce using rule 100 (termino -> factor popfact DIV pushpoper termino .)
+
+
+state 227
+
+    (53) dimensiones -> LCORCH pos COMMA pos RCORCH .
+
+    IGUAL           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MULT            reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    DIV             reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MAS             reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MENOS           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    RPARENT         reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MENOR           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MAYOR           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MENORIGUAL      reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    MAYORIGUAL      reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    COMPARE         reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    DIFFERENT       reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    AND             reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    OR              reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    COMMA           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    SEMICOLON       reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    HACER           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+    HASTA           reduce using rule 53 (dimensiones -> LCORCH pos COMMA pos RCORCH .)
+
+
+state 228
+
+    (66) checkParameter -> exp checkArg COMMA . addParameter checkParameter
+    (67) addParameter -> .
+
+    LPARENT         reduce using rule 67 (addParameter -> .)
+    MAS             reduce using rule 67 (addParameter -> .)
+    MENOS           reduce using rule 67 (addParameter -> .)
+    ID              reduce using rule 67 (addParameter -> .)
+    CTE_I           reduce using rule 67 (addParameter -> .)
+    CTE_F           reduce using rule 67 (addParameter -> .)
+    CTE_S           reduce using rule 67 (addParameter -> .)
+    CTE_C           reduce using rule 67 (addParameter -> .)
+
+    addParameter                   shift and go to state 236
+
+state 229
+
+    (77) mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ . bloque while3
+    (30) bloque -> . LBRACE RBRACE
+    (31) bloque -> . LBRACE bloqueaux RBRACE
+
+    LBRACE          shift and go to state 38
+
+    bloque                         shift and go to state 237
+
+state 230
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 . while2 HACER bloque for4 for5 while3
+    (79) while2 -> .
+
+    HACER           reduce using rule 79 (while2 -> .)
+
+    while2                         shift and go to state 238
+
+state 231
+
+    (86) desdeaux -> ID pushpilaid dimensiones IGUAL pushpoper exp .
+
+    HASTA           reduce using rule 86 (desdeaux -> ID pushpilaid dimensiones IGUAL pushpoper exp .)
+
+
+state 232
+
+    (57) lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .
+
+    REGRESA         reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    ID              reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    MIENTRAS        reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    DESDE           reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    LEE             reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    ESCRIBE         reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    SI              reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+    RBRACE          reduce using rule 57 (lectura -> LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON .)
+
+
+state 233
+
+    (60) lecturaaux -> ID pushpilaid dimensiones COMMA . lecturaaux
+    (58) lecturaaux -> . ID pushpilaid
+    (59) lecturaaux -> . ID pushpilaid dimensiones
+    (60) lecturaaux -> . ID pushpilaid dimensiones COMMA lecturaaux
+
+    ID              shift and go to state 147
+
+    lecturaaux                     shift and go to state 239
+
+state 234
+
+    (71) escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .
+
+    REGRESA         reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    ID              reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    MIENTRAS        reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    DESDE           reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    LEE             reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    ESCRIBE         reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    SI              reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+    RBRACE          reduce using rule 71 (escritura -> ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON .)
+
+
+state 235
+
+    (45) siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .
+
+    SINO            reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    REGRESA         reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    ID              reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    MIENTRAS        reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    DESDE           reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    LEE             reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    ESCRIBE         reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    SI              reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+    RBRACE          reduce using rule 45 (siaux -> SI LPARENT expresion RPARENT si1 ENTONCES bloque .)
+
+
+state 236
+
+    (66) checkParameter -> exp checkArg COMMA addParameter . checkParameter
+    (65) checkParameter -> . exp checkArg
+    (66) checkParameter -> . exp checkArg COMMA addParameter checkParameter
+    (93) exp -> . termino popterm
+    (94) exp -> . termino popterm MAS pushpoper exp
+    (95) exp -> . termino popterm MENOS pushpoper exp
+    (98) termino -> . factor popfact
+    (99) termino -> . factor popfact MULT pushpoper termino
+    (100) termino -> . factor popfact DIV pushpoper termino
+    (102) factor -> . LPARENT addfalsebottom expresion RPARENT removefalsebottom
+    (103) factor -> . var_cte
+    (104) factor -> . MAS pushpoper var_cte
+    (105) factor -> . MENOS pushpoper var_cte
+    (108) var_cte -> . ID pushpilaid
+    (109) var_cte -> . ID pushpilaid dimensiones
+    (110) var_cte -> . CTE_I pushpilao
+    (111) var_cte -> . CTE_F pushpilao
+    (112) var_cte -> . CTE_S pushpilao
+    (113) var_cte -> . CTE_C pushpilao
+    (114) var_cte -> . fcall
+    (61) fcall -> . ID pushfunId LPARENT era checkParameter RPARENT
+    (62) fcall -> . ID LPARENT fcallaux RPARENT
+
+    LPARENT         shift and go to state 84
+    MAS             shift and go to state 87
+    MENOS           shift and go to state 88
+    ID              shift and go to state 91
+    CTE_I           shift and go to state 92
+    CTE_F           shift and go to state 93
+    CTE_S           shift and go to state 94
+    CTE_C           shift and go to state 95
+
+    exp                            shift and go to state 170
+    checkParameter                 shift and go to state 240
+    termino                        shift and go to state 86
+    factor                         shift and go to state 89
+    var_cte                        shift and go to state 90
+    fcall                          shift and go to state 96
+
+state 237
+
+    (77) mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque . while3
+    (80) while3 -> .
+
+    REGRESA         reduce using rule 80 (while3 -> .)
+    ID              reduce using rule 80 (while3 -> .)
+    MIENTRAS        reduce using rule 80 (while3 -> .)
+    DESDE           reduce using rule 80 (while3 -> .)
+    LEE             reduce using rule 80 (while3 -> .)
+    ESCRIBE         reduce using rule 80 (while3 -> .)
+    SI              reduce using rule 80 (while3 -> .)
+    RBRACE          reduce using rule 80 (while3 -> .)
+
+    while3                         shift and go to state 241
+
+state 238
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 . HACER bloque for4 for5 while3
+
+    HACER           shift and go to state 242
+
+
+state 239
+
+    (60) lecturaaux -> ID pushpilaid dimensiones COMMA lecturaaux .
+
+    RPARENT         reduce using rule 60 (lecturaaux -> ID pushpilaid dimensiones COMMA lecturaaux .)
+
+
+state 240
+
+    (66) checkParameter -> exp checkArg COMMA addParameter checkParameter .
+
+    RPARENT         reduce using rule 66 (checkParameter -> exp checkArg COMMA addParameter checkParameter .)
+
+
+state 241
+
+    (77) mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .
+
+    REGRESA         reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    ID              reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    MIENTRAS        reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    DESDE           reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    LEE             reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    ESCRIBE         reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    SI              reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+    RBRACE          reduce using rule 77 (mientras -> MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3 .)
+
+
+state 242
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER . bloque for4 for5 while3
+    (30) bloque -> . LBRACE RBRACE
+    (31) bloque -> . LBRACE bloqueaux RBRACE
+
+    LBRACE          shift and go to state 38
+
+    bloque                         shift and go to state 243
+
+state 243
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque . for4 for5 while3
+    (83) for4 -> .
+
+    REGRESA         reduce using rule 83 (for4 -> .)
+    ID              reduce using rule 83 (for4 -> .)
+    MIENTRAS        reduce using rule 83 (for4 -> .)
+    DESDE           reduce using rule 83 (for4 -> .)
+    LEE             reduce using rule 83 (for4 -> .)
+    ESCRIBE         reduce using rule 83 (for4 -> .)
+    SI              reduce using rule 83 (for4 -> .)
+    RBRACE          reduce using rule 83 (for4 -> .)
+
+    for4                           shift and go to state 244
+
+state 244
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 . for5 while3
+    (84) for5 -> .
+
+    REGRESA         reduce using rule 84 (for5 -> .)
+    ID              reduce using rule 84 (for5 -> .)
+    MIENTRAS        reduce using rule 84 (for5 -> .)
+    DESDE           reduce using rule 84 (for5 -> .)
+    LEE             reduce using rule 84 (for5 -> .)
+    ESCRIBE         reduce using rule 84 (for5 -> .)
+    SI              reduce using rule 84 (for5 -> .)
+    RBRACE          reduce using rule 84 (for5 -> .)
+
+    for5                           shift and go to state 245
+
+state 245
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 . while3
+    (80) while3 -> .
+
+    REGRESA         reduce using rule 80 (while3 -> .)
+    ID              reduce using rule 80 (while3 -> .)
+    MIENTRAS        reduce using rule 80 (while3 -> .)
+    DESDE           reduce using rule 80 (while3 -> .)
+    LEE             reduce using rule 80 (while3 -> .)
+    ESCRIBE         reduce using rule 80 (while3 -> .)
+    SI              reduce using rule 80 (while3 -> .)
+    RBRACE          reduce using rule 80 (while3 -> .)
+
+    while3                         shift and go to state 246
+
+state 246
+
+    (81) desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .
+
+    REGRESA         reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    ID              reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    MIENTRAS        reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    DESDE           reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    LEE             reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    ESCRIBE         reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    SI              reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+    RBRACE          reduce using rule 81 (desde -> DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3 .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for LPARENT in state 55 resolved as shift
+WARNING: shift/reduce conflict for LPARENT in state 91 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 149 resolved as shift
+WARNING: reduce/reduce conflict in state 149 resolved using rule (escrituraaux -> CTE_S)
+WARNING: rejected rule (pushpilao -> <empty>) in state 149

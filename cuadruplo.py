@@ -53,6 +53,19 @@ def popIO():
             return True
     return False
 
+def popRet():
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] == 'regresa':
+            right_operand = PilaO.pop()
+            Ptypes.pop()
+            operator = Poper.pop()
+            #result_type = semantic_cube[operator][left_type][right_type]
+            temp = cuadruplo.cuadruplo(count-1, operator, None, None, right_operand)
+            Quad.append(temp)
+            return True
+    return False
+    
 def popAssign():
     size = len(Poper)
     if size > 0:
@@ -72,6 +85,8 @@ def popAssign():
                 return True
             else:
                 print("ERROR: type mismatch")
+                sys.exit()
+                return False
     return False
 
 def popLog(glob):
@@ -97,6 +112,7 @@ def popLog(glob):
                 return True
             else:
                 print("ERROR: type mismatch")
+                sys.exit()
     return False
 
 def popRel(glob):
@@ -122,6 +138,7 @@ def popRel(glob):
                 return True
             else:
                 print("ERROR: type mismatch")
+                sys.exit()
     return False
 
 def popTerm(glob):
@@ -148,6 +165,7 @@ def popTerm(glob):
                     return True
                 else:
                     print("ERROR: type mismatch")
+                    sys.exit()
     return False
 
 def popFact(glob):
@@ -174,6 +192,7 @@ def popFact(glob):
                     return True
                 else:
                     print("ERROR: type mismatch")
+                    sys.exit()
     return False
 
 def gettipo(cte):
@@ -207,6 +226,7 @@ def GotoF_SI():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
         print('Error: type mismatch')
+        sys.exit()
         return False
     else:
         result = PilaO.pop()
@@ -238,6 +258,7 @@ def GotoF_While():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
         print('Error: type mismatch')
+        sys.exit()
         return False
     else:
         result = PilaO.pop()
@@ -278,6 +299,7 @@ def compareFor(glob):
         return True
     else:
         print("ERROR: type mismatch")
+        sys.exit()
     return False
 
 #Neural point 3 of for same as while2
@@ -291,7 +313,11 @@ def addToFor(glob):
     else:
         Tabla.tempAddSize(result_type)
     left_operand = desde.pop()
-    right_operand = 1
+    dir = mv.getMemoCte('int')
+    temp = Tabla.cteInsert(1, 'int', dir)
+    if (temp == False):
+        mv.restMemo('int')
+    right_operand = Tabla.findCteVM(1)
     temp = cuadruplo.cuadruplo(count-1, '+', left_operand, right_operand, result)
     desde.append(left_operand)
     desde.append(result)
@@ -312,7 +338,7 @@ def assignToFor():
 def paramInsert():
     params = PilaO.pop()
     tipo = Ptypes.pop()
-    num = 'param' + str(param)
+    num = param
     temp = cuadruplo.cuadruplo(count-1, 'Param', params, None, num)
     Quad.append(temp)
 
@@ -330,6 +356,10 @@ def parcheguad(func, glob):
                 return False
             else:
                 result = mv.getMemoTemp(tipo, glob)
+                if (glob):
+                    Tabla.gtempAddSize(tipo)
+                else:
+                    Tabla.tempAddSize(tipo)
                 temp = cuadruplo.cuadruplo(count-1, '=', dir, None, result)
                 Quad.append(temp)
                 PilaO.append(result)

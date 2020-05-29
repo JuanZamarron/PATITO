@@ -1,0 +1,43 @@
+condicionÇNoneÇNoneÇNoneÇ4,0,0,2,0,0,3Ç0
+/
+"desde ingresa local:"ÇstringÇ11000
+0ÇintÇ8000
+1ÇintÇ8001
+"mientras hasta 5 ingresa m:"ÇstringÇ11001
+5ÇintÇ8002
+2ÇintÇ8003
+"si ingresa i:"ÇstringÇ11002
+" es menor a: "ÇstringÇ11003
+" es mayoy a: "ÇstringÇ11004
+/
+0ÇGotoÇNoneÇNoneÇ1
+1ÇescribeÇNoneÇNoneÇ11000
+2ÇleeÇNoneÇNoneÇ1002
+3Ç=Ç8000ÇNoneÇ1001
+4Ç<=Ç1001Ç1002Ç7000
+5ÇGotoFÇ7000ÇNoneÇ10
+6ÇescribeÇNoneÇNoneÇ1001
+7Ç+Ç1001Ç8001Ç4000
+8Ç=Ç4000ÇNoneÇ1001
+9ÇGotoÇNoneÇNoneÇ4
+10ÇescribeÇNoneÇNoneÇ11001
+11ÇleeÇNoneÇNoneÇ1000
+12Ç=Ç8002ÇNoneÇ1002
+13Ç<=Ç1000Ç1002Ç7001
+14ÇGotoFÇ7001ÇNoneÇ19
+15ÇescribeÇNoneÇNoneÇ1000
+16Ç+Ç1000Ç8003Ç4001
+17Ç=Ç4001ÇNoneÇ1000
+18ÇGotoÇNoneÇNoneÇ13
+19ÇescribeÇNoneÇNoneÇ11002
+20ÇleeÇNoneÇNoneÇ1001
+21Ç<Ç1001Ç1002Ç7002
+22ÇGotoFÇ7002ÇNoneÇ27
+23ÇescribeÇNoneÇNoneÇ1001
+24ÇescribeÇNoneÇNoneÇ11003
+25ÇescribeÇNoneÇNoneÇ1002
+26ÇGotoÇNoneÇNoneÇ30
+27ÇescribeÇNoneÇNoneÇ1001
+28ÇescribeÇNoneÇNoneÇ11004
+29ÇescribeÇNoneÇNoneÇ1002
+30ÇEndÇNoneÇNoneÇNone

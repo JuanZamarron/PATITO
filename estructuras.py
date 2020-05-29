@@ -21,3 +21,11 @@ class cuadruplo(object):
         self.dir1 = dir1
         self.dir2 = dir2
         self.result = result
+
+class vector(object):
+    def __init__(self, id, lim1, lim2, m, size):
+        self.id = id
+        self.lim1 = lim1
+        self.lim2 = lim2
+        self.m = m
+        self.size = size

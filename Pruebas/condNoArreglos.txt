@@ -1,0 +1,30 @@
+programa condicion;
+var
+    int m, i, local, mult;
+
+principal()
+   {
+       escribe("desde ingresa local:");
+       lee(local);
+       desde i = 0 hasta local hacer {
+        escribe(i);
+       }
+       escribe("mientras hasta 5 ingresa m:");
+       lee(m);
+       local = 5;
+        mientras (m <= local) haz {
+            escribe(m);
+            m = m + 2;
+        }
+        escribe("si ingresa i:");
+        lee(i);
+      si ( i < local) entonces
+         {
+         escribe(i , " es menor a: ", local);
+         }
+      sino
+        {
+         escribe(i , " es mayoy a: ", local);
+        }
+   }
+

@@ -1,0 +1,15 @@
+programa patito;
+var float factorial,i, n;
+
+principal()
+{
+    factorial = 1.0;
+    escribe("Enter a positive number:");
+    lee(n);
+    i = 1.0;
+    mientras (i <= n) haz {
+       factorial =  factorial*i;
+        i = i + 1.0;
+    }
+    escribe("Factorial of ", n, " = ", factorial);
+}

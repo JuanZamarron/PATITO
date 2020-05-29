@@ -1,0 +1,52 @@
+programa sortArrayAndFind;
+var
+    float i, n,j,temp,a[100], result, x,f,v ;
+
+funcion float searchNumber(float x, float len)
+{
+    desde i = 0.0 hasta (n - 1.0) hacer {
+        si(a[i] == x) entonces {
+            regresa(i);
+        }
+    }
+    regresa(9999.0);
+}
+
+principal()
+{
+	escribe("Enter the size of array:");
+	lee(n);
+	escribe("Enter the array elements:");
+
+	desde i=0.0 hasta (n-1.0) hacer {
+	    lee(a[i]);
+	}
+
+	desde i=1.0 hasta (n-2.0) hacer {
+		desde j=0.0 hasta (n-2.0) hacer {
+			si(a[j] > a[j+1.0]) entonces
+			{
+				temp=a[j];
+				a[j]=a[j+1.0];
+				a[j+1.0]=temp;
+			}
+		}
+	}
+
+	escribe("Array after bubble sort");
+	desde i=0.0 hasta (n-1.0) hacer {
+		escribe(a[i]);
+	}
+
+    escribe("Ahora ingresa el número que deseas buscar:");
+    lee(x);
+    f = 0.0;
+    v = n - 1.0;
+    result = searchNumber(x, n);
+    si(result < 9999.0) entonces {
+        escribe("el elemento no se encuentra en la posición:",result);
+    }sino{
+        escribe("El elemento se encuentra en el index: ", result);
+    }
+
+}

@@ -1,0 +1,24 @@
+patitoÇNoneÇNoneÇNoneÇ0,3,0,0,2,0,1Ç0
+/
+1.0ÇfloatÇ9000
+"Enter a positive number:"ÇstringÇ11000
+"Factorial of "ÇstringÇ11001
+" = "ÇstringÇ11002
+/
+0ÇGotoÇNoneÇNoneÇ1
+1Ç=Ç9000ÇNoneÇ2000
+2ÇescribeÇNoneÇNoneÇ11000
+3ÇleeÇNoneÇNoneÇ2002
+4Ç=Ç9000ÇNoneÇ2001
+5Ç<=Ç2001Ç2002Ç7000
+6ÇGotoFÇ7000ÇNoneÇ12
+7Ç*Ç2000Ç2001Ç5000
+8Ç=Ç5000ÇNoneÇ2000
+9Ç+Ç2001Ç9000Ç5001
+10Ç=Ç5001ÇNoneÇ2001
+11ÇGotoÇNoneÇNoneÇ5
+12ÇescribeÇNoneÇNoneÇ11001
+13ÇescribeÇNoneÇNoneÇ2002
+14ÇescribeÇNoneÇNoneÇ11002
+15ÇescribeÇNoneÇNoneÇ2000
+16ÇEndÇNoneÇNoneÇNone
