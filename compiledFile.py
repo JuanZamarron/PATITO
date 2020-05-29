@@ -6,7 +6,7 @@
 
 from lex import archivo
 
-
+#Funcion que exporta directorio de funciones, tabla de constantes y cuadruplos a un archivo.txt
 def export_txt(dirFunc, cte, Quad):
     print(archivo)
     leng = len(cte)
