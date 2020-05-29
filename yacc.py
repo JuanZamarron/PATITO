@@ -25,7 +25,7 @@ from lex import tokens
 prueba = open(path, "r")
 entrada = prueba.read()
 
-#Creacion del programa
+###########INICIO DEL PROGRAMA###############
 def p_programa(p):
     '''
     programa : PROGRAMA ID globfunc SEMICOLON gotomain vars funcs endprog
@@ -45,7 +45,9 @@ def p_gotomain(p):
     '''
     quad.quadInsert('Goto', None, None, None)
     quad.count += 1
+#############################################
 
+###########MODULO DE DECLARACION DE VARAIBLES###############
 def p_vars(p):
     '''
     vars : VAR varaux
@@ -211,15 +213,6 @@ def p_tammatriz(p):
     if (temp2 == False):
         mv.restMemo(tipo2)
     Tablas.isVector = 2
-def p_functipo(p):
-    '''
-    functipo : INT
-             | FLOAT
-             | CHAR
-             | STRING
-             | VOID
-    '''
-    Tablas.funcType = p[1]
 
 def p_tipo(p):
     '''
@@ -229,22 +222,13 @@ def p_tipo(p):
          | STRING
     '''
     Tablas.myType = p[1]
+##########################################################
 
+###########MODULO DE FUNCIONES###############
 def p_funcs(p):
     '''
     funcs : setmain principal
           | funcsaux setmain principal
-    '''
-
-def p_setGotoMain(p):
-    '''
-    setmain :
-    '''
-    quad.gotoMain()
-
-def p_principal(p):
-    '''
-    principal : PRINCIPAL LPARENT RPARENT bloque
     '''
 
 def p_funcsaux(p):
@@ -253,18 +237,23 @@ def p_funcsaux(p):
              | func insertparams endfunc funcsaux
     '''
 
-def p_endfunc(p):
+def p_insertparams(p):
     '''
-    endfunc :
+    insertparams :
     '''
-    quad.quadInsert('Endfunc', None, None, None)
-    quad.count += 1
+    Tablas.insertFuncParams(Tablas.params, Tablas.func)
+    Tablas.params = ''
+    size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
+    Tablas.insertFuncSize(size, Tablas.func)
+    Tablas.clearVarSize()
+    Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
+    Tablas.func = ''
 
 def p_func(p):
     '''
     func : getquad FUNCION funcaux
     '''
-    
+
 def p_getquad(p):
     '''
     getquad :
@@ -275,6 +264,16 @@ def p_funcaux(p):
     '''
     funcaux : functipo funcaux2
     '''
+
+def p_functipo(p):
+    '''
+    functipo : INT
+             | FLOAT
+             | CHAR
+             | STRING
+             | VOID
+    '''
+    Tablas.funcType = p[1]
 
 def p_funcaux2(p):
     '''
@@ -292,18 +291,6 @@ def p_dirfuncinsert(p):
         dir = mv.getMemoLoc(Tablas.funcType, 1)
     Tablas.insert(p[-1], Tablas.funcType, dir, 1)
     Tablas.insertDirFunc(p[-1], Tablas.funcType, dir)
-
-def p_insertparams(p):
-    '''
-    insertparams :
-    '''
-    Tablas.insertFuncParams(Tablas.params, Tablas.func)
-    Tablas.params = ''
-    size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
-    Tablas.insertFuncSize(size, Tablas.func)
-    Tablas.clearVarSize()
-    Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
-    Tablas.func = ''
 
 def p_funcaux3(p):
     '''
@@ -329,19 +316,21 @@ def p_funcaux5(p):
     Tablas.insert(p[1], Tablas.myType, dir, 1)
     Tablas.params = str(Tablas.params) + Tablas.myType[0]
 
-def p_bloque(p):
+def p_retorno(p):
     '''
-    bloque : LBRACE RBRACE
-           | LBRACE bloqueaux RBRACE
-    '''
-
-def p_bloqueaux(p):
-    '''
-    bloqueaux : estatuto
-              | estatuto bloqueaux
-              | retorno
+    retorno : REGRESA pushpoper LPARENT exp RPARENT popret SEMICOLON
     '''
 
+def p_endfunc(p):
+    '''
+    endfunc :
+    '''
+    quad.quadInsert('Endfunc', None, None, None)
+    quad.count += 1
+##############################################
+
+#############################################################
+#################MODULO DE ESTATUTOS LINEALES##########################
 def p_estatuto(p):
     '''
     estatuto : asignacion
@@ -353,19 +342,109 @@ def p_estatuto(p):
              | escritura
     '''
 
+#############ESTATUTO DE ASIGNACION############################
+def p_asignacion(p):
+    '''
+    asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
+    '''
+
+def p_asignacionaux(p):
+    '''
+    asignacionaux : IGUAL pushpoper expresion
+                  | dimensiones IGUAL pushpoper expresion
+    '''
+##############################################################
+
+#############ESTATUTO DE LECTURA############################
+def p_lectura(p):
+    '''
+    lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
+    '''
+
+def p_lecturaaux(p):
+    '''
+    lecturaaux : ID pushpilaid popio
+               | ID pushpilaid popio COMMA lequad lecturaaux
+               | ID pushpilaid dimensiones popio
+               | ID pushpilaid dimensiones popio COMMA lequad lecturaaux
+    '''
+
+def p_lequad(p):
+    '''
+    lequad :
+    '''
+    quad.pushPoper('lee')
+############################################################
+
+#############ESTATUTO DE ESCTRITURA############################
+def p_escritura(p):
+    '''
+    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
+    '''
+
+def p_escrituraaux(p):
+    '''
+    escrituraaux : CTE_S ctemem pushpilao popio
+                 | expresion popio
+                 | CTE_S ctemem pushpilao popio COMMA escquad escrituraaux
+                 | expresion popio COMMA escquad escrituraaux
+    '''
+
+def p_escquad(p):
+    '''
+    escquad :
+    '''
+    quad.pushPoper('escribe')
+###############################################################
+
+#############ESTATUTO DE LLAMADA DE FUNCIONES############################
+def p_fcall(p):
+    '''
+    fcall : ID erainsert LPARENT RPARENT
+          | ID erainsert LPARENT addfalsebottom fcallaux RPARENT removefalsebottom
+    '''
+    quad.gosub(p[1])
+    quad.count += 1
+    temp = quad.parcheguad(p[1], Tablas.isGlobal)
+    if (temp):
+        quad.count += 1
+    quad.param = 1
+
+def p_erainsert(p):
+    '''
+    erainsert :
+    '''
+    quad.quadInsert('Era', None, None, p[-1])
+    quad.count += 1
+
+def p_fcallaux(p):
+    '''
+    fcallaux : addfalsebottom expresion removefalsebottom paraminsert
+             | addfalsebottom expresion removefalsebottom paraminsert COMMA fcallaux
+    '''
+
+def p_paraminsert(p):
+    '''
+    paraminsert :
+    '''
+    quad.paramInsert()
+    quad.param += 1
+    quad.count += 1
+#########################################################################
+
+##############################################################
+#############################################################
+
+
+################################################################
+#################MODULO ESTATUTOS NO-LINEALES##########################
+
+###########MODULO ESTATUTO SI###############
 def p_si(p):
     '''
     si : siaux
        | siaux si3 SINO bloque
     '''
-
-def p_si3(p):
-    '''
-    si3 :
-    '''
-    temp = quad.Goto_SI()
-    if temp:
-        quad.count += 1
 
 def p_siaux(p):
     '''
@@ -386,11 +465,101 @@ def p_si2(p):
     '''
     quad.fillGoto()
 
-def p_asignacion(p):
+def p_si3(p):
     '''
-    asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
+    si3 :
+    '''
+    temp = quad.Goto_SI()
+    if temp:
+        quad.count += 1
+######################################################
+
+###########MODULO ESTATUTO MIENTRAS###############
+def p_mientras(p):
+    '''
+    mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
     '''
 
+def p_while1(p):
+    '''
+    while1 :
+    '''
+    quad.pushJumps()
+
+def p_while2(p):
+    '''
+    while2 :
+    '''
+    temp = quad.GotoF_While()
+    if temp:
+        quad.count += 1
+
+def p_while3(p):
+    '''
+    while3 :
+    '''
+    temp = quad.Goto_While()
+    if temp:
+        quad.count += 1
+#################################################
+
+###########MODULO ESTATUTO DESDE###############
+def p_desde(p):
+    '''
+    desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    '''
+
+def p_desdeaux(p):
+    '''
+    desdeaux : ID pushpilaid IGUAL pushpoper exp
+             | ID pushpilaid dimensiones IGUAL pushpoper exp
+    '''
+
+def p_for2(p):
+    '''
+    for2 :
+    '''
+    temp = quad.compareFor(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+
+def p_for4(p):
+    '''
+    for4 :
+    '''
+    temp = quad.addToFor(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+
+def p_for5(p):
+    '''
+    for5 :
+    '''
+    temp = quad.assignToFor()
+    if temp:
+        quad.count += 1
+################################################
+
+################################################################
+################################################################
+
+###########MODULO DE BLOQUE###############################
+def p_bloque(p):
+    '''
+    bloque : LBRACE RBRACE
+           | LBRACE bloqueaux RBRACE
+    '''
+
+def p_bloqueaux(p):
+    '''
+    bloqueaux : estatuto
+              | estatuto bloqueaux
+              | retorno
+    '''
+##########################################################
+
+
+#############MODULO DE POPs##############################
 def p_popassign(p):
     '''
     popassign :
@@ -399,17 +568,126 @@ def p_popassign(p):
     if temp:
         quad.count += 1
 
-def p_asignacionaux(p):
+def p_popio(p):
     '''
-    asignacionaux : IGUAL pushpoper expresion
-                  | dimensiones IGUAL pushpoper expresion
+    popio :
+    '''
+    temp = quad.popIO()
+    if temp:
+        quad.count += 1
+
+def p_popret(p):
+    '''
+    popret :
+    '''
+    temp = quad.popRet()
+    if temp:
+        quad.count += 1
+
+def p_poplog(p):
+    '''
+    poplog :
+    '''
+    temp = quad.popLog(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+
+def p_poprel(p):
+    '''
+    poprel :
+    '''
+    temp = quad.popRel(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+
+def p_popterm(p):
+    '''
+    popterm :
+    '''
+    temp = quad.popTerm(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+
+def p_popfact(p):
+    '''
+    popfact :
+    '''
+    temp = quad.popFact(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+#########################################################
+
+###############MODULO EXPRESIONES########################
+def p_expresion(p):
+    '''
+    expresion : expr poplog
+              | expr poplog log expresion
     '''
 
+def p_expr(p):
+    '''
+    expr : exp poprel
+         | exp poprel rel expr
+    '''
+
+def p_exp(p):
+    '''
+    exp : termino popterm
+        | termino popterm MAS pushpoper exp
+        | termino popterm MENOS pushpoper exp
+    '''
+
+def p_termino(p):
+    '''
+    termino : factor popfact
+            | factor popfact MULT pushpoper termino
+            | factor popfact DIV pushpoper termino
+    '''
+
+def p_factor(p):
+    '''
+    factor : LPARENT addfalsebottom expresion RPARENT removefalsebottom
+           | var_cte
+           | MAS pushpoper var_cte
+           | MENOS pushpoper var_cte
+    '''
+
+def p_log(p):
+    '''
+    log : AND pushpoper
+        | OR pushpoper
+    '''
+
+def p_rel(p):
+    '''
+    rel : MENOR pushpoper
+        | MAYOR pushpoper
+        | MENORIGUAL pushpoper
+        | MAYORIGUAL pushpoper
+        | COMPARE pushpoper
+        | DIFFERENT pushpoper
+    '''
+#########################################################
+
+###############MODULO DE VARIABLES DIMENSIONADAS##############
 def p_dimensiones(p):
     '''
     dimensiones : addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver1 RCORCH removefalsebottom
                 | addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver2 COMMA addfalsebottom exp removefalsebottom ver3 RCORCH removefalsebottom
     '''
+
+def p_removeid(p):
+    '''
+    removeid :
+    '''
+    idDir = quad.PilaO.pop()
+    tipo = quad.Ptypes.pop()
+    temp = Tablas.findCteVM(idDir)
+    if temp == False:
+        print('Error: No es variable dimensionada')
+        sys.exit()
+    else:
+        Tablas.isVector = idDir
 
 def p_ver1(p):
     '''
@@ -490,254 +768,51 @@ def p_ver3(p):
     quad.quadInsert('+', result, dir, result2)
     quad.count += 1
     quad.PilaO.append('('+str(result2)+')')
-
-def p_removeid(p):
-    '''
-    removeid :
-    '''
-    idDir = quad.PilaO.pop()
-    tipo = quad.Ptypes.pop()
-    temp = Tablas.findCteVM(idDir)
-    if temp == False:
-        print('Error: No es variable dimensionada')
-        sys.exit()
-    else:
-        Tablas.isVector = idDir
+##############################################################
 
 
-def p_pos(p):
+###########MODULO DE PUSH A PILAS#############################
+def p_pushpilaid(p):
     '''
-    pos : ID
-        | CTE_I
+    pushpilaid :
     '''
+    tipo = Tablas.getIdType(p[-1])
+    dir = Tablas.findVM(p[-1])
+    quad.pushPilaO(dir)
+    quad.pushType(tipo)
 
-def p_retorno(p):
+def p_pushpilao(p):
     '''
-    retorno : REGRESA pushpoper LPARENT exp RPARENT popret SEMICOLON
+    pushpilao :
     '''
-
-def p_popret(p):
-    '''
-    popret :
-    '''
-    temp = quad.popRet()
-    if temp:
-        quad.count += 1
-
-def p_lectura(p):
-    '''
-    lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
-    '''
-
-def p_lecturaaux(p):
-    '''
-    lecturaaux : ID pushpilaid popio
-               | ID pushpilaid popio COMMA lequad lecturaaux
-               | ID pushpilaid dimensiones popio
-               | ID pushpilaid dimensiones popio COMMA lequad lecturaaux
-    '''
-
-def p_lequad(p):
-    '''
-    lequad :
-    '''
-    quad.pushPoper('lee')
-
-def p_fcall(p):
-    '''
-    fcall : ID erainsert LPARENT RPARENT
-          | ID erainsert LPARENT addfalsebottom fcallaux RPARENT removefalsebottom
-    '''
-    quad.gosub(p[1])
-    quad.count += 1
-    temp = quad.parcheguad(p[1], Tablas.isGlobal)
-    if (temp):
-        quad.count += 1
-    quad.param = 1
-
-def p_erainsert(p):
-    '''
-    erainsert :
-    '''
-    quad.quadInsert('Era', None, None, p[-1])
-    quad.count += 1
-
-def p_fcallaux(p):
-    '''
-    fcallaux : addfalsebottom expresion removefalsebottom paraminsert
-             | addfalsebottom expresion removefalsebottom paraminsert COMMA fcallaux
-    '''
-
-def p_paraminsert(p):
-    '''
-    paraminsert :
-    '''
-    quad.paramInsert()
-    quad.param += 1
-    quad.count += 1
-
-def p_escritura(p):
-    '''
-    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
-    '''
-
-def p_popio(p):
-    '''
-    popio :
-    '''
-    temp = quad.popIO()
-    if temp:
-        quad.count += 1
-
-def p_escrituraaux(p):
-    '''
-    escrituraaux : CTE_S ctemem pushpilao popio
-                 | expresion popio
-                 | CTE_S ctemem pushpilao popio COMMA escquad escrituraaux
-                 | expresion popio COMMA escquad escrituraaux
-    '''
-
-def p_escquad(p):
-    '''
-    escquad :
-    '''
-    quad.pushPoper('escribe')
-
-def p_mientras(p):
-    '''
-    mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
-    '''
-
-def p_while1(p):
-    '''
-    while1 :
-    '''
-    quad.pushJumps()
-
-def p_while2(p):
-    '''
-    while2 :
-    '''
-    temp = quad.GotoF_While()
-    if temp:
-        quad.count += 1
-
-def p_while3(p):
-    '''
-    while3 :
-    '''
-    temp = quad.Goto_While()
-    if temp:
-        quad.count += 1
-
-def p_desde(p):
-    '''
-    desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
-    '''
-
-def p_for2(p):
-    '''
-    for2 :
-    '''
-    temp = quad.compareFor(Tablas.isGlobal)
-    if temp:
-        quad.count += 1
-    
-def p_for4(p):
-    '''
-    for4 :
-    '''
-    temp = quad.addToFor(Tablas.isGlobal)
-    if temp:
-        quad.count += 1
-    
-def p_for5(p):
-    '''
-    for5 :
-    '''
-    temp = quad.assignToFor()
-    if temp:
-        quad.count += 1
-
-def p_desdeaux(p):
-    '''
-    desdeaux : ID pushpilaid IGUAL pushpoper exp
-             | ID pushpilaid dimensiones IGUAL pushpoper exp
-    '''
-
-def p_expresion(p):
-    '''
-    expresion : expr poplog
-              | expr poplog log expresion
-    '''
-
-def p_poplog(p):
-    '''
-    poplog :
-    '''
-    temp = quad.popLog(Tablas.isGlobal)
-    if temp:
-        quad.count += 1
-
-def p_expr(p):
-    '''
-    expr : exp poprel
-         | exp poprel rel expr
-    '''
-
-def p_porel(p):
-    '''
-    poprel :
-    '''
-    temp = quad.popRel(Tablas.isGlobal)
-    if temp:
-        quad.count += 1
-
-def p_exp(p):
-    '''
-    exp : termino popterm
-        | termino popterm MAS pushpoper exp
-        | termino popterm MENOS pushpoper exp
-    '''
-
+    tipo = quad.gettipo(p[-2])
+    dir = Tablas.findCteVM(p[-2])
+    #Cuadruplo
+    quad.pushPilaO(dir)
+    quad.pushType(tipo)
 
 def p_pushpoper(p):
     '''
     pushpoper :
     '''
     quad.pushPoper(p[-1])
+##############################################################
 
-def p_popterm(p):
+################MODULO PRINCIPAL#################
+def p_setGotoMain(p):
     '''
-    popterm :
+    setmain :
     '''
-    temp = quad.popTerm(Tablas.isGlobal)
-    if temp:
-        quad.count += 1
+    quad.gotoMain()
 
-def p_termino(p):
+def p_principal(p):
     '''
-    termino : factor popfact
-            | factor popfact MULT pushpoper termino
-            | factor popfact DIV pushpoper termino
+    principal : PRINCIPAL LPARENT RPARENT bloque
     '''
+#################################################
+    
 
-def p_popfact(p):
-    '''
-    popfact :
-    '''
-    temp = quad.popFact(Tablas.isGlobal)
-    if temp:
-        quad.count += 1
-
-def p_factor(p):
-    '''
-    factor : LPARENT addfalsebottom expresion RPARENT removefalsebottom
-           | var_cte
-           | MAS pushpoper var_cte
-           | MENOS pushpoper var_cte
-    '''
-
+###############MODULO DE FONDO FALSO#############
 def p_addfalsebottom(p):
     '''
     addfalsebottom :
@@ -749,7 +824,9 @@ def p_removefalsebottom(p):
     removefalsebottom :
     '''
     quad.popFalseBottom()
+#################################################
 
+#Variables
 def p_var_cte(p):
     '''
     var_cte : ID pushpilaid
@@ -761,15 +838,7 @@ def p_var_cte(p):
             | fcall
     '''
 
-def p_pushpilaid(p):
-    '''
-    pushpilaid :
-    '''
-    tipo = Tablas.getIdType(p[-1])
-    dir = Tablas.findVM(p[-1])
-    quad.pushPilaO(dir)
-    quad.pushType(tipo)
-
+#Punto neural para guardar constantes
 def p_ctemem(p):
     '''
     ctemem :
@@ -781,33 +850,7 @@ def p_ctemem(p):
     if (temp == False):
         mv.restMemo(tipo)
     
-def p_pushpilao(p):
-    '''
-    pushpilao :
-    '''
-    tipo = quad.gettipo(p[-2])
-    dir = Tablas.findCteVM(p[-2])
-    #Cuadruplo
-    quad.pushPilaO(dir)
-    quad.pushType(tipo)
-
-def p_log(p):
-    '''
-    log : AND pushpoper
-        | OR pushpoper
-    '''
-
-def p_rel(p):
-    '''
-    rel : MENOR pushpoper
-        | MAYOR pushpoper
-        | MENORIGUAL pushpoper
-        | MAYORIGUAL pushpoper
-        | COMPARE pushpoper
-        | DIFFERENT pushpoper
-    '''
-
-#Funciones Nuerales
+#Funciones Nuerales Generales
 def p_dirfunctrue(p):
     '''
     dirfunctrue :
@@ -839,6 +882,7 @@ def p_empty(p):
 def p_error(p):
     print("ERROR DE SINTAXIS", p)
 
+#Fin del programa
 def p_endprog(p):
     '''
     endprog :
