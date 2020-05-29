@@ -30,6 +30,7 @@ ltF = 17000
 ltC = 18000
 ltB = 19000
 
+#Funcione que regresa el siguiente espacio de memoria global disponible
 def getMemoGlob(tipo, salto):
     global gI
     global gF
@@ -47,6 +48,7 @@ def getMemoGlob(tipo, salto):
         gC += salto
         return temp
 
+#Funcione que regresa el siguiente espacio de memoria lcoal disponible
 def getMemoLoc(tipo, salto):
     global lI
     global lF
@@ -64,6 +66,7 @@ def getMemoLoc(tipo, salto):
         lC += salto
         return temp
 
+#Funcione que regresa el siguiente espacio de memoria de constantes disponible
 def getMemoCte(tipo):
     global gcI
     global gcF
@@ -91,6 +94,7 @@ def getMemoCte(tipo):
         gcS += 1
         return temp
 
+#Funcion que resta 1 del contador de memoria de constantes correspondiente
 def restMemo(tipo):
     global gcI
     global gcF
@@ -108,6 +112,7 @@ def restMemo(tipo):
     if tipo == "string":
         gcS -= 1
 
+#Funcion que regresa el siguiente espacio de memoria temporal dependiendo si es global o local
 def getMemoTemp(tipo, glob):
     global gtI
     global gtF
