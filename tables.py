@@ -92,6 +92,7 @@ def varsInsert(id, type, dir, salto):
         varTable[id] = temp
         addSize(type, salto)
 
+#Agrega tamaño de memoria local a reservar
 def addSize(type, salto):
     global li
     global lf
@@ -103,6 +104,7 @@ def addSize(type, salto):
     elif type == 'char':
         lc += salto
 
+#Agrega tamaño de memoria global a reservar
 def gaddSize(type, salto):
     global gli
     global glf
@@ -114,6 +116,7 @@ def gaddSize(type, salto):
     elif type == 'char':
         glc += salto
 
+#Agrega tamaño de memoria local temporal a reservar
 def tempAddSize(type):
     global lti
     global ltf
@@ -128,6 +131,7 @@ def tempAddSize(type):
     elif type == 'boolean':
         ltb += 1
 
+#Agrega tamaño de memoria global temporal a reservar
 def gtempAddSize(type):
     global glti
     global gltf
@@ -151,18 +155,22 @@ def repeatedVarId(id):
             return True
     return False
 
+#Imprime el directorio de funciones
 def dirPrint():
     for ids in dirFuncs:
         print('ID: ', ids, ', Type: ', dirFuncs[ids].type, 'Dir: ', dirFuncs[ids].dir,' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
 
+#Imprime la tabla de varibales globales
 def gvarPrint():
     for ids in gvarTable:
         print('ID: ', ids, ', Type: ', gvarTable[ids].type, ' Dir: ', gvarTable[ids].dir)
 
+#Imprime la tabla de variables locales
 def varsPrint():
     for ids in varTable:
         print('ID: ', ids, ', Type: ', varTable[ids].type, ' Dir: ', varTable[ids].dir)
 
+#Saca el tipo de dato de las tablas de variables
 def getIdType(id):
     tipo = None
     for ids in varTable:
@@ -174,7 +182,7 @@ def getIdType(id):
                 tipo = gvarTable[ids].type
     return tipo
 
-#Table de constantes
+#Agrega constantes a la tabla de constantes
 def cteInsert(id, type, dir):
     cte = id
     temp = table.table(cte, type, dir, None, None, None)
@@ -186,6 +194,7 @@ def cteInsert(id, type, dir):
         return True
     return False
 
+#Verifica si la constante ya existe
 def repeatedCte(id):
     leng = len(cteTable)
     for ids in range(leng):
@@ -193,12 +202,13 @@ def repeatedCte(id):
             return True
     return False
 
+#Imprime la tabla de constantes
 def ctePrint():
     leng = len(cteTable)
     for ids in range(leng):
         print('ID: ', cteTable[ids].id, ', Type: ', cteTable[ids].type, ' Dir: ', cteTable[ids].dir)
 
-#Find associated memory
+#Encuentra la memoria asociada a la variable
 def findVM(id):
     for ids in varTable:
         if id == ids:
@@ -207,7 +217,7 @@ def findVM(id):
         if id == ids:
             return gvarTable[id].dir
 
-#Find associtaed memory of constants
+#Encuentra la memoria asociada a la constante
 def findCteVM(id):
     leng = len(cteTable)
     for ids in range(leng):
@@ -215,17 +225,20 @@ def findCteVM(id):
             return cteTable[ids].dir
     return False
 
+#Agrega la cantidad de parametros y tipo al directorio de funciones
 def insertFuncParams(params, func):
     #print(func)
     for ids in dirFuncs:
         if ids == func:
             dirFuncs[ids].params = params
 
+#Agrega la memoria a reservar la directorio de funciones
 def insertFuncSize(size, func):
     for ids in dirFuncs:
         if ids == func:
             dirFuncs[ids].size = size
 
+#Resetea los contadores de memoria local a reservar
 def clearVarSize():
     global li
     global lf
@@ -241,20 +254,24 @@ def clearVarSize():
     ltf = 0
     ltc = 0
     ltb = 0
-    
+
+#Agrega el numero del cuadruplo donde empieza la funcion al directorio de funciones    
 def insertFuncQuad(quad, func):
     for ids in dirFuncs:
         if ids == func:
             dirFuncs[ids].quad = quad
 
+#Imprime la tabla de variables dimensionadas globales
 def gVectPrint():
     for ids in vectGTable:
         print('ID: ', ids, ', Lim1: ', vectGTable[ids].lim1, ' Lim2:', vectGTable[ids].lim2, ' M:', vectGTable[ids].m, ' Size:', vectGTable[ids].size)
 
+#Imprime la tabla de variables dimensionadas locales
 def dirlVect():
     for ids in dirFuncs:
-        print('ID: ', ids, ', Type: ', dirFuncs[ids].type, ' Params:', dirFuncs[ids].params, ' Size:', dirFuncs[ids].size, ' Quad:', dirFuncs[ids].quad)
+        print('ID: ', ids, ', Lim1: ', vectLTable[ids].lim1, ' Lim2:', vectLTable[ids].lim2, ' M:', vectLTable[ids].m, ' Size:', vectLTable[ids].size)
 
+#Verifica si la varibale dimensionada es local
 def findLVector(dir):
     for ids in vectLTable:
         if ids == dir:
