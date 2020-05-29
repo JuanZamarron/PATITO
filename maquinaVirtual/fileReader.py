@@ -8,6 +8,7 @@ dirFuncs = []
 cteTable = []
 Quad = []
 
+#Lee archivo generado por compilador y crea directorio de funciones, constantes y cuadruplos
 class dir(object):
     def __init__(self, id, type, dir, params, size, quad):
         self.id = id

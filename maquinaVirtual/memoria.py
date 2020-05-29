@@ -53,6 +53,8 @@ class memoria(object):
         for i in range(int(boolean)):
             self.boolean.append(None)
 
+
+#Ingresa valor al espacio de memoria
 def assign(mem1, mem2, mem3, mem4, dir, val):
     space = dir%1000
     mem = indentifyMem(dir)
@@ -76,6 +78,7 @@ def assignaux(mem,space,tipo,val):
     else:
         mem.boolean[space] = val
 
+#Idetifica que memoria es
 def indentifyMem(dir):
     if dir<gtI:
         return 1
@@ -86,6 +89,7 @@ def indentifyMem(dir):
     else:
         return 4
 
+#Identifica que tipo de dato es
 def indentifyType(dir):
     if dir>=lI:
         dir = dir//1000-12
@@ -96,6 +100,7 @@ def indentifyType(dir):
     else:
         return dir
 
+#Consigue valor del espacio de memoria
 def get(mem1, mem2, mem3, mem4, dir):
     space = dir%1000
     mem = indentifyMem(dir)

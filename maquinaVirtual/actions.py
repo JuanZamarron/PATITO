@@ -37,6 +37,7 @@ charP = 0
 returnQuad = []
 
 
+#Regresa la constante
 def findCte(dir):
     for i in range(len(cteTable)):
         if dir == int(cteTable[i].dir):
@@ -46,9 +47,7 @@ def findCte(dir):
                 return float(cteTable[i].id)
             return cteTable[i].id
 
-def goto(cuad, i):
-    return int(cuad.result)
-
+#Verifica si la memoria es un apuntador
 def apuntador(dir):
     if dir[0] == '(':
         dir = dir.rstrip(')')
@@ -60,6 +59,10 @@ def apuntador(dir):
             return dir
         else:
             return int(dir)
+
+#Funciones de cuadruplos
+def goto(cuad, i):
+    return int(cuad.result)
 
 def sum(cuad, i):
     dir1 = apuntador(cuad.dir1)
@@ -446,6 +449,7 @@ def ver(cuad, i):
     else:
         print('Error: Varibale dimensionada fuera de rango')
 
+#Switch que selecciona que funcion ejecutar segun la accion de cuadruplo
 def switch(cuadr, i):
     dict = {
         '+' : sum,
