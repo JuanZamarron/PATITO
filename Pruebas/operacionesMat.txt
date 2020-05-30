@@ -1,0 +1,39 @@
+programa patito;
+var 
+int a[1][1],b[1][1], d[1][1], r, c;
+
+principal()
+{
+    a[0, 0] = 1;
+    a[0, 1] = 2;
+    a[1, 0] = 3;
+    a[1, 1] = 4;
+    b[0, 0] = 5;
+    b[0, 1] = 6;
+    b[1, 0] = 7;
+    b[1, 1] = 8;
+    d = a * b;
+    desde r = 0 hasta 1 hacer 
+    {
+        desde c = 0 hasta 1 hacer
+        {
+            escribe(d[r,c]);
+        }
+    }
+    d = a + b;
+    desde r = 0 hasta 1 hacer 
+    {
+        desde c = 0 hasta 1 hacer
+        {
+            escribe(d[r,c]);
+        }
+    }
+    d = a - b;
+    desde r = 0 hasta 1 hacer 
+    {
+        desde c = 0 hasta 1 hacer
+        {
+            escribe(d[r,c]);
+        }
+    }
+}

@@ -67,7 +67,15 @@ tokens = [
     'MENORIGUAL',
     'LCORCH',
     'RCORCH',
+    'DETERMINANTE',
+    'TRANSPUESTA',
+    'INVERSA',
 ] + list(reserved.values())
+
+#Especiales
+t_DETERMINANTE = r'\$'
+t_TRANSPUESTA = r'\¡'
+t_INVERSA = r'\?'
 
 #Delimeters
 t_LPARENT = r'\('
