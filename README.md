@@ -104,7 +104,7 @@ Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
 1. int
     
             principal()
-            var int variable ;
+            var int variable;
             {
                 variable = 1;
                 escribe(variable)

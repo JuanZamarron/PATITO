@@ -25,7 +25,7 @@ from lex import tokens
 prueba = open(path, "r")
 entrada = prueba.read()
 
-###########INICIO DEL PROGRAMA###############
+###########1.INICIO DEL PROGRAMA###############
 def p_programa(p):
     '''
     programa : PROGRAMA ID globfunc SEMICOLON gotomain vars funcs endprog
@@ -47,7 +47,7 @@ def p_gotomain(p):
     quad.count += 1
 #############################################
 
-###########MODULO DE DECLARACION DE VARAIBLES###############
+###########2.MODULO DE DECLARACION DE VARAIBLES###############
 def p_vars(p):
     '''
     vars : VAR varaux
@@ -224,7 +224,7 @@ def p_tipo(p):
     Tablas.myType = p[1]
 ##########################################################
 
-###########MODULO DE FUNCIONES###############
+###########3.MODULO DE FUNCIONES###############
 def p_funcs(p):
     '''
     funcs : setmain principal
@@ -328,9 +328,19 @@ def p_endfunc(p):
     quad.quadInsert('Endfunc', None, None, None)
     quad.count += 1
 ##############################################
+################ MODULO PRINCIPAL#################
+def p_setGotoMain(p):
+    '''
+    setmain :
+    '''
+    quad.gotoMain()
 
+def p_principal(p):
+    '''
+    principal : PRINCIPAL LPARENT RPARENT bloque
+    '''
 #############################################################
-#################MODULO DE ESTATUTOS LINEALES##########################
+#################4.MODULO DE ESTATUTOS LINEALES##########################
 def p_estatuto(p):
     '''
     estatuto : asignacion
@@ -342,7 +352,23 @@ def p_estatuto(p):
              | escritura
     '''
 
-#############ESTATUTO DE ASIGNACION############################
+########### 5.MODULO DE BLOQUE###############################
+def p_bloque(p):
+    '''
+    bloque : LBRACE RBRACE
+           | LBRACE bloqueaux RBRACE
+    '''
+
+def p_bloqueaux(p):
+    '''
+    bloqueaux : estatuto
+              | estatuto bloqueaux
+              | retorno
+    '''
+##########################################################
+
+
+############# 6. ESTATUTO DE ASIGNACION ############################
 def p_asignacion(p):
     '''
     asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
@@ -355,7 +381,7 @@ def p_asignacionaux(p):
     '''
 ##############################################################
 
-#############ESTATUTO DE LECTURA############################
+############# 7.ESTATUTO DE LECTURA ############################
 def p_lectura(p):
     '''
     lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
@@ -376,7 +402,7 @@ def p_lequad(p):
     quad.pushPoper('lee')
 ############################################################
 
-#############ESTATUTO DE ESCTRITURA############################
+############# 8.ESTATUTO DE ESCTRITURA ############################
 def p_escritura(p):
     '''
     escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
@@ -397,7 +423,7 @@ def p_escquad(p):
     quad.pushPoper('escribe')
 ###############################################################
 
-#############ESTATUTO DE LLAMADA DE FUNCIONES############################
+############# 9.ESTATUTO DE LLAMADA DE FUNCIONES ############################
 def p_fcall(p):
     '''
     fcall : ID erainsert LPARENT RPARENT
@@ -439,7 +465,7 @@ def p_paraminsert(p):
 ################################################################
 #################MODULO ESTATUTOS NO-LINEALES##########################
 
-###########MODULO ESTATUTO SI###############
+########### 10.MODULO ESTATUTO SI ###############
 def p_si(p):
     '''
     si : siaux
@@ -474,7 +500,7 @@ def p_si3(p):
         quad.count += 1
 ######################################################
 
-###########MODULO ESTATUTO MIENTRAS###############
+########### 11.MODULO ESTATUTO MIENTRAS ###############
 def p_mientras(p):
     '''
     mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
@@ -503,7 +529,7 @@ def p_while3(p):
         quad.count += 1
 #################################################
 
-###########MODULO ESTATUTO DESDE###############
+###########12.MODULO ESTATUTO DESDE###############
 def p_desde(p):
     '''
     desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
@@ -539,27 +565,8 @@ def p_for5(p):
     if temp:
         quad.count += 1
 ################################################
-
 ################################################################
-################################################################
-
-###########MODULO DE BLOQUE###############################
-def p_bloque(p):
-    '''
-    bloque : LBRACE RBRACE
-           | LBRACE bloqueaux RBRACE
-    '''
-
-def p_bloqueaux(p):
-    '''
-    bloqueaux : estatuto
-              | estatuto bloqueaux
-              | retorno
-    '''
-##########################################################
-
-
-#############MODULO DE POPs##############################
+############# Pops ##############################
 def p_popassign(p):
     '''
     popassign :
@@ -617,7 +624,7 @@ def p_popfact(p):
         quad.count += 1
 #########################################################
 
-###############MODULO EXPRESIONES########################
+###############13.MODULO EXPRESIONES########################
 def p_expresion(p):
     '''
     expresion : expr poplog
@@ -669,7 +676,7 @@ def p_rel(p):
     '''
 #########################################################
 
-###############MODULO DE VARIABLES DIMENSIONADAS##############
+############### 14.MODULO DE VARIABLES DIMENSIONADAS##############
 def p_dimensiones(p):
     '''
     dimensiones : addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver1 RCORCH removefalsebottom
@@ -771,7 +778,7 @@ def p_ver3(p):
 ##############################################################
 
 
-###########MODULO DE PUSH A PILAS#############################
+###########  PUSH A PILAS #############################
 def p_pushpilaid(p):
     '''
     pushpilaid :
@@ -798,21 +805,8 @@ def p_pushpoper(p):
     quad.pushPoper(p[-1])
 ##############################################################
 
-################MODULO PRINCIPAL#################
-def p_setGotoMain(p):
-    '''
-    setmain :
-    '''
-    quad.gotoMain()
 
-def p_principal(p):
-    '''
-    principal : PRINCIPAL LPARENT RPARENT bloque
-    '''
-#################################################
-    
-
-###############MODULO DE FONDO FALSO#############
+############### FONDO FALSO #############
 def p_addfalsebottom(p):
     '''
     addfalsebottom :
@@ -826,7 +820,7 @@ def p_removefalsebottom(p):
     quad.popFalseBottom()
 #################################################
 
-#Variables
+############### 15. VAR CTE #############
 def p_var_cte(p):
     '''
     var_cte : ID pushpilaid
