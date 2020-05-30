@@ -171,7 +171,7 @@ def p_tamvector(p):
     temp = Tablas.cteInsert(p[-2], tipo, dir)
     if (temp == False):
         mv.restMemo(tipo)
-    Tablas.vectSize = p[-2]
+    Tablas.vectSize = p[-2] + 1
     Tablas.m = 1
     tipo = quad.gettipo(Tablas.vectSize)
     tipo2 = quad.gettipo(Tablas.m)
