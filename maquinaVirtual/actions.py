@@ -589,6 +589,30 @@ def ver(cuad, i):
     else:
         print('Error: Varibale dimensionada fuera de rango')
 
+def deter(cuad, i):
+    dir1 = (cuad.dir1.split('['))
+    result = apuntador(cuad.result)
+    mat1 = createMat(dir1)
+    res = np.linalg.det(mat1)
+    memo.assign(glob, globTemp, local, localTemp, result, res)
+    return i + 1
+
+def trans(cuad, i):
+    dir1 = (cuad.dir1.split('['))
+    result = (cuad.result.split('['))
+    mat1 = createMat(dir1)
+    res = np.transpose(mat1)
+    createMatRes(result, res)
+    return i + 1
+
+def inver(cuad, i):
+    dir1 = (cuad.dir1.split('['))
+    result = (cuad.result.split('['))
+    mat1 = createMat(dir1)
+    res = np.linalg.inv(mat1)
+    createMatRes(result, res)
+    return i + 1
+
 #Switch que selecciona que funcion ejecutar segun la accion de cuadruplo
 def switch(cuadr, i):
     dict = {
@@ -615,6 +639,9 @@ def switch(cuadr, i):
         'Param' : param,
         'Endfunc' : endfunc,
         'Ver' : ver,
+        '$' : deter,
+        '¡' : trans,
+        '?' : inver,
     }
     func = dict.get(cuadr.action, 'null')
     if func != 'null':

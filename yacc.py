@@ -615,6 +615,14 @@ def p_popfact(p):
     temp = quad.popFact(Tablas.isGlobal)
     if temp:
         quad.count += 1
+
+def p_popmat(p):
+    '''
+    popmat :
+    '''
+    temp = quad.popMat(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
 #########################################################
 
 ###############MODULO EXPRESIONES########################
@@ -650,6 +658,14 @@ def p_factor(p):
            | var_cte
            | MAS pushpoper var_cte
            | MENOS pushpoper var_cte
+           | matrices popmat
+    '''
+
+def p_matrices(p):
+    '''
+    matrices : DETERMINANTE pushpoper ID pushpilaid
+             | TRANSPUESTA pushpoper ID pushpilaid
+             | INVERSA pushpoper ID pushpilaid
     '''
 
 def p_log(p):

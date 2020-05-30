@@ -183,7 +183,7 @@ def popTerm(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print("ERROR: type mismatch")
+                    print("Error: type mismatch")
                     sys.exit()
     return False
 
@@ -220,6 +220,54 @@ def popFact(glob):
                     return True
                 else:
                     print("ERROR: type mismatch")
+                    sys.exit()
+    return False
+
+#Funcion que agrega cuadruplo de funciones especiales de matrices
+def popMat(glob):
+    size = len(Poper)
+    if size > 0:
+        if Poper[size-1] != '(':
+            if Poper[size-1] == '$' or Poper[size-1] == '¡' or Poper[size-1] == '?':
+                temp = operand = PilaO.pop()
+                operand = operand if operand == opMat(operand) else opMat(operand)
+                o_type = Ptypes.pop()
+                operator = Poper.pop()
+                if operator == '¡':
+                    result_type = o_type
+                elif operator == '$':
+                    if (o_type == 'char'):
+                        print('Error: No se puede el determinante de una matriz de chars')
+                        sys.exit()
+                    else:
+                        result_type = o_type
+                else:
+                    result_type = semantic_cube['/'][o_type]['float']
+                tam = compMatSize(operand, temp, operand, temp, operator)
+                if tam == 0:
+                    print('Error: Esta es una funcion especial para solo matrices')
+                    sys.exit()
+                elif tam == 1:
+                    salto = 1
+                else:
+                    salto = tamMat(tam)
+                if(result_type != 'err'):
+                    result = mv.getMemoTemp(result_type, glob, salto)
+                    if (salto > 1 and len(tam) == 1):
+                        result = str(result) + '[' + tam[0]
+                    elif(salto > 1 and len(tam) == 2):
+                        result = str(result) + '[' + tam[0] + '[' + tam[1]
+                    if (glob):
+                        Tabla.gtempAddSize(result_type,salto)
+                    else:
+                        Tabla.tempAddSize(result_type,salto)
+                    temp = cuadruplo.cuadruplo(count-1, operator, operand, None, result)
+                    Quad.append(temp)
+                    PilaO.append(result)
+                    Ptypes.append(result_type)
+                    return True
+                else:
+                    print('Error: type mismatch')
                     sys.exit()
     return False
 
@@ -424,6 +472,12 @@ def compMatSize(rO,rT,lO,lT,op):
         if (len(sR) != len(sL)):
             print('Error: Matrices de diferentes dimensiones')
             sys.exit()
+        elif op == '$':
+            return 1
+        elif op == '¡':
+            return [sR[2], sR[1]]
+        elif op == '?':
+            return [sR[1], sR[2]]
         elif (op == '+' or op == '-'):
             if (len(sR) == 2):
                 if(sR[1] != sL[1]):
