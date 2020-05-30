@@ -7,6 +7,7 @@
 import sys
 import memoria as memo
 import fileReader
+import numpy as np
 
 #Directorio de funciones
 dirFuncs = fileReader.dirFuncs
@@ -60,42 +61,141 @@ def apuntador(dir):
         else:
             return int(dir)
 
+#Crea matriz
+def createMat(dir):
+    dir1 = int(dir[0])
+    lim1 = findCte(int(dir[1])) + 1
+    matrix = []
+    if (len(dir) == 2):
+        for c in range(lim1):
+            space = dir1 + c
+            matrix[c] = memo.get(glob, globTemp, local, localTemp, space)
+        return matrix
+    else:
+        lim2 = findCte(int(dir[2])) + 1
+        for r in range(0,lim1):
+            a = []
+            for c in range(0,lim2):
+                space = (r*lim1) + c + dir1
+                val = memo.get(glob, globTemp, local, localTemp, space)
+                a.append(val)
+            matrix.append(a)
+        print(matrix)
+        return matrix
+
+#Inserta resultados de operaciones de matrices a matriz correspondiente
+def createMatRes(dir, res):
+    dir1 = int(dir[0])
+    lim1 = findCte(int(dir[1])) + 1
+    if (len(dir) == 2):
+        for c in range(lim1):
+            space = dir1 + c
+            memo.assign(glob, globTemp, local, localTemp, space, res[c])
+    else:
+        lim2 = findCte(int(dir[2])) + 1
+        for r in range(lim1):
+            for c in range(lim2):
+                space = (r*lim1) + c + dir1
+                memo.assign(glob, globTemp, local, localTemp, space, res[r][c])
+
 #Funciones de cuadruplos
 def goto(cuad, i):
     return int(cuad.result)
 
 def sum(cuad, i):
-    dir1 = apuntador(cuad.dir1)
-    dir2 = apuntador(cuad.dir2)
-    result = apuntador(cuad.result)
-    if dir1>=8000 and dir1<13000:
-        left_op = findCte(dir1)
+    dir1 = (cuad.dir1.split('['))
+    dir2 = (cuad.dir2.split('['))
+    len1 = len(dir1)
+    len2 = len(dir2)
+    if (len1 < 2 and len2 < 2):
+        dir1 = apuntador(cuad.dir1)
+        dir2 = apuntador(cuad.dir2)
+        result = apuntador(cuad.result)
+        if dir1>=8000 and dir1<13000:
+            left_op = findCte(dir1)
+        else:
+            left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+        if dir2>=8000 and dir2<13000:
+            right_op = findCte(dir2)
+        else:
+            right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+        #print(left_op,'+',right_op)
+        res = left_op + right_op
+        memo.assign(glob, globTemp, local, localTemp, result, res)
+        return i + 1
     else:
-        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
-    if dir2>=8000 and dir2<13000:
-        right_op = findCte(dir2)
-    else:
-        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'+',right_op)
-    res = left_op + right_op
-    memo.assign(glob, globTemp, local, localTemp, result, res)
+        result = (cuad.result.split('['))
+        if (len1 < 2):
+            dir1 = apuntador(cuad.dir1)
+            if dir1>=8000 and dir1<13000:
+                left_op = findCte(dir1)
+            else:
+                left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+            mat2 = createMat(dir2)
+            res = np.add(left_op, mat2)
+            createMatRes(result, res)
+        elif (len2 < 2):
+            mat1 = createMat(dir1)
+            dir2 = apuntador(cuad.dir2)
+            if dir2>=8000 and dir2<13000:
+                right_op = findCte(dir2)
+            else:
+                right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+            res = np.add(mat1, right_op)
+            createMatRes(result, res)
+        else:
+            mat1 = createMat(dir1)
+            mat2 = createMat(dir2)
+            res = np.add(mat1, mat2)
+            createMatRes(result, res)
     return i + 1
 
 def rest(cuad, i):
-    dir1 = apuntador(cuad.dir1)
-    dir2 = apuntador(cuad.dir2)
-    result = apuntador(cuad.result)
-    if dir1>=8000 and dir1<13000:
-        left_op = findCte(dir1)
+    dir1 = (cuad.dir1.split('['))
+    dir2 = (cuad.dir2.split('['))
+    len1 = len(dir1)
+    len2 = len(dir2)
+    if (len1 < 2 and len2 < 2):
+        dir1 = apuntador(cuad.dir1)
+        dir2 = apuntador(cuad.dir2)
+        result = apuntador(cuad.result)
+        if dir1>=8000 and dir1<13000:
+            left_op = findCte(dir1)
+        else:
+            left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+        if dir2>=8000 and dir2<13000:
+            right_op = findCte(dir2)
+        else:
+            right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+        #print(left_op,'-',right_op)
+        res = left_op - right_op
+        memo.assign(glob, globTemp, local, localTemp, result, res)
+        return i + 1
     else:
-        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
-    if dir2>=8000 and dir2<13000:
-        right_op = findCte(dir2)
-    else:
-        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'-',right_op)
-    res = left_op - right_op
-    memo.assign(glob, globTemp, local, localTemp, result, res)
+        result = (cuad.result.split('['))
+        if (len1 < 2):
+            dir1 = apuntador(cuad.dir1)
+            if dir1>=8000 and dir1<13000:
+                left_op = findCte(dir1)
+            else:
+                left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+            mat2 = createMat(dir2)
+            res = np.subtract(left_op, mat2)
+            createMatRes(result, res)
+        elif (len2 < 2):
+            mat1 = createMat(dir1)
+            dir2 = apuntador(cuad.dir2)
+            if dir2>=8000 and dir2<13000:
+                right_op = findCte(dir2)
+            else:
+                right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+            res = np.subtract(mat1, right_op)
+            createMatRes(result, res)
+        else:
+            mat1 = createMat(dir1)
+            mat2 = createMat(dir2)
+            res = np.subtract(mat1, mat2)
+            createMatRes(result, res)
     return i + 1
 
 def div(cuad, i):
@@ -116,22 +216,53 @@ def div(cuad, i):
     return i + 1
 
 def mult(cuad, i):
-    dir1 = apuntador(cuad.dir1)
-    dir2 = apuntador(cuad.dir2)
-    result = apuntador(cuad.result)
-    if dir1>=8000 and dir1<13000:
-        left_op = findCte(dir1)
+    dir1 = (cuad.dir1.split('['))
+    dir2 = (cuad.dir2.split('['))
+    len1 = len(dir1)
+    len2 = len(dir2)
+    if (len1 < 2 and len2 < 2):
+        dir1 = apuntador(cuad.dir1)
+        dir2 = apuntador(cuad.dir2)
+        result = apuntador(cuad.result)
+        if dir1>=8000 and dir1<13000:
+            left_op = findCte(dir1)
+        else:
+            left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+        if dir2>=8000 and dir2<13000:
+            right_op = findCte(dir2)
+        else:
+            right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+        #print(left_op,'*',right_op)
+        res = left_op * right_op
+        memo.assign(glob, globTemp, local, localTemp, result, res)
+        return i + 1
     else:
-        left_op = memo.get(glob, globTemp, local, localTemp, dir1)
-    if dir2>=8000 and dir2<13000:
-        right_op = findCte(dir2)
-    else:
-        right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'*',right_op)
-    res = left_op * right_op
-    memo.assign(glob, globTemp, local, localTemp, result, res)
+        result = (cuad.result.split('['))
+        if (len1 < 2):
+            dir1 = apuntador(cuad.dir1)
+            if dir1>=8000 and dir1<13000:
+                left_op = findCte(dir1)
+            else:
+                left_op = memo.get(glob, globTemp, local, localTemp, dir1)
+            mat2 = createMat(dir2)
+            res = np.multiply(left_op, mat2)
+            createMatRes(result, res)
+        elif (len2 < 2):
+            mat1 = createMat(dir1)
+            dir2 = apuntador(cuad.dir2)
+            if dir2>=8000 and dir2<13000:
+                right_op = findCte(dir2)
+            else:
+                right_op = memo.get(glob, globTemp, local, localTemp, dir2)
+            res = np.multiply(mat1, right_op)
+            createMatRes(result, res)
+        else:
+            mat1 = createMat(dir1)
+            mat2 = createMat(dir2)
+            res = np.dot(mat1, mat2)
+            createMatRes(result, res)
     return i + 1
-
+        
 def greater(cuad, i):
     dir1 = apuntador(cuad.dir1)
     dir2 = apuntador(cuad.dir2)
@@ -309,15 +440,24 @@ def escribe(cuad, i):
     return i + 1
 
 def asigna(cuad, i):
-    dir1 = apuntador(cuad.dir1)
-    result = apuntador(cuad.result)
-    if dir1>=8000 and dir1<13000:
-        right_op = findCte(dir1)
+    dir1 = (cuad.dir1.split('['))
+    result = (cuad.result.split('['))
+    len1 = len(dir1)
+    len2 = len(result)
+    if (len1 < 2 and len2 < 2):
+        dir1 = apuntador(cuad.dir1)
+        result = apuntador(cuad.result)
+        if dir1>=8000 and dir1<13000:
+            right_op = findCte(dir1)
+        else:
+            right_op = memo.get(glob, globTemp, local, localTemp, dir1)
+        #print(cuad.result,'=',right_op)
+        memo.assign(glob, globTemp, local, localTemp, result, right_op)
+        return i + 1
     else:
-        right_op = memo.get(glob, globTemp, local, localTemp, dir1)
-    #print(cuad.result,'=',right_op)
-    memo.assign(glob, globTemp, local, localTemp, result, right_op)
-    return i + 1
+        mat1 = createMat(dir1)
+        createMatRes(result, mat1)
+        return i + 1
 
 def regresa(cuad, i):
     global local

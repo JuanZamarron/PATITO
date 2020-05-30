@@ -113,7 +113,7 @@ def restMemo(tipo):
         gcS -= 1
 
 #Funcion que regresa el siguiente espacio de memoria temporal dependiendo si es global o local
-def getMemoTemp(tipo, glob):
+def getMemoTemp(tipo, glob, salto):
     global gtI
     global gtF
     global gtC
@@ -125,34 +125,34 @@ def getMemoTemp(tipo, glob):
     if glob == True:
         if tipo == "float":
             temp = gtF
-            gtF += 1
+            gtF += salto
             return temp
         if tipo == "int":
             temp = gtI
-            gtI += 1
+            gtI += salto
             return temp
         if tipo == "char":
             temp = gtC
-            gtC += 1
+            gtC += salto
             return temp
         if tipo == "boolean":
             temp = gtB
-            gtB += 1
+            gtB += salto
             return temp
     else:
         if tipo == "float":
             temp = ltF
-            ltF += 1
+            ltF += salto
             return temp
         if tipo == "int":
             temp = ltI
-            ltI += 1
+            ltI += salto
             return temp
         if tipo == "char":
             temp = ltC
-            ltC += 1
+            ltC += salto
             return temp
         if tipo == "boolean":
             temp = ltB
-            ltB += 1
+            ltB += salto
             return temp

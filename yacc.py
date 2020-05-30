@@ -171,7 +171,7 @@ def p_tamvector(p):
     temp = Tablas.cteInsert(p[-2], tipo, dir)
     if (temp == False):
         mv.restMemo(tipo)
-    Tablas.vectSize = p[-2]
+    Tablas.vectSize = p[-2]+1
     Tablas.m = 1
     tipo = quad.gettipo(Tablas.vectSize)
     tipo2 = quad.gettipo(Tablas.m)
@@ -703,11 +703,11 @@ def p_ver1(p):
         lim2 = Tablas.vectGTable[Tablas.isVector].lim1
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
-    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    result = mv.getMemoTemp('int', Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', temp, dir, result)
     quad.count += 1
@@ -729,11 +729,11 @@ def p_ver2(p):
         m = Tablas.vectGTable[Tablas.isVector].m
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
-    result = mv.getMemoTemp('int',Tablas.isGlobal)
+    result = mv.getMemoTemp('int',Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     quad.quadInsert('*', temp, m, result)
     quad.count += 1
     quad.PilaO.append(result)
@@ -752,18 +752,18 @@ def p_ver3(p):
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
     temp2 = quad.PilaO.pop()
-    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    result = mv.getMemoTemp('int', Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     quad.quadInsert('+', temp, temp2, result)
     quad.count += 1
-    result2 = mv.getMemoTemp('int', Tablas.isGlobal)
+    result2 = mv.getMemoTemp('int', Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', result, dir, result2)
     quad.count += 1

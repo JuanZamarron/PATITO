@@ -117,34 +117,34 @@ def gaddSize(type, salto):
         glc += salto
 
 #Agrega tamaño de memoria local temporal a reservar
-def tempAddSize(type):
+def tempAddSize(type, salto):
     global lti
     global ltf
     global ltc
     global ltb
     if type == 'int':
-        lti += 1
+        lti += salto
     elif type == 'float':
-        ltf += 1
+        ltf += salto
     elif type == 'char':
-        ltc += 1
+        ltc += salto
     elif type == 'boolean':
-        ltb += 1
+        ltb += salto
 
 #Agrega tamaño de memoria global temporal a reservar
-def gtempAddSize(type):
+def gtempAddSize(type, salto):
     global glti
     global gltf
     global gltc
     global gltb
     if type == 'int':
-        glti += 1
+        glti += salto
     elif type == 'float':
-        gltf += 1
+        gltf += salto
     elif type == 'char':
-        gltc += 1
+        gltc += salto
     elif type == 'boolean':
-        gltb += 1
+        gltb += salto
 
 #Checks if repeated id in local varTable
 def repeatedVarId(id):
