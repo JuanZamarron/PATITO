@@ -5,9 +5,14 @@
 # ------------------------------------------------------------
 import ply.yacc as yacc
 from lex import archivo
+from lex import path
+
 import tables as Tablas
 import cuadruplo as quad
 import memoriaVirtual as mv
+import compiledFile as cf
+import estructuras as vect
+import sys
 
 Tablas.dirFuncs.clear()
 Tablas.varTable.clear()
@@ -17,10 +22,10 @@ Tablas.gvarTable.clear()
 from lex import tokens
 
 #Lee archivo de prueba
-prueba = open(archivo, "r")
+prueba = open(path, "r")
 entrada = prueba.read()
 
-#Creacion del programa
+###########INICIO DEL PROGRAMA###############
 def p_programa(p):
     '''
     programa : PROGRAMA ID globfunc SEMICOLON gotomain vars funcs endprog
@@ -30,7 +35,7 @@ def p_globfunc(p):
     '''
     globfunc :
     '''
-    Tablas.insertDirFunc(p[-1], None)
+    Tablas.insertDirFunc(p[-1], None, None)
     Tablas.dirFuncs[p[-1]].quad = 0
     Tablas.program = p[-1]
 
@@ -40,10 +45,13 @@ def p_gotomain(p):
     '''
     quad.quadInsert('Goto', None, None, None)
     quad.count += 1
+#############################################
 
+###########MODULO DE DECLARACION DE VARAIBLES###############
 def p_vars(p):
     '''
     vars : VAR varaux
+         | empty
     '''
     
 def p_varaux(p):
@@ -55,33 +63,156 @@ def p_varaux(p):
 def p_varaux2(p):
     '''
     varaux2 : varaux3
-            | varaux3 varaux2
+            | varaux3 COMMA varaux2
     '''
 
 def p_varaux3(p):
     '''
     varaux3 : ID
-            | ID COMMA
-            | ID LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH COMMA
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH
-            | ID LCORCH CTE_I RCORCH LCORCH CTE_I RCORCH  COMMA
+            | ID LCORCH vardim CTE_I RCORCH tamvector
+            | ID LCORCH vardim CTE_I RCORCH LCORCH CTE_I tammatriz RCORCH
     '''
+    salto = 1
     if Tablas.isGlobal == True:
-        dir = mv.getMemoGlob(Tablas.myType)
+        if Tablas.isVector != None:
+            if Tablas.isVector == 1:
+                if p[4]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,None, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoGlob(Tablas.myType, salto)
+                Tablas.vectGTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+            elif Tablas.isVector == 2:
+                if p[4]<1 or p[7]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                dir2 = Tablas.findCteVM(p[7])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,dir2, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoGlob(Tablas.myType, salto)
+                Tablas.vectGTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+        else:
+            dir = mv.getMemoGlob(Tablas.myType, salto)
     else:
-        dir = mv.getMemoLoc(Tablas.myType)
-    Tablas.insert(p[1], Tablas.myType, dir)
+        if Tablas.isVector != None:
+            if Tablas.isVector == 1:
+                if p[4]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,None, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoLoc(Tablas.myType, salto)
+                Tablas.vectLTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+            elif Tablas.isVector == 2:
+                if p[4]<1 or p[7]<1:
+                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    sys.exit()
+                dir1 = Tablas.findCteVM(p[4])
+                dir2 = Tablas.findCteVM(p[7])
+                m = Tablas.findCteVM(Tablas.m)
+                size = Tablas.findCteVM(Tablas.vectSize)
+                temp = vect.vector(p[1],dir1,dir2, m, size)
+                salto = Tablas.vectSize
+                dir = mv.getMemoLoc(Tablas.myType, salto)
+                Tablas.vectLTable[dir] = temp
+                tipo = quad.gettipo(dir)
+                dirTemp = mv.getMemoCte(tipo)
+                temp = Tablas.cteInsert(dir, tipo, dirTemp)
+                if (temp == False):
+                    mv.restMemo(tipo)
+        else:
+            dir = mv.getMemoLoc(Tablas.myType, salto)
+    Tablas.insert(p[1], Tablas.myType, dir, salto)
+    Tablas.isVector = None
 
-def p_functipo(p):
+def p_vardim(p):
     '''
-    functipo : INT
-             | FLOAT
-             | CHAR
-             | STRING
-             | VOID
+    vardim :
     '''
-    Tablas.funcType = p[1]
+    Tablas.isVector = p[-2]
+    tipo = quad.gettipo(0)
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(0, tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+
+def p_tamvector(p):
+    '''
+    tamvector :
+    '''
+    tipo = quad.gettipo(p[-2])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-2], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    Tablas.vectSize = p[-2]+1
+    Tablas.m = 1
+    tipo = quad.gettipo(Tablas.vectSize)
+    tipo2 = quad.gettipo(Tablas.m)
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(Tablas.vectSize, tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    dir2 = mv.getMemoCte(tipo2)
+    temp2 = Tablas.cteInsert(Tablas.m, tipo2, dir2)
+    if (temp2 == False):
+        mv.restMemo(tipo2)
+    Tablas.isVector = 1
+
+def p_tammatriz(p):
+    '''
+    tammatriz :
+    '''
+    tipo = quad.gettipo(p[-1])
+    tipo2 = quad.gettipo(p[-4])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-1], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    dir2 = mv.getMemoCte(tipo2)
+    temp2 = Tablas.cteInsert(p[-4], tipo2, dir2)
+    if (temp2 == False):
+        mv.restMemo(tipo2)
+    Tablas.vectSize = (p[-1]+1)*(p[-4]+1)
+    Tablas.m = Tablas.vectSize/(p[-4]-0+1)
+    tipo = quad.gettipo(Tablas.vectSize)
+    tipo2 = quad.gettipo(Tablas.m)
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(Tablas.vectSize, tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    dir2 = mv.getMemoCte(tipo2)
+    temp2 = Tablas.cteInsert(Tablas.m, tipo2, dir2)
+    if (temp2 == False):
+        mv.restMemo(tipo2)
+    Tablas.isVector = 2
 
 def p_tipo(p):
     '''
@@ -91,22 +222,13 @@ def p_tipo(p):
          | STRING
     '''
     Tablas.myType = p[1]
+##########################################################
 
+###########MODULO DE FUNCIONES###############
 def p_funcs(p):
     '''
     funcs : setmain principal
           | funcsaux setmain principal
-    '''
-
-def p_setGotoMain(p):
-    '''
-    setmain :
-    '''
-    quad.gotoMain()
-
-def p_principal(p):
-    '''
-    principal : PRINCIPAL LPARENT RPARENT bloque
     '''
 
 def p_funcsaux(p):
@@ -115,18 +237,23 @@ def p_funcsaux(p):
              | func insertparams endfunc funcsaux
     '''
 
-def p_endfunc(p):
+def p_insertparams(p):
     '''
-    endfunc :
+    insertparams :
     '''
-    quad.quadInsert('Endfunc', None, None, None)
-    quad.count += 1
+    Tablas.insertFuncParams(Tablas.params, Tablas.func)
+    Tablas.params = ''
+    size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
+    Tablas.insertFuncSize(size, Tablas.func)
+    Tablas.clearVarSize()
+    Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
+    Tablas.func = ''
 
 def p_func(p):
     '''
     func : getquad FUNCION funcaux
     '''
-    
+
 def p_getquad(p):
     '''
     getquad :
@@ -137,6 +264,16 @@ def p_funcaux(p):
     '''
     funcaux : functipo funcaux2
     '''
+
+def p_functipo(p):
+    '''
+    functipo : INT
+             | FLOAT
+             | CHAR
+             | STRING
+             | VOID
+    '''
+    Tablas.funcType = p[1]
 
 def p_funcaux2(p):
     '''
@@ -149,22 +286,11 @@ def p_dirfuncinsert(p):
     '''
     Tablas.func = p[-1]
     if (Tablas.isGlobal == True):
-        dir = mv.getMemoGlob(Tablas.funcType)
+        dir = mv.getMemoGlob(Tablas.funcType, 1)
     else:
-        dir = mv.getMemoLoc(Tablas.funcType)
-    Tablas.insert(p[-1], Tablas.funcType, dir)
-    Tablas.insertDirFunc(p[-1], Tablas.funcType)
-
-def p_insertparams(p):
-    '''
-    insertparams :
-    '''
-    Tablas.insertFuncParams(Tablas.params, Tablas.func)
-    Tablas.params = ''
-    size = str(Tablas.li) + ',' + str(Tablas.lf) + ',' + str(Tablas.lc) + ',' + str(Tablas.lti) + ',' + str(Tablas.ltf) + ',' + str(Tablas.ltc) + ',' + str(Tablas.ltb)
-    Tablas.insertFuncSize(size, Tablas.func)
-    Tablas.clearVarSize()
-    Tablas.insertFuncQuad(Tablas.quad-1, Tablas.func)
+        dir = mv.getMemoLoc(Tablas.funcType, 1)
+    Tablas.insert(p[-1], Tablas.funcType, dir, 1)
+    Tablas.insertDirFunc(p[-1], Tablas.funcType, dir)
 
 def p_funcaux3(p):
     '''
@@ -184,25 +310,27 @@ def p_funcaux5(p):
              | ID COMMA
     '''
     if (Tablas.isGlobal == True):
-        dir = mv.getMemoGlob(Tablas.myType)
+        dir = mv.getMemoGlob(Tablas.myType, 1)
     else:
-        dir = mv.getMemoLoc(Tablas.myType)
-    Tablas.insert(p[1], Tablas.myType, dir)
+        dir = mv.getMemoLoc(Tablas.myType, 1)
+    Tablas.insert(p[1], Tablas.myType, dir, 1)
     Tablas.params = str(Tablas.params) + Tablas.myType[0]
 
-def p_bloque(p):
+def p_retorno(p):
     '''
-    bloque : LBRACE RBRACE
-           | LBRACE bloqueaux RBRACE
-    '''
-
-def p_bloqueaux(p):
-    '''
-    bloqueaux : estatuto
-              | estatuto bloqueaux
-              | retorno
+    retorno : REGRESA pushpoper LPARENT exp RPARENT popret SEMICOLON
     '''
 
+def p_endfunc(p):
+    '''
+    endfunc :
+    '''
+    quad.quadInsert('Endfunc', None, None, None)
+    quad.count += 1
+##############################################
+
+#############################################################
+#################MODULO DE ESTATUTOS LINEALES##########################
 def p_estatuto(p):
     '''
     estatuto : asignacion
@@ -214,87 +342,62 @@ def p_estatuto(p):
              | escritura
     '''
 
-def p_si(p):
-    '''
-    si : siaux
-       | siaux si3 SINO bloque
-    '''
-
-def p_si3(p):
-    '''
-    si3 :
-    '''
-    temp = quad.Goto_SI()
-    if temp:
-        quad.count += 1
-
-def p_siaux(p):
-    '''
-    siaux : SI LPARENT expresion RPARENT si1 ENTONCES bloque
-    '''
-
-def p_si1(p):
-    '''
-    si1 :
-    '''
-    temp = quad.GotoF_SI()
-    if temp:
-        quad.count += 1
-
-def p_si2(p):
-    '''
-    si2 :
-    '''
-    quad.fillGoto()
-
+#############ESTATUTO DE ASIGNACION############################
 def p_asignacion(p):
     '''
     asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
     '''
-
-def p_popassign(p):
-    '''
-    popassign :
-    '''
-    temp = quad.popAssign()
-    if temp:
-        quad.count += 1
 
 def p_asignacionaux(p):
     '''
     asignacionaux : IGUAL pushpoper expresion
                   | dimensiones IGUAL pushpoper expresion
     '''
+##############################################################
 
-def p_dimensiones(p):
-    '''
-    dimensiones : LCORCH pos RCORCH
-                | LCORCH pos COMMA pos RCORCH
-    '''
-
-def p_pos(p):
-    '''
-    pos : ID
-        | CTE_I
-    '''
-
-def p_retorno(p):
-    '''
-    retorno : REGRESA LPARENT exp RPARENT SEMICOLON
-    '''
-
+#############ESTATUTO DE LECTURA############################
 def p_lectura(p):
     '''
-    lectura : LEE pushpoper LPARENT lecturaaux RPARENT popio SEMICOLON
+    lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
     '''
 
 def p_lecturaaux(p):
     '''
-    lecturaaux : ID pushpilaid
-               | ID pushpilaid dimensiones
-               | ID pushpilaid dimensiones COMMA lecturaaux
+    lecturaaux : ID pushpilaid popio
+               | ID pushpilaid popio COMMA lequad lecturaaux
+               | ID pushpilaid dimensiones popio
+               | ID pushpilaid dimensiones popio COMMA lequad lecturaaux
     '''
 
+def p_lequad(p):
+    '''
+    lequad :
+    '''
+    quad.pushPoper('lee')
+############################################################
+
+#############ESTATUTO DE ESCTRITURA############################
+def p_escritura(p):
+    '''
+    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
+    '''
+
+def p_escrituraaux(p):
+    '''
+    escrituraaux : CTE_S ctemem pushpilao popio
+                 | expresion popio
+                 | CTE_S ctemem pushpilao popio COMMA escquad escrituraaux
+                 | expresion popio COMMA escquad escrituraaux
+    '''
+
+def p_escquad(p):
+    '''
+    escquad :
+    '''
+    quad.pushPoper('escribe')
+###############################################################
+
+#############ESTATUTO DE LLAMADA DE FUNCIONES############################
 def p_fcall(p):
     '''
     fcall : ID erainsert LPARENT RPARENT
@@ -327,28 +430,51 @@ def p_paraminsert(p):
     quad.paramInsert()
     quad.param += 1
     quad.count += 1
+#########################################################################
 
-def p_escritura(p):
+##############################################################
+#############################################################
+
+
+################################################################
+#################MODULO ESTATUTOS NO-LINEALES##########################
+
+###########MODULO ESTATUTO SI###############
+def p_si(p):
     '''
-    escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT popio SEMICOLON
+    si : siaux
+       | siaux si3 SINO bloque
     '''
 
-def p_popio(p):
+def p_siaux(p):
     '''
-    popio :
+    siaux : SI LPARENT expresion RPARENT si1 ENTONCES bloque
     '''
-    temp = quad.popIO()
+
+def p_si1(p):
+    '''
+    si1 :
+    '''
+    temp = quad.GotoF_SI()
     if temp:
         quad.count += 1
 
-def p_escrituraaux(p):
+def p_si2(p):
     '''
-    escrituraaux : CTE_S ctemem
-                 | expresion
-                 | CTE_S ctemem COMMA escrituraaux
-                 | expresion COMMA escrituraaux
+    si2 :
     '''
+    quad.fillGoto()
 
+def p_si3(p):
+    '''
+    si3 :
+    '''
+    temp = quad.Goto_SI()
+    if temp:
+        quad.count += 1
+######################################################
+
+###########MODULO ESTATUTO MIENTRAS###############
 def p_mientras(p):
     '''
     mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
@@ -375,10 +501,18 @@ def p_while3(p):
     temp = quad.Goto_While()
     if temp:
         quad.count += 1
+#################################################
 
+###########MODULO ESTATUTO DESDE###############
 def p_desde(p):
     '''
     desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
+    '''
+
+def p_desdeaux(p):
+    '''
+    desdeaux : ID pushpilaid IGUAL pushpoper exp
+             | ID pushpilaid dimensiones IGUAL pushpoper exp
     '''
 
 def p_for2(p):
@@ -388,7 +522,7 @@ def p_for2(p):
     temp = quad.compareFor(Tablas.isGlobal)
     if temp:
         quad.count += 1
-    
+
 def p_for4(p):
     '''
     for4 :
@@ -396,7 +530,7 @@ def p_for4(p):
     temp = quad.addToFor(Tablas.isGlobal)
     if temp:
         quad.count += 1
-    
+
 def p_for5(p):
     '''
     for5 :
@@ -404,18 +538,51 @@ def p_for5(p):
     temp = quad.assignToFor()
     if temp:
         quad.count += 1
+################################################
 
-def p_desdeaux(p):
+################################################################
+################################################################
+
+###########MODULO DE BLOQUE###############################
+def p_bloque(p):
     '''
-    desdeaux : ID pushpilaid IGUAL pushpoper exp
-             | ID pushpilaid dimensiones IGUAL pushpoper exp
+    bloque : LBRACE RBRACE
+           | LBRACE bloqueaux RBRACE
     '''
 
-def p_expresion(p):
+def p_bloqueaux(p):
     '''
-    expresion : expr
-              | expr log expresion
+    bloqueaux : estatuto
+              | estatuto bloqueaux
+              | retorno
     '''
+##########################################################
+
+
+#############MODULO DE POPs##############################
+def p_popassign(p):
+    '''
+    popassign :
+    '''
+    temp = quad.popAssign()
+    if temp:
+        quad.count += 1
+
+def p_popio(p):
+    '''
+    popio :
+    '''
+    temp = quad.popIO()
+    if temp:
+        quad.count += 1
+
+def p_popret(p):
+    '''
+    popret :
+    '''
+    temp = quad.popRet()
+    if temp:
+        quad.count += 1
 
 def p_poplog(p):
     '''
@@ -425,33 +592,13 @@ def p_poplog(p):
     if temp:
         quad.count += 1
 
-def p_expr(p):
-    '''
-    expr : exp poprel
-         | exp poprel rel expr
-    '''
-
-def p_porel(p):
+def p_poprel(p):
     '''
     poprel :
     '''
     temp = quad.popRel(Tablas.isGlobal)
     if temp:
         quad.count += 1
-
-def p_exp(p):
-    '''
-    exp : termino popterm
-        | termino popterm MAS pushpoper exp
-        | termino popterm MENOS pushpoper exp
-    '''
-
-
-def p_pushpoper(p):
-    '''
-    pushpoper :
-    '''
-    quad.pushPoper(p[-1])
 
 def p_popterm(p):
     '''
@@ -461,13 +608,6 @@ def p_popterm(p):
     if temp:
         quad.count += 1
 
-def p_termino(p):
-    '''
-    termino : factor popfact
-            | factor popfact MULT pushpoper termino
-            | factor popfact DIV pushpoper termino
-    '''
-
 def p_popfact(p):
     '''
     popfact :
@@ -476,66 +616,57 @@ def p_popfact(p):
     if temp:
         quad.count += 1
 
+def p_popmat(p):
+    '''
+    popmat :
+    '''
+    temp = quad.popMat(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
+#########################################################
+
+###############MODULO EXPRESIONES########################
+def p_expresion(p):
+    '''
+    expresion : expr poplog
+              | expr poplog log expresion
+    '''
+
+def p_expr(p):
+    '''
+    expr : exp poprel
+         | exp poprel rel expr
+    '''
+
+def p_exp(p):
+    '''
+    exp : termino popterm
+        | termino popterm MAS pushpoper exp
+        | termino popterm MENOS pushpoper exp
+    '''
+
+def p_termino(p):
+    '''
+    termino : factor popfact
+            | factor popfact MULT pushpoper termino
+            | factor popfact DIV pushpoper termino
+    '''
+
 def p_factor(p):
     '''
     factor : LPARENT addfalsebottom expresion RPARENT removefalsebottom
            | var_cte
            | MAS pushpoper var_cte
            | MENOS pushpoper var_cte
+           | matrices popmat
     '''
 
-def p_addfalsebottom(p):
+def p_matrices(p):
     '''
-    addfalsebottom :
+    matrices : DETERMINANTE pushpoper ID pushpilaid
+             | TRANSPUESTA pushpoper ID pushpilaid
+             | INVERSA pushpoper ID pushpilaid
     '''
-    quad.pushPoper(p[-1])
-
-def p_removefalsebottom(p):
-    '''
-    removefalsebottom :
-    '''
-    quad.popFalseBottom()
-
-def p_var_cte(p):
-    '''
-    var_cte : ID pushpilaid
-            | ID pushpilaid dimensiones
-            | CTE_I ctemem pushpilao
-            | CTE_F ctemem pushpilao
-            | CTE_S ctemem pushpilao
-            | CTE_C ctemem pushpilao
-            | fcall
-    '''
-
-def p_pushpilaid(p):
-    '''
-    pushpilaid :
-    '''
-    tipo = Tablas.getIdType(p[-1])
-    dir = Tablas.findVM(p[-1])
-    quad.pushPilaO(dir)
-    quad.pushType(tipo)
-
-def p_ctemem(p):
-    '''
-    ctemem :
-    '''
-    tipo = quad.gettipo(p[-1])
-    #Memoria Virtual
-    dir = mv.getMemoCte(tipo)
-    temp = Tablas.cteInsert(p[-1], tipo, dir)
-    if (temp == False):
-        mv.restMemo(tipo)
-    
-def p_pushpilao(p):
-    '''
-    pushpilao :
-    '''
-    tipo = quad.gettipo(p[-2])
-    dir = Tablas.findCteVM(p[-2])
-    #Cuadruplo
-    quad.pushPilaO(dir)
-    quad.pushType(tipo)
 
 def p_log(p):
     '''
@@ -552,21 +683,204 @@ def p_rel(p):
         | COMPARE pushpoper
         | DIFFERENT pushpoper
     '''
+#########################################################
 
-#Funciones Nuerales
+###############MODULO DE VARIABLES DIMENSIONADAS##############
+def p_dimensiones(p):
+    '''
+    dimensiones : addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver1 RCORCH removefalsebottom
+                | addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver2 COMMA addfalsebottom exp removefalsebottom ver3 RCORCH removefalsebottom
+    '''
+
+def p_removeid(p):
+    '''
+    removeid :
+    '''
+    idDir = quad.PilaO.pop()
+    tipo = quad.Ptypes.pop()
+    temp = Tablas.findCteVM(idDir)
+    if temp == False:
+        print('Error: No es variable dimensionada')
+        sys.exit()
+    else:
+        Tablas.isVector = idDir
+
+def p_ver1(p):
+    '''
+    ver1 :
+    '''
+    temp = quad.PilaO.pop()
+    #quad.PilaO.append(temp)
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    result = mv.getMemoTemp('int', Tablas.isGlobal,1)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int',1)
+    else:
+        Tablas.tempAddSize('int',1)
+    dir = Tablas.findCteVM(Tablas.isVector)
+    quad.quadInsert('+', temp, dir, result)
+    quad.count += 1
+    quad.PilaO.append('('+str(result)+')')
+
+def p_ver2(p):
+    '''
+    ver2 :
+    '''
+    temp = quad.PilaO.pop()
+    #quad.PilaO.append(temp)
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+        m = Tablas.vectLTable[Tablas.isVector].m
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+        m = Tablas.vectGTable[Tablas.isVector].m
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    result = mv.getMemoTemp('int',Tablas.isGlobal,1)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int',1)
+    else:
+        Tablas.tempAddSize('int',1)
+    quad.quadInsert('*', temp, m, result)
+    quad.count += 1
+    quad.PilaO.append(result)
+
+def p_ver3(p):
+    '''
+    ver3 :
+    '''
+    temp = quad.PilaO.pop()
+    loc = Tablas.findLVector(Tablas.isVector)
+    lim1 = Tablas.findCteVM(0)
+    if loc == True:
+        lim2 = Tablas.vectLTable[Tablas.isVector].lim1
+    else:
+        lim2 = Tablas.vectGTable[Tablas.isVector].lim1
+    quad.quadInsert('Ver', temp, lim1, lim2)
+    quad.count += 1
+    temp2 = quad.PilaO.pop()
+    result = mv.getMemoTemp('int', Tablas.isGlobal,1)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int',1)
+    else:
+        Tablas.tempAddSize('int',1)
+    quad.quadInsert('+', temp, temp2, result)
+    quad.count += 1
+    result2 = mv.getMemoTemp('int', Tablas.isGlobal,1)
+    if (Tablas.isGlobal):
+        Tablas.gtempAddSize('int',1)
+    else:
+        Tablas.tempAddSize('int',1)
+    dir = Tablas.findCteVM(Tablas.isVector)
+    quad.quadInsert('+', result, dir, result2)
+    quad.count += 1
+    quad.PilaO.append('('+str(result2)+')')
+##############################################################
+
+
+###########MODULO DE PUSH A PILAS#############################
+def p_pushpilaid(p):
+    '''
+    pushpilaid :
+    '''
+    tipo = Tablas.getIdType(p[-1])
+    dir = Tablas.findVM(p[-1])
+    quad.pushPilaO(dir)
+    quad.pushType(tipo)
+
+def p_pushpilao(p):
+    '''
+    pushpilao :
+    '''
+    tipo = quad.gettipo(p[-2])
+    dir = Tablas.findCteVM(p[-2])
+    #Cuadruplo
+    quad.pushPilaO(dir)
+    quad.pushType(tipo)
+
+def p_pushpoper(p):
+    '''
+    pushpoper :
+    '''
+    quad.pushPoper(p[-1])
+##############################################################
+
+################MODULO PRINCIPAL#################
+def p_setGotoMain(p):
+    '''
+    setmain :
+    '''
+    quad.gotoMain()
+
+def p_principal(p):
+    '''
+    principal : PRINCIPAL LPARENT RPARENT bloque
+    '''
+#################################################
+    
+
+###############MODULO DE FONDO FALSO#############
+def p_addfalsebottom(p):
+    '''
+    addfalsebottom :
+    '''
+    quad.pushPoper(p[-1])
+
+def p_removefalsebottom(p):
+    '''
+    removefalsebottom :
+    '''
+    quad.popFalseBottom()
+#################################################
+
+#Variables
+def p_var_cte(p):
+    '''
+    var_cte : ID pushpilaid
+            | ID pushpilaid dimensiones
+            | CTE_I ctemem pushpilao
+            | CTE_F ctemem pushpilao
+            | CTE_S ctemem pushpilao
+            | CTE_C ctemem pushpilao
+            | fcall
+    '''
+
+#Punto neural para guardar constantes
+def p_ctemem(p):
+    '''
+    ctemem :
+    '''
+    tipo = quad.gettipo(p[-1])
+    #Memoria Virtual
+    dir = mv.getMemoCte(tipo)
+    temp = Tablas.cteInsert(p[-1], tipo, dir)
+    if (temp == False):
+        mv.restMemo(tipo)
+    
+#Funciones Nuerales Generales
 def p_dirfunctrue(p):
     '''
     dirfunctrue :
     '''
     Tablas.isGlobal = True
-    Tablas.varsPrint()
-    print('')
+    #Tablas.varsPrint()
+    #print('')
     mv.lI = 13000
     mv.ltI = 16000
     mv.ltF = 17000
     mv.ltC = 18000
     mv.ltB = 19000
     Tablas.varTable.clear()
+    Tablas.vectLTable.clear()
 
 def p_dirfuncfalse(p):
     '''
@@ -584,20 +898,27 @@ def p_empty(p):
 def p_error(p):
     print("ERROR DE SINTAXIS", p)
 
+#Fin del programa
 def p_endprog(p):
     '''
     endprog :
     '''
-    print(Tablas.program)
     size = str(Tablas.gli) + ',' + str(Tablas.glf) + ',' + str(Tablas.glc) + ',' + str(Tablas.glti) + ',' + str(Tablas.gltf) + ',' + str(Tablas.gltc) + ',' + str(Tablas.gltb)
     Tablas.insertFuncSize(size, Tablas.program)
     quad.quadInsert('End', None, None, None)
+    cf.export_txt(Tablas.dirFuncs, Tablas.cteTable, quad.Quad)
     Tablas.gvarPrint()
     print('')
+    print('DirFunc')
     Tablas.dirPrint()
-    #print('Constantes')
-    #Tablas.ctePrint()
+    print('')
+    print('Constantes')
+    Tablas.ctePrint()
+    print('')
+    print('Cuadruplos')
     quad.imprime()
+    print('')
+    Tablas.gVectPrint()
 
 #Build parse
 parser = yacc.yacc()

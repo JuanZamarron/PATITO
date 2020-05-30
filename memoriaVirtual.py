@@ -30,40 +30,43 @@ ltF = 17000
 ltC = 18000
 ltB = 19000
 
-def getMemoGlob(tipo):
+#Funcione que regresa el siguiente espacio de memoria global disponible
+def getMemoGlob(tipo, salto):
     global gI
     global gF
     global gC
     if tipo == "float":
         temp = gF
-        gF += 1
+        gF += salto
         return temp
     if tipo == "int":
         temp = gI
-        gI +=1
+        gI += salto
         return temp
     if tipo == "char":
         temp = gC
-        gC += 1
+        gC += salto
         return temp
 
-def getMemoLoc(tipo):
+#Funcione que regresa el siguiente espacio de memoria lcoal disponible
+def getMemoLoc(tipo, salto):
     global lI
     global lF
     global lC
     if tipo == "float":
         temp = lF
-        lF += 1
+        lF += salto
         return temp
     if tipo == "int":
         temp = lI
-        lI += 1
+        lI += salto
         return temp
     if tipo == "char":
         temp = lC
-        lC += 1
+        lC += salto
         return temp
 
+#Funcione que regresa el siguiente espacio de memoria de constantes disponible
 def getMemoCte(tipo):
     global gcI
     global gcF
@@ -91,6 +94,7 @@ def getMemoCte(tipo):
         gcS += 1
         return temp
 
+#Funcion que resta 1 del contador de memoria de constantes correspondiente
 def restMemo(tipo):
     global gcI
     global gcF
@@ -108,7 +112,8 @@ def restMemo(tipo):
     if tipo == "string":
         gcS -= 1
 
-def getMemoTemp(tipo, glob):
+#Funcion que regresa el siguiente espacio de memoria temporal dependiendo si es global o local
+def getMemoTemp(tipo, glob, salto):
     global gtI
     global gtF
     global gtC
@@ -120,34 +125,34 @@ def getMemoTemp(tipo, glob):
     if glob == True:
         if tipo == "float":
             temp = gtF
-            gtF += 1
+            gtF += salto
             return temp
         if tipo == "int":
             temp = gtI
-            gtI += 1
+            gtI += salto
             return temp
         if tipo == "char":
             temp = gtC
-            gtC += 1
+            gtC += salto
             return temp
         if tipo == "boolean":
             temp = gtB
-            gtB += 1
+            gtB += salto
             return temp
     else:
         if tipo == "float":
             temp = ltF
-            ltF += 1
+            ltF += salto
             return temp
         if tipo == "int":
             temp = ltI
-            ltI += 1
+            ltI += salto
             return temp
         if tipo == "char":
             temp = ltC
-            ltC += 1
+            ltC += salto
             return temp
         if tipo == "boolean":
             temp = ltB
-            ltB += 1
+            ltB += salto
             return temp
