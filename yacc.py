@@ -696,7 +696,7 @@ def p_removeid(p):
     removeid :
     '''
     idDir = quad.PilaO.pop()
-    tipo = quad.Ptypes.pop()
+    #tipo = quad.Ptypes.pop()
     temp = Tablas.findCteVM(idDir)
     if temp == False:
         print('Error: No es variable dimensionada')
@@ -709,6 +709,7 @@ def p_ver1(p):
     ver1 :
     '''
     temp = quad.PilaO.pop()
+    quad.Ptypes.pop()
     #quad.PilaO.append(temp)
     loc = Tablas.findLVector(Tablas.isVector)
     lim1 = Tablas.findCteVM(0)
@@ -733,6 +734,7 @@ def p_ver2(p):
     ver2 :
     '''
     temp = quad.PilaO.pop()
+    quad.Ptypes.pop()
     #quad.PilaO.append(temp)
     loc = Tablas.findLVector(Tablas.isVector)
     lim1 = Tablas.findCteVM(0)
