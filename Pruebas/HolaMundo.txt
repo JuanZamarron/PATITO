@@ -1,8 +1,11 @@
-programa integer;
-var char variable;
+programa arregloscharprogram;
+var char a[10];
+   int n;
 
 principal()
 {
-    variable = 1 + 'a';
-    escribe(variable);
+   n = 4;
+   a[0] ='a';
+
+
 }

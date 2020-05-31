@@ -173,24 +173,25 @@ La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario
     escribe("Esto imprime un string");
     
 ### Asignacion
-    programa patito;
-        var
-            int i;
-            char j;
+
+            programa patito;
+                    var
+                        int i;
+                        char j;
             
-        principal()
-        {
-        i = 0;
-        j = "Nada";
-        
-        escribe("Valor de i: ",i);
-        escribe("Valor de j: ",j);
-        
-        i=3;
-        j = "valor de j";
-        escribe("Nuevo valor de i: ", i);
-        escribe("Nuevo valor de j: ",j);
-        }
+            principal()
+            {
+                i = 0;
+                j = 'R';
+            
+                escribe("Valor de i: ",i);
+                escribe("Valor de j: ",j);
+            
+                i = 3;
+                j = 'J';
+                escribe("Nuevo valor de i: ", i);
+                escribe("Nuevo valor de j: ",j);
+            }
 
  ### Repeticion
     programa patito;
