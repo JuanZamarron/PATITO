@@ -111,8 +111,8 @@ Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
             
             principal()
             {
-                variable = "h";
-                escribe("variable");
+                variable = 'h';
+                escribe(variable);
             }
 
 3. float
