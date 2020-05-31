@@ -1,8 +1,37 @@
-floatprogramÇNoneÇNoneÇNoneÇ0,1,0,0,0,0,0Ç0
+arreglosprogramÇNoneÇNoneÇNoneÇ103,0,0,6,0,0,2Ç0
 /
-2.0ÇfloatÇ9000
+0ÇintÇ8000
+100ÇintÇ8001
+101ÇintÇ8002
+1ÇintÇ8003
+1000ÇintÇ8004
+"Ingresa el tamaño del arreglo:"ÇstringÇ11000
+"Ingresa los elementos del arreglo:"ÇstringÇ11001
+"El Arreglo es:"ÇstringÇ11002
 /
 0ÇGotoÇNoneÇNoneÇ1
-1Ç=Ç9000ÇNoneÇ2000
-2ÇescribeÇNoneÇNoneÇ2000
-3ÇEndÇNoneÇNoneÇNone
+1ÇescribeÇNoneÇNoneÇ11000
+2ÇleeÇNoneÇNoneÇ1101
+3ÇescribeÇNoneÇNoneÇ11001
+4Ç=Ç8000ÇNoneÇ1102
+5Ç-Ç1101Ç8003Ç4000
+6Ç<=Ç1102Ç4000Ç7000
+7ÇGotoFÇ7000ÇNoneÇ14
+8ÇVerÇ1102Ç8000Ç8001
+9Ç+Ç1102Ç8004Ç4001
+10ÇleeÇNoneÇNoneÇ(4001)
+11Ç+Ç1102Ç8003Ç4002
+12Ç=Ç4002ÇNoneÇ1102
+13ÇGotoÇNoneÇNoneÇ5
+14ÇescribeÇNoneÇNoneÇ11002
+15Ç=Ç8000ÇNoneÇ1102
+16Ç-Ç1101Ç8003Ç4003
+17Ç<=Ç1102Ç4003Ç7001
+18ÇGotoFÇ7001ÇNoneÇ25
+19ÇVerÇ1102Ç8000Ç8001
+20Ç+Ç1102Ç8004Ç4004
+21ÇescribeÇNoneÇNoneÇ(4004)
+22Ç+Ç1102Ç8003Ç4005
+23Ç=Ç4005ÇNoneÇ1102
+24ÇGotoÇNoneÇNoneÇ16
+25ÇEndÇNoneÇNoneÇNone

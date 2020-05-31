@@ -126,20 +126,24 @@ Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
                 escribe(variable);
             }
 
-4. boolean
-    
+4. arreglos
+            programa arreglosprogram;
+            var int a[100], n,i;
+            
             principal()
-            var boolean variable;
             {
-                variable = true;
-                escribe(variable)
-            }
-5. arreglos
-    
-            principal()
-            var int arr[10];
-            {
-                escribe("Así se instancía un arreglo.")
+                escribe("Ingresa el tamaño del arreglo:");
+                lee(n);
+                escribe("Ingresa los elementos del arreglo:");
+            
+                desde i=0 hasta (n-1) hacer {
+                    lee(a[i]);
+                }
+                    escribe("El Arreglo es:");
+            
+                desde i=0 hasta (n-1) hacer {
+                    escribe(a[i]);
+                }
             }
             
           

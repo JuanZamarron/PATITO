@@ -1,8 +1,18 @@
-programa charprogram;
-var char variable;
+programa arreglosprogram;
+var int a[100], n,i;
 
 principal()
 {
-    variable = "h";
-    escribe(variable);
+    escribe("Ingresa el tamaño del arreglo:");
+    lee(n);
+    escribe("Ingresa los elementos del arreglo:");
+
+    desde i=0 hasta (n-1) hacer {
+        lee(a[i]);
+    }
+        escribe("El Arreglo es:");
+
+    desde i=0 hasta (n-1) hacer {
+		escribe(a[i]);
+	}
 }
