@@ -92,7 +92,7 @@ def popAssign():
                 Ptypes.append(left_type)
                 return True
             else:
-                print("ERROR: type mismatch")
+                print("Error: type mismatch, assign")
                 sys.exit()
                 return False
     return False
@@ -120,7 +120,7 @@ def popLog(glob):
                 Ptypes.append(result_type)
                 return True
             else:
-                print("ERROR: type mismatch")
+                print("Error: type mismatch, and, or")
                 sys.exit()
     return False
 
@@ -147,7 +147,7 @@ def popRel(glob):
                 Ptypes.append(result_type)
                 return True
             else:
-                print("ERROR: type mismatch")
+                print("Error: type mismatch, <,<=,>,>=")
                 sys.exit()
     return False
 
@@ -183,7 +183,7 @@ def popTerm(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print("Error: type mismatch")
+                    print("Error: type mismatch,+,-")
                     sys.exit()
     return False
 
@@ -219,7 +219,7 @@ def popFact(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print("ERROR: type mismatch")
+                    print("Error: type mismatch,*,/")
                     sys.exit()
     return False
 
@@ -267,7 +267,7 @@ def popMat(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print('Error: type mismatch')
+                    print('Error: type mismatch,¡,$,?')
                     sys.exit()
     return False
 
@@ -304,7 +304,7 @@ def popFalseBottom():
 def GotoF_SI():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
-        print('Error: type mismatch')
+        print('Error: type mismatch, SI')
         sys.exit()
         return False
     else:
@@ -336,7 +336,7 @@ def pushJumps():
 def GotoF_While():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
-        print('Error: type mismatch')
+        print('Error: type mismatch, MIENTRAS')
         sys.exit()
         return False
     else:
@@ -377,7 +377,7 @@ def compareFor(glob):
         Ptypes.append(result_type)
         return True
     else:
-        print("ERROR: type mismatch")
+        print("Error: type mismatch, FOR")
         sys.exit()
     return False
 
@@ -473,11 +473,27 @@ def compMatSize(rO,rT,lO,lT,op):
             print('Error: Matrices de diferentes dimensiones')
             sys.exit()
         elif op == '$':
+            if (len(sR) == 2):
+                print('Error: EL arreglo tiene que ser de 2 dimensiones para sacar determinante')
+                sys.exit()
+            elif (sR[1] != sR[2]):
+                print('Error: La matriz tiene que ser cuadrada.')
+                sys.exit()
             return 1
         elif op == '¡':
-            return [sR[2], sR[1]]
+            if (len(sR) == 2):
+                return [sR[1]]
+            else:
+                return [sR[2], sR[1]]
         elif op == '?':
-            return [sR[1], sR[2]]
+            if (len(sR) == 2):
+                print('Error: EL arreglo tiene que ser de 2 dimensiones para sacar inversa')
+                sys.exit()
+            elif (sR[1] != sR[2]):
+                print('Error: La matriz tiene que ser cuadrada.')
+                sys.exit()
+            else:
+                return [sR[1], sR[2]]
         elif (op == '+' or op == '-'):
             if (len(sR) == 2):
                 if(sR[1] != sL[1]):

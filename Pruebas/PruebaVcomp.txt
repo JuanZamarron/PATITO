@@ -1,0 +1,143 @@
+programa PruebaVcomp;
+var
+    int i, rI;
+    float f, rF;
+    char c, rC;
+
+    principal()
+    {
+        i = 2;
+        f = 2.0;
+        c = 'c';
+        escribe("int > int");
+        si (i>i) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("float > float");
+        si (f>f) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+
+        escribe("int < int");
+        si (i<i) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("float < float");
+        si (f<f) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+
+        escribe("int >= int");
+        si (i>=i) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("float >= float");
+        si (f>=f) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+
+        escribe("int <= int");
+        si (i<=i) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("float <= float");
+        si (f<=f) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+
+        escribe("int == int");
+        si (i==i) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("float == float");
+        si (f==f) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("char == char");
+        si (c==c) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+
+        escribe("int != int");
+        si (i!=i) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("float != float");
+        si (f!=f) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+        escribe("char != char");
+        si (c!=c) entonces
+            {
+                escribe("verdadero");
+            }
+        sino
+            {
+                escribe("falso");
+            }
+    }
