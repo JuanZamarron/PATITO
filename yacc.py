@@ -25,7 +25,7 @@ from lex import tokens
 prueba = open(path, "r")
 entrada = prueba.read()
 
-###########1.INICIO DEL PROGRAMA###############
+###########INICIO DEL PROGRAMA###############
 def p_programa(p):
     '''
     programa : PROGRAMA ID globfunc SEMICOLON gotomain vars funcs endprog
@@ -47,7 +47,7 @@ def p_gotomain(p):
     quad.count += 1
 #############################################
 
-###########2.MODULO DE DECLARACION DE VARAIBLES###############
+###########MODULO DE DECLARACION DE VARAIBLES###############
 def p_vars(p):
     '''
     vars : VAR varaux
@@ -171,7 +171,7 @@ def p_tamvector(p):
     temp = Tablas.cteInsert(p[-2], tipo, dir)
     if (temp == False):
         mv.restMemo(tipo)
-    Tablas.vectSize = p[-2] + 1
+    Tablas.vectSize = p[-2]+1
     Tablas.m = 1
     tipo = quad.gettipo(Tablas.vectSize)
     tipo2 = quad.gettipo(Tablas.m)
@@ -224,7 +224,7 @@ def p_tipo(p):
     Tablas.myType = p[1]
 ##########################################################
 
-###########3.MODULO DE FUNCIONES###############
+###########MODULO DE FUNCIONES###############
 def p_funcs(p):
     '''
     funcs : setmain principal
@@ -328,19 +328,9 @@ def p_endfunc(p):
     quad.quadInsert('Endfunc', None, None, None)
     quad.count += 1
 ##############################################
-################ MODULO PRINCIPAL#################
-def p_setGotoMain(p):
-    '''
-    setmain :
-    '''
-    quad.gotoMain()
 
-def p_principal(p):
-    '''
-    principal : PRINCIPAL LPARENT RPARENT bloque
-    '''
 #############################################################
-#################4.MODULO DE ESTATUTOS LINEALES##########################
+#################MODULO DE ESTATUTOS LINEALES##########################
 def p_estatuto(p):
     '''
     estatuto : asignacion
@@ -352,23 +342,7 @@ def p_estatuto(p):
              | escritura
     '''
 
-########### 5.MODULO DE BLOQUE###############################
-def p_bloque(p):
-    '''
-    bloque : LBRACE RBRACE
-           | LBRACE bloqueaux RBRACE
-    '''
-
-def p_bloqueaux(p):
-    '''
-    bloqueaux : estatuto
-              | estatuto bloqueaux
-              | retorno
-    '''
-##########################################################
-
-
-############# 6. ESTATUTO DE ASIGNACION ############################
+#############ESTATUTO DE ASIGNACION############################
 def p_asignacion(p):
     '''
     asignacion : ID pushpilaid asignacionaux popassign SEMICOLON
@@ -381,7 +355,7 @@ def p_asignacionaux(p):
     '''
 ##############################################################
 
-############# 7.ESTATUTO DE LECTURA ############################
+#############ESTATUTO DE LECTURA############################
 def p_lectura(p):
     '''
     lectura : LEE pushpoper LPARENT lecturaaux RPARENT SEMICOLON
@@ -402,7 +376,7 @@ def p_lequad(p):
     quad.pushPoper('lee')
 ############################################################
 
-############# 8.ESTATUTO DE ESCTRITURA ############################
+#############ESTATUTO DE ESCTRITURA############################
 def p_escritura(p):
     '''
     escritura : ESCRIBE pushpoper LPARENT escrituraaux RPARENT SEMICOLON
@@ -423,7 +397,7 @@ def p_escquad(p):
     quad.pushPoper('escribe')
 ###############################################################
 
-############# 9.ESTATUTO DE LLAMADA DE FUNCIONES ############################
+#############ESTATUTO DE LLAMADA DE FUNCIONES############################
 def p_fcall(p):
     '''
     fcall : ID erainsert LPARENT RPARENT
@@ -465,7 +439,7 @@ def p_paraminsert(p):
 ################################################################
 #################MODULO ESTATUTOS NO-LINEALES##########################
 
-########### 10.MODULO ESTATUTO SI ###############
+###########MODULO ESTATUTO SI###############
 def p_si(p):
     '''
     si : siaux
@@ -500,7 +474,7 @@ def p_si3(p):
         quad.count += 1
 ######################################################
 
-########### 11.MODULO ESTATUTO MIENTRAS ###############
+###########MODULO ESTATUTO MIENTRAS###############
 def p_mientras(p):
     '''
     mientras : MIENTRAS while1 LPARENT expresion RPARENT while2 HAZ bloque while3
@@ -529,7 +503,7 @@ def p_while3(p):
         quad.count += 1
 #################################################
 
-###########12.MODULO ESTATUTO DESDE###############
+###########MODULO ESTATUTO DESDE###############
 def p_desde(p):
     '''
     desde : DESDE desdeaux popassign while1 HASTA exp for2 while2 HACER bloque for4 for5 while3
@@ -564,10 +538,28 @@ def p_for5(p):
     temp = quad.assignToFor()
     if temp:
         quad.count += 1
+################################################
 
 ################################################################
-############# Pops ##############################
+################################################################
 
+###########MODULO DE BLOQUE###############################
+def p_bloque(p):
+    '''
+    bloque : LBRACE RBRACE
+           | LBRACE bloqueaux RBRACE
+    '''
+
+def p_bloqueaux(p):
+    '''
+    bloqueaux : estatuto
+              | estatuto bloqueaux
+              | retorno
+    '''
+##########################################################
+
+
+#############MODULO DE POPs##############################
 def p_popassign(p):
     '''
     popassign :
@@ -623,9 +615,17 @@ def p_popfact(p):
     temp = quad.popFact(Tablas.isGlobal)
     if temp:
         quad.count += 1
+
+def p_popmat(p):
+    '''
+    popmat :
+    '''
+    temp = quad.popMat(Tablas.isGlobal)
+    if temp:
+        quad.count += 1
 #########################################################
 
-###############13.MODULO EXPRESIONES########################
+###############MODULO EXPRESIONES########################
 def p_expresion(p):
     '''
     expresion : expr poplog
@@ -658,6 +658,14 @@ def p_factor(p):
            | var_cte
            | MAS pushpoper var_cte
            | MENOS pushpoper var_cte
+           | matrices popmat
+    '''
+
+def p_matrices(p):
+    '''
+    matrices : DETERMINANTE pushpoper ID pushpilaid
+             | TRANSPUESTA pushpoper ID pushpilaid
+             | INVERSA pushpoper ID pushpilaid
     '''
 
 def p_log(p):
@@ -677,7 +685,7 @@ def p_rel(p):
     '''
 #########################################################
 
-############### 14.MODULO DE VARIABLES DIMENSIONADAS##############
+###############MODULO DE VARIABLES DIMENSIONADAS##############
 def p_dimensiones(p):
     '''
     dimensiones : addfalsebottom LCORCH removeid addfalsebottom exp removefalsebottom ver1 RCORCH removefalsebottom
@@ -711,11 +719,11 @@ def p_ver1(p):
         lim2 = Tablas.vectGTable[Tablas.isVector].lim1
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
-    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    result = mv.getMemoTemp('int', Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', temp, dir, result)
     quad.count += 1
@@ -737,11 +745,11 @@ def p_ver2(p):
         m = Tablas.vectGTable[Tablas.isVector].m
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
-    result = mv.getMemoTemp('int',Tablas.isGlobal)
+    result = mv.getMemoTemp('int',Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     quad.quadInsert('*', temp, m, result)
     quad.count += 1
     quad.PilaO.append(result)
@@ -760,18 +768,18 @@ def p_ver3(p):
     quad.quadInsert('Ver', temp, lim1, lim2)
     quad.count += 1
     temp2 = quad.PilaO.pop()
-    result = mv.getMemoTemp('int', Tablas.isGlobal)
+    result = mv.getMemoTemp('int', Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     quad.quadInsert('+', temp, temp2, result)
     quad.count += 1
-    result2 = mv.getMemoTemp('int', Tablas.isGlobal)
+    result2 = mv.getMemoTemp('int', Tablas.isGlobal,1)
     if (Tablas.isGlobal):
-        Tablas.gtempAddSize('int')
+        Tablas.gtempAddSize('int',1)
     else:
-        Tablas.tempAddSize('int')
+        Tablas.tempAddSize('int',1)
     dir = Tablas.findCteVM(Tablas.isVector)
     quad.quadInsert('+', result, dir, result2)
     quad.count += 1
@@ -779,7 +787,7 @@ def p_ver3(p):
 ##############################################################
 
 
-###########  PUSH A PILAS #############################
+###########MODULO DE PUSH A PILAS#############################
 def p_pushpilaid(p):
     '''
     pushpilaid :
@@ -806,8 +814,21 @@ def p_pushpoper(p):
     quad.pushPoper(p[-1])
 ##############################################################
 
+################MODULO PRINCIPAL#################
+def p_setGotoMain(p):
+    '''
+    setmain :
+    '''
+    quad.gotoMain()
 
-############### FONDO FALSO #############
+def p_principal(p):
+    '''
+    principal : PRINCIPAL LPARENT RPARENT bloque
+    '''
+#################################################
+    
+
+###############MODULO DE FONDO FALSO#############
 def p_addfalsebottom(p):
     '''
     addfalsebottom :
@@ -821,7 +842,7 @@ def p_removefalsebottom(p):
     quad.popFalseBottom()
 #################################################
 
-############### 15. VAR CTE #############
+#Variables
 def p_var_cte(p):
     '''
     var_cte : ID pushpilaid
