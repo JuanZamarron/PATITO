@@ -1,25 +1,6 @@
-programa matrixprogram;
-    var int n,i, j;
-    char mat[30][30];
-
-    principal()
-    {
-        escribe("Ingresa el tamaño de tu matriz cuadrada:");
-        lee(n);
-        escribe("Ingresa los valores de la matrix:");
-
-
-        desde i=0 hasta (n-1) hacer {
-            desde j=0 hasta (n-1) hacer {
-                lee(mat[i,j]);
-            }
-        }
-
-        escribe("La matriz tiene los valores:");
-         desde i=0 hasta (n-1) hacer {
-            desde j=0 hasta (n-1) hacer {
-                escribe(mat[i,j]);
-            }
-             escribe("===");
+programa holamuno;
+        {
+        principal(){
+            escribir("Hola mundo!");
         }
     }

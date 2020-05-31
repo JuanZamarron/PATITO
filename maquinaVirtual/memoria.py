@@ -8,6 +8,7 @@
 gI = 1000
 gF = 2000
 gC = 3000
+
 #Temporales Globales
 gtI = 4000
 gtF = 5000
