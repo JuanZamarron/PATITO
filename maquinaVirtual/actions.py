@@ -98,6 +98,23 @@ def createMatRes(dir, res):
                 space = (r*lim1) + c + dir1
                 memo.assign(glob, globTemp, local, localTemp, space, res[r][c])
 
+#Funcion que identifica el tipo de la constante
+def gettipo(cte):
+    tipo = str(type(cte))
+    temp = None
+    if tipo == "<class 'float'>":
+        temp = 2
+        return temp
+    elif tipo == "<class 'int'>":
+        temp = 1
+        return temp
+    elif len(cte) == 1:
+        temp = 3
+        return temp
+    elif tipo == "<class 'str'>":
+        print('Error: Valor ingresado no valido')
+        sys.exit()
+
 #Funciones de cuadruplos
 def goto(cuad, i):
     return int(cuad.result)
@@ -426,7 +443,12 @@ def gotofalse(cuad, i):
 
 def lee(cuad, i):
     valor = input()
+    tipo1 = gettipo(valor)
     result = apuntador(cuad.result)
+    tipo2 = memo.indentifyType(result)
+    if tipo1 != tipo2:
+        print('Error: Valor ingresado no es valido')
+        sys.exit()
     memo.assign(glob, globTemp, local, localTemp, result, valor)
     return i + 1
 
