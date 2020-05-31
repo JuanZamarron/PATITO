@@ -125,6 +125,7 @@ Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
                 variable = 2.0;
                 escribe(variable);
             }
+            
 
 4. arreglos
             programa arreglosprogram;
@@ -145,6 +146,25 @@ Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
                     escribe(a[i]);
                 }
             }
+
+5. arreglos (Ejemplo 2)
+
+            programa arreglosprogram;
+            var int a[100];
+                char b[100];
+                float c[100];
+            
+            principal()
+            {
+                a[0] = 10;
+                b[0] = 'H';
+                c[0] = 24.5;
+                escribe( "Arreglo int: ", a[0]);
+                escribe( "Arreglo char: ", b[0]);
+                escribe( "Arreglo double: ", c[0]);
+            }
+
+           
             
           
 De igual manera el lenguaje acepta los siguientes operadores logicos:
