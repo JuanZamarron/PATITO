@@ -1,8 +1,8 @@
-programa charprogram;
+programa integer;
 var char variable;
 
 principal()
 {
-    variable = 'h';
+    variable = 1 + 'a';
     escribe(variable);
 }
