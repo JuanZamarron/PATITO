@@ -11,12 +11,10 @@ Diseño de Compiladores .
 Una función simple que puede correrse con Patito ++ es parecida a la siguiente línea de código:
 
         programa holamundo;
-        { 
-            principal(){
-                escribir("Hola mundo!");
-            }
-        }    
-
+        principal(){
+            escribe("Hola mundo!");
+        }
+      
 
 cada programa escrito en patito ++ debe contener un nombre de programa y
 una "función" obligatoria llamada principal.
@@ -49,83 +47,85 @@ Finalmente nuestro archivo se ejecutará con las instrucciones llevadas a cabo e
 Para crear una variable en Patito ++ se encuentran un par de formas:
 - Creando una variable global:
 
-        programa ejemplouno;
-        var int x;
-            float y;
-            char z; 
-            int matriz[3][3];
-        
-         { 
+            programa ejemplouno;
+            var
+                int x;
+                float y;
+                char z;
+                int matriz[3][3];
+            
             principal()
             {
-                escribir("Hola Variables!");
+                escribe("Hola Variables!");
             }
-        }    
+              
 
-- inicializando una funcion x a  0
+- inicializando una funcion x a  100
 
-        programa ejemplodos;
-        var int x;
-   
-        principal()
-        {
-        x = 100;
-            escribir("Hola Variables Gobales con valor: ", x);
-        }
+            programa ejemplodos;
+            var int x;
+            
+            principal()
+            {
+            x = 100;
+                escribe("Hola Variables x con valor: ", x);
+            }
   
   
 - Llamando una función desde principal
 
-        programa ejemplotres;
-        var int x;
-         { 
-            funcion void nombreFuncion(int data)
-              var 
-                int x_local;
-                float y_local;
-                char z_local; 
-                inr matriz_local[3][3];
+            programa ejemplotres;
+            var int x;
+            
+            funcion void mifuncion(int data)
             {
-                escribir("Hola Desde funcion con valor:", data);
+                escribe("Hola Desde funcion un parametro de valor :", data);
             }
             
             principal()
             {
-            x = 1;
-                nombreFuncion(x);
+            x = 123;
+                mifuncion(x);
             }
-        }
+                    
        
-
-
 ### Tipo de Datos y Operadores
 
 Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
 1. int
-    
-            principal()
+
+            programa integer;
             var int variable;
+            
+            principal()
             {
-                variable = 1;
-                escribe(variable)
+                variable = 200;
+                escribe(variable);
             }
-    
+
+            
 2. char
     
-            principal()
+            programa charprogram;
             var char variable;
+            
+            principal()
             {
-                variable = "a";
-                escribe(variable)
+                variable = "h";
+                escribe("variable");
             }
+
 3. float
     
-            principal()
+            programa floatprogram;
             var float variable;
+            
+            principal()
             {
-                variable = 45.0;
-                escribe(variable)
+                variable = 2.0;
+                escribe(variable);
             }
+
 4. boolean
     
             principal()
@@ -172,7 +172,7 @@ La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario
     programa patito;
         var
             int i;
-            string j;
+            char j;
             
         principal()
         {

@@ -1,0 +1,8 @@
+floatprogramÇNoneÇNoneÇNoneÇ0,1,0,0,0,0,0Ç0
+/
+2.0ÇfloatÇ9000
+/
+0ÇGotoÇNoneÇNoneÇ1
+1Ç=Ç9000ÇNoneÇ2000
+2ÇescribeÇNoneÇNoneÇ2000
+3ÇEndÇNoneÇNoneÇNone

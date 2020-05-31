@@ -1,0 +1,8 @@
+programa charprogram;
+var char variable;
+
+principal()
+{
+    variable = "h";
+    escribe(variable);
+}
