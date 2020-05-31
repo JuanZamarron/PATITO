@@ -278,19 +278,19 @@ def gettipo(cte):
     if cte == 'true' or cte == 'false':
         temp = 'boolean'
         return temp
-    if tipo == "<class 'float'>":
+    elif tipo == "<class 'float'>":
         temp = 'float'
         return temp
-    if tipo == "<class 'int'>":
+    elif tipo == "<class 'int'>":
         temp = 'int'
         return temp
-    if tipo == "<class 'str'>":
-        temp = 'string'
-        return temp
-    if tipo == "<class 'char'>":
+    elif cte[0] == "'":
         temp = 'char'
         return temp
-
+    elif tipo == "<class 'str'>":
+        temp = 'string'
+        return temp
+    
 #Funcion que imprime los cuadruplos generados
 def imprime():
     for i in range(0, len(Quad)):

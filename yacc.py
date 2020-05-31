@@ -219,7 +219,6 @@ def p_tipo(p):
     tipo : INT
          | FLOAT
          | CHAR
-         | STRING
     '''
     Tablas.myType = p[1]
 ##########################################################
