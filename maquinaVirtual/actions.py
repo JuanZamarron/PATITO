@@ -443,6 +443,13 @@ def gotofalse(cuad, i):
 
 def lee(cuad, i):
     valor = input()
+    try:
+        valor = int(valor)
+    except ValueError:
+        try:
+            valor = float(valor)
+        except ValueError:
+            pass
     tipo1 = gettipo(valor)
     result = apuntador(cuad.result)
     tipo2 = memo.indentifyType(result)
