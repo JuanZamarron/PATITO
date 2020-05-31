@@ -473,6 +473,12 @@ def compMatSize(rO,rT,lO,lT,op):
             print('Error: Matrices de diferentes dimensiones')
             sys.exit()
         elif op == '$':
+            if (len(sR) == 2):
+                print('Error: EL arreglo tiene que ser de 2 dimensiones para sacar determinante')
+                sys.exit()
+            elif (sR[1] != sR[2]):
+                print('Error: La matriz tiene que ser cuadrada.')
+                sys.exit()
             return 1
         elif op == '¡':
             if (len(sR) == 2):
@@ -481,7 +487,11 @@ def compMatSize(rO,rT,lO,lT,op):
                 return [sR[2], sR[1]]
         elif op == '?':
             if (len(sR) == 2):
-                return [sR[1]]
+                print('Error: EL arreglo tiene que ser de 2 dimensiones para sacar inversa')
+                sys.exit()
+            elif (sR[1] != sR[2]):
+                print('Error: La matriz tiene que ser cuadrada.')
+                sys.exit()
             else:
                 return [sR[1], sR[2]]
         elif (op == '+' or op == '-'):

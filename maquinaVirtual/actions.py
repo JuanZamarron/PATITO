@@ -69,7 +69,7 @@ def createMat(dir):
     if (len(dir) == 2):
         for c in range(lim1):
             space = dir1 + c
-            matrix[c] = memo.get(glob, globTemp, local, localTemp, space)
+            matrix.append(memo.get(glob, globTemp, local, localTemp, space))
         return matrix
     else:
         lim2 = findCte(int(dir[2])) + 1
