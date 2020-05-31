@@ -1,0 +1,33 @@
+programa patito;
+var
+ int i,j,cont;
+ float a[10], b[10], data, prueba;
+
+principal()
+{
+    escribe("Iniciando programa...");
+    a[0] = 0.0;
+    a[1] = 1.0;
+    a[2] = 2.0;
+    a[3] = 3.0;
+    a[4] = 4.0;
+    a[5] = 5.0;
+    data = 15.0;
+    i = 5;
+    j = 5;
+    cont = 0;
+
+    prueba = 2.8 + 1;
+
+    mientras (j >= 0) haz {
+       b[j]  =  a[cont] * data + 1 ;
+       j = j - 1;
+       cont = cont + 1;
+    }
+
+   desde j=0 hasta (i) hacer {
+        escribe(b[j]);
+    }
+    escribe(prueba);
+
+}

@@ -14,13 +14,16 @@ principal()
     a[4] = 4;
     a[5] = 5;
 
-    i = 8;
+    i = 5;
     escribe("Ejecutando operción...");
     desde j=0 hasta (i-1) hacer {
          b[j] = a[j] * i;
     }
     escribe("Guardando operción...");
     escribe("Resultado:");
-    escribe(a[0]);
+
+    desde j=0 hasta (i-1) hacer {
+        escribe(b[j]);
+    }
 
 }
