@@ -1,0 +1,79 @@
+PruebaVopÇNoneÇNoneÇNoneÇ2,2,2,3,9,0,0Ç0
+/
+2ÇintÇ8000
+2.0ÇfloatÇ9000
+'c'ÇcharÇ10000
+"MULT"ÇstringÇ11000
+"int * int"ÇstringÇ11001
+"int * float"ÇstringÇ11002
+"float * float"ÇstringÇ11003
+"DIV"ÇstringÇ11004
+"int / int"ÇstringÇ11005
+"int / float"ÇstringÇ11006
+"float / float"ÇstringÇ11007
+"SUM"ÇstringÇ11008
+"int + int"ÇstringÇ11009
+"int + float"ÇstringÇ11010
+"float + float"ÇstringÇ11011
+"REST"ÇstringÇ11012
+"int - int"ÇstringÇ11013
+"int - float"ÇstringÇ11014
+"float - float"ÇstringÇ11015
+/
+0ÇGotoÇNoneÇNoneÇ1
+1Ç=Ç8000ÇNoneÇ1000
+2Ç=Ç9000ÇNoneÇ2000
+3Ç=Ç10000ÇNoneÇ3000
+4ÇescribeÇNoneÇNoneÇ11000
+5Ç*Ç1000Ç1000Ç4000
+6Ç=Ç4000ÇNoneÇ1001
+7ÇescribeÇNoneÇNoneÇ11001
+8ÇescribeÇNoneÇNoneÇ1001
+9Ç*Ç1000Ç2000Ç5000
+10Ç=Ç5000ÇNoneÇ2001
+11ÇescribeÇNoneÇNoneÇ11002
+12ÇescribeÇNoneÇNoneÇ2001
+13Ç*Ç2000Ç2000Ç5001
+14Ç=Ç5001ÇNoneÇ2001
+15ÇescribeÇNoneÇNoneÇ11003
+16ÇescribeÇNoneÇNoneÇ2001
+17ÇescribeÇNoneÇNoneÇ11004
+18Ç/Ç1000Ç1000Ç5002
+19Ç=Ç5002ÇNoneÇ2001
+20ÇescribeÇNoneÇNoneÇ11005
+21ÇescribeÇNoneÇNoneÇ2001
+22Ç/Ç1000Ç2000Ç5003
+23Ç=Ç5003ÇNoneÇ2001
+24ÇescribeÇNoneÇNoneÇ11006
+25ÇescribeÇNoneÇNoneÇ2001
+26Ç/Ç2000Ç2000Ç5004
+27Ç=Ç5004ÇNoneÇ2001
+28ÇescribeÇNoneÇNoneÇ11007
+29ÇescribeÇNoneÇNoneÇ2001
+30ÇescribeÇNoneÇNoneÇ11008
+31Ç+Ç1000Ç1000Ç4001
+32Ç=Ç4001ÇNoneÇ1001
+33ÇescribeÇNoneÇNoneÇ11009
+34ÇescribeÇNoneÇNoneÇ1001
+35Ç+Ç1000Ç2000Ç5005
+36Ç=Ç5005ÇNoneÇ2001
+37ÇescribeÇNoneÇNoneÇ11010
+38ÇescribeÇNoneÇNoneÇ2001
+39Ç+Ç2000Ç2000Ç5006
+40Ç=Ç5006ÇNoneÇ2001
+41ÇescribeÇNoneÇNoneÇ11011
+42ÇescribeÇNoneÇNoneÇ2001
+43ÇescribeÇNoneÇNoneÇ11012
+44Ç-Ç1000Ç1000Ç4002
+45Ç=Ç4002ÇNoneÇ1001
+46ÇescribeÇNoneÇNoneÇ11013
+47ÇescribeÇNoneÇNoneÇ1001
+48Ç*Ç1000Ç2000Ç5007
+49Ç=Ç5007ÇNoneÇ2001
+50ÇescribeÇNoneÇNoneÇ11014
+51ÇescribeÇNoneÇNoneÇ2001
+52Ç*Ç2000Ç2000Ç5008
+53Ç=Ç5008ÇNoneÇ2001
+54ÇescribeÇNoneÇNoneÇ11015
+55ÇescribeÇNoneÇNoneÇ2001
+56ÇEndÇNoneÇNoneÇNone
