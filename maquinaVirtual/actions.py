@@ -272,7 +272,11 @@ def mult(cuad, i):
             mat1 = createMat(dir1)
             mat2 = createMat(dir2)
             res = np.dot(mat1, mat2)
-            createMatRes(result, res)
+            if (str(res)[0] != '['):
+                result = apuntador(cuad.result)
+                memo.assign(glob, globTemp, local, localTemp, result, res)
+            else:
+                createMatRes(result, res)
     return i + 1
         
 def greater(cuad, i):

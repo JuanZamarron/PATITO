@@ -202,7 +202,10 @@ def popFact(glob):
                 operator = Poper.pop()
                 result_type = semantic_cube[operator][left_type][right_type]
                 tam = compMatSize(right_operand, tempR, left_operand, tempL, operator)
-                salto = tamMat(tam)
+                if tam == 1:
+                    salto = 1
+                else:
+                    salto = tamMat(tam)
                 if(result_type != 'err'):
                     result = mv.getMemoTemp(result_type, glob, salto)
                     if (salto > 1 and len(tam) == 1):
@@ -509,7 +512,11 @@ def compMatSize(rO,rT,lO,lT,op):
                     return [sR[1], sR[2]]
         elif (op == '*'):
             if (len(sR) == 2):
-                print('Error: No se puede multiplicar esta matriz.')
+                if (sR[1] != sL[1]):
+                    print('Error: No se puede multiplicar esta matriz.')
+                    sys.exit()
+                else:
+                    return 1
             else:
                 if(sL[2] != sR[1]):
                     print('Error: No se puede multiplicar esta matriz.')

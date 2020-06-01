@@ -49,7 +49,6 @@ tokens = [
     'LPARENT',
     'RPARENT',
     'COMMA',
-    'NOT',
     'MAS',
     'MENOS',
     'MULT',
@@ -61,8 +60,6 @@ tokens = [
     'AND',
     'OR',
     'COMPARE',
-    'MOD',
-    'COMMENT',
     'MAYORIGUAL',
     'MENORIGUAL',
     'LCORCH',
@@ -105,9 +102,6 @@ t_MENOR = r'\<'
 
 t_AND = r'&&'
 t_OR = r'\|\|'
-t_MOD = r'%'
-t_NOT = r'!'
-t_COMMENT = r'%%.*'
 
 t_CTE_S = r'\"([^\\\n]|(\\.))*?\"'
 t_CTE_C = r'\'[A-Za-z]\''
