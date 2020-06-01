@@ -3,120 +3,175 @@ El lenguaje de programación Patito++  es un lenguaje imperativo especial
 que desarrollamos como parte de nuestro proyecto final de la materia de 
 Diseño de Compiladores .
 
+### Librerías usadas y proceso de desarrollo
+Para el desarrollo del proyecto  Patito++ se utilizó python3 como lenguaje de programación base.
+
+Para el compilador y utilizamos la librería Ply  para el Lex el cual nos ayudó con las palabras reservadas, los tokens y las expresiones reculares.
+y la Gramática usamos Yacc.
+
+Además utilizamos numpy que nos ayudó para funciones especiales de las matrices, tales como : sumar, restar, multiplicar matrices, determinante, inversa y transpuesta de matrices.
+
+Durante el proceso de Branching del desarrollo del compilador, utilizamos la técnica GitFlow, el cual se basa en dos branches principales : 
+Master que contiene producción y develop, que contiene un código pre-producción con características añadidas.  Durante el ciclo de desarrollo usamos una variedad de branches usadas como cuádruplos, gramática, maquinavirtual, ejemplos, entro otros.
+
 ### Hola mundo
 Una función simple que puede correrse con Patito ++ es parecida a la siguiente línea de código:
 
-        programa holamuno;
-            { 
-            principal(){
-                escribir("Hola mundo!");
-            }
-        }    
-
+        programa holamundo;
+        principal(){
+            escribe("Hola mundo!");
+        }
+      
 
 cada programa escrito en patito ++ debe contener un nombre de programa y
 una "función" obligatoria llamada principal.
 
 ### Compilación y Running de Patito++
-#### Last update: 23 may 2020 (esto puede cambiar)
+#### Last update: 29 may 2020 (esto puede cambiar)
 Para ejecutar un probrama en patito++ es necesario:
-- Crear un archivo **txt**  en la carpeta /Pruebas y dentro del archivo
-'lex.py', en la linea  137 agregar el nuevo nombre del archivo como se ve 
-a continuación:
+- Ejecutar las siguientes funciones:´
+            
+            
+            python3 yacc.py    
 
-        prueba = open('Pruebas/MiNuevaPrueba.txt', "r")
-        archivo = 'Pruebas/MiNuevaPrueba.txt'
-Una vez cambiados el archivo .txt, procederemos a ejecutar el comando:
-         
-         python3 yacc.py    
 
-Enseguida laterminal ejecutará lo que se encuentra en el código y mostrará si
-las validaciones semanticas y sintácticas se ejecutan de maneta exitosa o no.
+A continuación  el programa te pedirá un Programa de prueba para ejecutar.
+Deberás ingresar el nombre del archivo que deseas probar. Este archivo debe estár 
+situado dentro de la carpeta: **/Pruebas**  y debe tener extención: **.txt** 
+
+El programa pocederá a compilar el programa y verificará la sintaxis y semantica del código. 
+Una vez finalizada la verificación se generará un archivo dentro de la carpeta **/compiledCode**
+con el mismo nombre que el archivo anteriormente ejecutado. Éste archivo será nuestro ejecutable para
+llevar a cabo las tareas del programa. Para correrlo hay que ejecutar el siguiente comando:
+            
+            
+            python3 maquinaVirtual/actions.py     
+
+
+Finalmente nuestro archivo se ejecutará con las instrucciones llevadas a cabo en nuestro programa. Incluyendo errores.
 
 ### Declaración de variables
 Para crear una variable en Patito ++ se encuentran un par de formas:
 - Creando una variable global:
 
-        programa global;
-        var int x, float y, char z, matriz[3][3];
-         { 
+            programa ejemplouno;
+            var
+                int x;
+                float y;
+                char z;
+                int matriz[3][3];
+            
             principal()
             {
-                escribir("Hola Variables Gobales!");
+                escribe("Hola Variables!");
             }
-        }    
+              
 
-- Creando una variable local a la funcion principal
+- inicializando una funcion x a  100
 
-        programa local;
-         { 
-            principal()
-              var int x_local, float y_local, char z_local, matriz_local[3][3];
-            {
-                escribir("Hola Variables Locales!");
-            }
-        }
-- inicializando una funcion con x datos
-
-        programa mifuncion;
-         { 
-            funcion mifuncion(int x, int y){
-                escribir("Hola Iniciación de Variables en Funciones!");
-            }
-         
+            programa ejemplodos;
+            var int x;
+            
             principal()
             {
-                mifuncion(3,5)
+            x = 100;
+                escribe("Hola Variables x con valor: ", x);
             }
-        }
+  
+  
+- Llamando una función desde principal
 
-
+            programa ejemplotres;
+            var int x;
+            
+            funcion void mifuncion(int data)
+            {
+                escribe("Hola Desde funcion un parametro de valor :", data);
+            }
+            
+            principal()
+            {
+            x = 123;
+                mifuncion(x);
+            }
+                    
+       
 ### Tipo de Datos y Operadores
 
-Dentro del desarrollo de Patitp++ contamos con 6 tipos de datos:
+Dentro del desarrollo de Patito++ contamos con 6 tipos de datos:
 1. int
-    
+
+            programa integer;
+            var int variable;
+            
             principal()
-            var int variable = 1;
             {
-                escribe(variable)
+                variable = 200;
+                escribe(variable);
             }
+
+            
+2. char
     
-2. string
-    
+            programa charprogram;
+            var char variable;
+            
             principal()
-            var string variable = "hola string";
             {
-                escribe(variable)
+                variable = 'h';
+                escribe(variable);
             }
-3. char
+
+3. float
     
+            programa floatprogram;
+            var float variable;
+            
             principal()
-            var char variable = "a";
             {
-                escribe(variable)
+                variable = 2.0;
+                escribe(variable);
             }
-4. float
-    
+            
+
+4. arreglos
+            programa arreglosprogram;
+            var int a[100], n,i;
+            
             principal()
-            var float variable = 45.0;
             {
-                escribe(variable)
+                escribe("Ingresa el tamaño del arreglo:");
+                lee(n);
+                escribe("Ingresa los elementos del arreglo:");
+            
+                desde i=0 hasta (n-1) hacer {
+                    lee(a[i]);
+                }
+                    escribe("El Arreglo es:");
+            
+                desde i=0 hasta (n-1) hacer {
+                    escribe(a[i]);
+                }
             }
-5. boolean
-    
+
+5. arreglos (Ejemplo 2)
+
+            programa arreglosprogram;
+            var int a[100];
+                char b[100];
+                float c[100];
+            
             principal()
-            var boolean variable = true;
             {
-                escribe(variable)
+                a[0] = 10;
+                b[0] = 'H';
+                c[0] = 24.5;
+                escribe( "Arreglo int: ", a[0]);
+                escribe( "Arreglo char: ", b[0]);
+                escribe( "Arreglo double: ", c[0]);
             }
-6. arreglos
-    
-            principal()
-            int arr[10];
-            {
-                escribe("Así se instancía un arreglo.")
-            }
+
+           
             
           
 De igual manera el lenguaje acepta los siguientes operadores logicos:
@@ -145,119 +200,106 @@ La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario
     escribe("Esto imprime un string");
     
 ### Asignacion
-    programa patito;
-        var
-            int i = 0;
-            string j = "Nada";
+
+            programa patito;
+                    var
+                        int i;
+                        char j;
             
-        principal()
-        {
-        escribe("Valor de i: ",i);
-        escribe("Valor de j: ",j);
-        i=3;
-        j = "valor de j";
-        escribe("Nuevo valor de i: ", i);
-        escribe("Nuevo valor de j: ",j);
-        }
+            principal()
+            {
+                i = 0;
+                j = 'R';
+            
+                escribe("Valor de i: ",i);
+                escribe("Valor de j: ",j);
+            
+                i = 3;
+                j = 'J';
+                escribe("Nuevo valor de i: ", i);
+                escribe("Nuevo valor de j: ",j);
+            }
 
  ### Repeticion
     programa patito;
-        var int arr[10]; %%Variable gobal
+        var int arr[10],i;
         principal()
         {
-            for(i = 0; i < 10; ++i)
-            {
-               arr[i] = i;
+            desde i = 0 hasta (9) hacer {
+                arr[i] = i;
             }
-            
-            for(i = 0; i < 10; ++i)
-            {
-               escribe(arr[i]);
+            desde i = 0 hasta (9) hacer {
+                escribe(arr[i]);
             }
         }
         
 
 ### Condicionales (si.. sino)
 
+        programa sinoejemplo;
+        var int variable;
         principal()
-        var int variable 10;
         {
-             si(variable == 10) entonces{
+            variable = 10;
+            si(variable == 10) entonces{
                 escribe("Es igual a 10");
-             }sino{
+            }sino{
                 escribe("Es diferente a 10");
-             }
+            }
         }
 
 
-### Otras caracteríticas
 
 
-### Ejemplo General
-        programa patito;
-        var
-            int i, j, p, k;
-            int Arreglo[10], OtroArreglo[10];
-            float valor;
-            int Matriz[3][8], OtraMatriz[3][3];
+### Ejemplo General FIBONACCI Iterativo y Recursivo
+        programa fibonacci;
+           var int x , i, des;
         
-            funcion int fact (int j)
-            var int i;
-            {
-                i=j + (p-j*2+j);
-                si(j==1) entonces{
-                    regresa(j);
-                }sino{
-                    regresa(j * fact(j-1));
-        
-                }
-            }
-        
-            funcion void inicia(int y)
-            var int x;
-            {
-                x=0;
-                mientras (x < 11) haz {
-                   Arreglo[x] = y*x;
-                   x=x+1;
-                }
-            }
-        
-           principal(){
-           lee(p); j=p*2;
-           inicia(p * j - 5);
-           desde i = 0 hasta 9 hacer {
-            Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
+        funcion int fibrecursive(int j)
+        {
+           si(j <= 1) entonces
+           {
+            regresa(j);
+           }sino {
+              regresa( fibrecursive(j-1) + fibrecursive(j-2));
            }
-           desde j = 0 hasta 2 hacer{
-                desde k = 0 hasta 7 hacer{
-                        escribe("loop");
+        
+        }
+        
+        funcion void fib(int n)
+         var int x, y, z;
+        {
+            x = 0;
+            y = 1;
+            z = 0;
+           desde i = 0 hasta (n-1) hacer {
+              escribe(x);
+              z = x + y;
+              x = y;
+              y = z;
+            }
+        }
+        
+        principal()
+        {
+           i = 0;
+           escribe("Ingresa en número de repeticiones de la serie:");
+           lee(x);
+           escribe("Ingresa 1 si quieres que la función sea recursiva ó cualquier otro número si quieres que sea iterativa:");
+            lee(des);
+            escribe("Fibonnaci Serie: ");
+            si(des == 1) entonces{
+                mientras (i < x) haz
+                   {
+                      escribe(fibrecursive(i));
+                      i = i + 1;
                    }
-           }
+            }sino{
+                escribe("Fibonnaci Series : ");
+                fib(x);
+            }
         
-           desde j=0 hasta 2 hacer{
-                desde k = 0 hasta 2 hacer{
-                    OtraMatriz[j,k]=k + j;
-                }
-                valor = 2.0;
-                escribe("el determinante es:", valor);
-                mientras(i+2 >= 3+0)haz{
-                    escribe("resultado", Arreglo[i], fact(i+2) * valor);
-                    i = i - 1;
-                }
-           }
+        }
 
-
-
-# Sobre el Desarollo
-### Lenguaje báse
-
-### Librerías usadas YACC & Lex
-* lex.py => reserved, tokens y expresiones regulares
-* yacc.py => gramatica
-
-### Nuestro Timeline
-
-### Conclusiones
 
 
