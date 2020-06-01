@@ -44,6 +44,9 @@ def pushType(type):
 def pushPoper(action):
     Poper.append(action)
 
+###################################################
+#### MODULO QUE AGREGA CUADRUPLO DE OPERACIONES ###
+
 #Funcion que agrega cuadruplos de lee y escribe
 def popIO():
     size = len(Poper)
@@ -274,6 +277,9 @@ def popMat(glob):
                     sys.exit()
     return False
 
+#########################################################
+#########################################################
+
 #Funcion que identifica el tipo de la constante
 def gettipo(cte):
     tipo = str(type(cte))
@@ -303,6 +309,9 @@ def imprime():
 def popFalseBottom():
     Poper.pop()
 
+###################################################
+#### MODULO QUE AGREGA CUADRUPLO DE ESTATUTO SI ###
+
 #Punto neural 1 de si
 def GotoF_SI():
     exp_type = Ptypes.pop()
@@ -331,6 +340,12 @@ def Goto_SI():
     Quad[false].result = count
     return True
 
+#########################################################
+#########################################################
+
+#########################################################
+#### MODULO QUE AGREGA CUADRUPLO DE ESTATUTO MIENTRAS ###
+
 #Punto neural 1 de mientras
 def pushJumps():
     Pjumps.append(count-1)
@@ -357,6 +372,12 @@ def Goto_While():
     Quad.append(temp)
     Quad[end].result = count
     return True
+
+#########################################################
+#########################################################
+
+######################################################
+#### MODULO QUE AGREGA CUADRUPLO DE ESTATUTO DESDE ###
 
 #Punto neural 1 de desde es igual al punto neural 1 de mientras
 
@@ -416,6 +437,12 @@ def assignToFor():
 
 #Punto neural 6 de desde es igual al punto neural 3 de mientras
 
+#########################################################
+#########################################################
+
+#################################################
+#### MODULO QUE AGREGA CUADRUPLO DE FUNCIONES ###
+
 #Funcion que agrega el cuadruplo de Param
 def paramInsert():
     params = PilaO.pop()
@@ -449,6 +476,9 @@ def parcheguad(func, glob):
                 PilaO.append(result)
                 Ptypes.append(tipo)
             return True
+
+#########################################################
+#########################################################
 
 #Funcione que verifica que las operaciones de matrices
 def opMat(dir):
