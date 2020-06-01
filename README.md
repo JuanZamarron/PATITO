@@ -215,7 +215,7 @@ La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario
 
  ### Repeticion
     programa patito;
-        var int arr[10];
+        var int arr[10],i;
         principal()
         {
             desde i = 0 hasta (9) hacer {
@@ -229,16 +229,18 @@ La escritura se realiza a traves de la palabra `escribe`, con la cual el usuario
 
 ### Condicionales (si.. sino)
 
-        principal()
+        programa sinoejemplo;
         var int variable;
+        principal()
         {
-             variable = 10;
-             si(variable == 10) entonces{
+            variable = 10;
+            si(variable == 10) entonces{
                 escribe("Es igual a 10");
-             }sino{
+            }sino{
                 escribe("Es diferente a 10");
-             }
+            }
         }
+
 
 
 
