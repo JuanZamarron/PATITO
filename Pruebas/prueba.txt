@@ -1,11 +1,29 @@
-programa sinoejemplo;
-    var int variable;
+programa fibonaccirecursive;
+   var int x , i;
+
+funcion int fibrecursive(int j)
+{
+   si(j <= 1) entonces
+   {
+    regresa(j);
+   }sino {
+      regresa( fibrecursive(j-1) + fibrecursive(j-2));
+   }
+}
+
 principal()
 {
-    variable = 10;
-    si(variable == 10) entonces{
-        escribe("Es igual a 10");
-    }sino{
-        escribe("Es diferente a 10");
-    }
+   i = 0;
+   escribe("Ingresa en número de repeticiones de la serie:");
+   lee(x);
+    escribe("Fibonnaci Serie: ");
+
+   mientras (i < x) haz
+   {
+      escribe(fibrecursive(i));
+      i = i + 1;
+   }
+
 }
+
+
