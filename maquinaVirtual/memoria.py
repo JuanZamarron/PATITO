@@ -92,7 +92,7 @@ def indentifyMem(dir):
 
 #Identifica que tipo de dato es
 def indentifyType(dir):
-    if dir>=lI:             # >= 13,00
+    if dir>=lI:
         dir = dir//1000-12
     else:
         dir = dir//1000
