@@ -1,0 +1,40 @@
+programa PruebaVop;
+var
+    int i, rI;
+    float f, rF;
+    char c, rC;
+
+    principal()
+    {
+        i = 2;
+        f = 2.0;
+        c = 'c';
+        escribe("MULT");
+        rI = i*i;
+        escribe("int * int", rI);
+        rF = i * f;
+        escribe("int * float", rF);
+        rF = f * f;
+        escribe("float * float", rF);
+        escribe("DIV");
+        rF = i/i;
+        escribe("int / int", rF);
+        rF = i / f;
+        escribe("int / float", rF);
+        rF = f / f;
+        escribe("float / float", rF);
+        escribe("SUM");
+        rI = i+i;
+        escribe("int + int", rI);
+        rF = i + f;
+        escribe("int + float", rF);
+        rF = f + f;
+        escribe("float + float", rF);
+        escribe("REST");
+        rI = i-i;
+        escribe("int - int", rI);
+        rF = i * f;
+        escribe("int - float", rF);
+        rF = f * f;
+        escribe("float - float", rF);
+    }

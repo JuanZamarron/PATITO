@@ -1,0 +1,25 @@
+programa PruebaVdeterminante;
+var
+    int arrI[3], matI[1][1], arrRI[3], matRI[1][1], rI;
+    float arrF[3], matF[1][1], arrRF[3], matRF[1][1], rF;
+    char arrC[3], matC[1][1], arrRC[3], matRC[1][1], rC;
+    int i, j;
+
+
+principal()
+{
+    matI[0,0] = 1;
+    matI[0,1] = 2;
+    matI[1,0] = 3;
+    matI[1,1] = 4;
+    matF[0,0] = 1.0;
+    matF[0,1] = 2.0;
+    matF[1,0] = 3.0;
+    matF[1,1] = 4.0;
+
+    rI = $matI;
+    escribe("Determinante int[][]", rI);
+    rF = $matF;
+    escribe("Determinante float[][]", rF);
+
+}

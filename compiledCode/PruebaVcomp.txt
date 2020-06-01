@@ -1,0 +1,111 @@
+PruebaVcompÇNoneÇNoneÇNoneÇ2,2,2,0,0,0,14Ç0
+/
+2ÇintÇ8000
+2.0ÇfloatÇ9000
+'c'ÇcharÇ10000
+"int > int"ÇstringÇ11000
+"verdadero"ÇstringÇ11001
+"falso"ÇstringÇ11002
+"float > float"ÇstringÇ11003
+"int < int"ÇstringÇ11004
+"float < float"ÇstringÇ11005
+"int >= int"ÇstringÇ11006
+"float >= float"ÇstringÇ11007
+"int <= int"ÇstringÇ11008
+"float <= float"ÇstringÇ11009
+"int == int"ÇstringÇ11010
+"float == float"ÇstringÇ11011
+"char == char"ÇstringÇ11012
+"int != int"ÇstringÇ11013
+"float != float"ÇstringÇ11014
+"char != char"ÇstringÇ11015
+/
+0ÇGotoÇNoneÇNoneÇ1
+1Ç=Ç8000ÇNoneÇ1000
+2Ç=Ç9000ÇNoneÇ2000
+3Ç=Ç10000ÇNoneÇ3000
+4ÇescribeÇNoneÇNoneÇ11000
+5Ç>Ç1000Ç1000Ç7000
+6ÇGotoFÇ7000ÇNoneÇ9
+7ÇescribeÇNoneÇNoneÇ11001
+8ÇGotoÇNoneÇNoneÇ10
+9ÇescribeÇNoneÇNoneÇ11002
+10ÇescribeÇNoneÇNoneÇ11003
+11Ç>Ç2000Ç2000Ç7001
+12ÇGotoFÇ7001ÇNoneÇ15
+13ÇescribeÇNoneÇNoneÇ11001
+14ÇGotoÇNoneÇNoneÇ16
+15ÇescribeÇNoneÇNoneÇ11002
+16ÇescribeÇNoneÇNoneÇ11004
+17Ç<Ç1000Ç1000Ç7002
+18ÇGotoFÇ7002ÇNoneÇ21
+19ÇescribeÇNoneÇNoneÇ11001
+20ÇGotoÇNoneÇNoneÇ22
+21ÇescribeÇNoneÇNoneÇ11002
+22ÇescribeÇNoneÇNoneÇ11005
+23Ç<Ç2000Ç2000Ç7003
+24ÇGotoFÇ7003ÇNoneÇ27
+25ÇescribeÇNoneÇNoneÇ11001
+26ÇGotoÇNoneÇNoneÇ28
+27ÇescribeÇNoneÇNoneÇ11002
+28ÇescribeÇNoneÇNoneÇ11006
+29Ç>=Ç1000Ç1000Ç7004
+30ÇGotoFÇ7004ÇNoneÇ33
+31ÇescribeÇNoneÇNoneÇ11001
+32ÇGotoÇNoneÇNoneÇ34
+33ÇescribeÇNoneÇNoneÇ11002
+34ÇescribeÇNoneÇNoneÇ11007
+35Ç>=Ç2000Ç2000Ç7005
+36ÇGotoFÇ7005ÇNoneÇ39
+37ÇescribeÇNoneÇNoneÇ11001
+38ÇGotoÇNoneÇNoneÇ40
+39ÇescribeÇNoneÇNoneÇ11002
+40ÇescribeÇNoneÇNoneÇ11008
+41Ç<=Ç1000Ç1000Ç7006
+42ÇGotoFÇ7006ÇNoneÇ45
+43ÇescribeÇNoneÇNoneÇ11001
+44ÇGotoÇNoneÇNoneÇ46
+45ÇescribeÇNoneÇNoneÇ11002
+46ÇescribeÇNoneÇNoneÇ11009
+47Ç<=Ç2000Ç2000Ç7007
+48ÇGotoFÇ7007ÇNoneÇ51
+49ÇescribeÇNoneÇNoneÇ11001
+50ÇGotoÇNoneÇNoneÇ52
+51ÇescribeÇNoneÇNoneÇ11002
+52ÇescribeÇNoneÇNoneÇ11010
+53Ç==Ç1000Ç1000Ç7008
+54ÇGotoFÇ7008ÇNoneÇ57
+55ÇescribeÇNoneÇNoneÇ11001
+56ÇGotoÇNoneÇNoneÇ58
+57ÇescribeÇNoneÇNoneÇ11002
+58ÇescribeÇNoneÇNoneÇ11011
+59Ç==Ç2000Ç2000Ç7009
+60ÇGotoFÇ7009ÇNoneÇ63
+61ÇescribeÇNoneÇNoneÇ11001
+62ÇGotoÇNoneÇNoneÇ64
+63ÇescribeÇNoneÇNoneÇ11002
+64ÇescribeÇNoneÇNoneÇ11012
+65Ç==Ç3000Ç3000Ç7010
+66ÇGotoFÇ7010ÇNoneÇ69
+67ÇescribeÇNoneÇNoneÇ11001
+68ÇGotoÇNoneÇNoneÇ70
+69ÇescribeÇNoneÇNoneÇ11002
+70ÇescribeÇNoneÇNoneÇ11013
+71Ç!=Ç1000Ç1000Ç7011
+72ÇGotoFÇ7011ÇNoneÇ75
+73ÇescribeÇNoneÇNoneÇ11001
+74ÇGotoÇNoneÇNoneÇ76
+75ÇescribeÇNoneÇNoneÇ11002
+76ÇescribeÇNoneÇNoneÇ11014
+77Ç!=Ç2000Ç2000Ç7012
+78ÇGotoFÇ7012ÇNoneÇ81
+79ÇescribeÇNoneÇNoneÇ11001
+80ÇGotoÇNoneÇNoneÇ82
+81ÇescribeÇNoneÇNoneÇ11002
+82ÇescribeÇNoneÇNoneÇ11015
+83Ç!=Ç3000Ç3000Ç7013
+84ÇGotoFÇ7013ÇNoneÇ87
+85ÇescribeÇNoneÇNoneÇ11001
+86ÇGotoÇNoneÇNoneÇ88
+87ÇescribeÇNoneÇNoneÇ11002
+88ÇEndÇNoneÇNoneÇNone

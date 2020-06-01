@@ -69,7 +69,7 @@ def createMat(dir):
     if (len(dir) == 2):
         for c in range(lim1):
             space = dir1 + c
-            matrix[c] = memo.get(glob, globTemp, local, localTemp, space)
+            matrix.append(memo.get(glob, globTemp, local, localTemp, space))
         return matrix
     else:
         lim2 = findCte(int(dir[2])) + 1
@@ -80,7 +80,6 @@ def createMat(dir):
                 val = memo.get(glob, globTemp, local, localTemp, space)
                 a.append(val)
             matrix.append(a)
-        print(matrix)
         return matrix
 
 #Inserta resultados de operaciones de matrices a matriz correspondiente
@@ -97,6 +96,23 @@ def createMatRes(dir, res):
             for c in range(lim2):
                 space = (r*lim1) + c + dir1
                 memo.assign(glob, globTemp, local, localTemp, space, res[r][c])
+
+#Funcion que identifica el tipo de la constante
+def gettipo(cte):
+    tipo = str(type(cte))
+    temp = None
+    if tipo == "<class 'float'>":
+        temp = 2
+        return temp
+    elif tipo == "<class 'int'>":
+        temp = 1
+        return temp
+    elif len(cte) == 1:
+        temp = 3
+        return temp
+    elif tipo == "<class 'str'>":
+        print('Error: Valor ingresado no valido')
+        sys.exit()
 
 #Funciones de cuadruplos
 def goto(cuad, i):
@@ -119,7 +135,6 @@ def sum(cuad, i):
             right_op = findCte(dir2)
         else:
             right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-        #print(left_op,'+',right_op)
         res = left_op + right_op
         memo.assign(glob, globTemp, local, localTemp, result, res)
         return i + 1
@@ -167,7 +182,6 @@ def rest(cuad, i):
             right_op = findCte(dir2)
         else:
             right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-        #print(left_op,'-',right_op)
         res = left_op - right_op
         memo.assign(glob, globTemp, local, localTemp, result, res)
         return i + 1
@@ -210,7 +224,6 @@ def div(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'/',right_op)
     res = left_op / right_op
     memo.assign(glob, globTemp, local, localTemp, result, res)
     return i + 1
@@ -232,7 +245,6 @@ def mult(cuad, i):
             right_op = findCte(dir2)
         else:
             right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-        #print(left_op,'*',right_op)
         res = left_op * right_op
         memo.assign(glob, globTemp, local, localTemp, result, res)
         return i + 1
@@ -260,7 +272,11 @@ def mult(cuad, i):
             mat1 = createMat(dir1)
             mat2 = createMat(dir2)
             res = np.dot(mat1, mat2)
-            createMatRes(result, res)
+            if (str(res)[0] != '['):
+                result = apuntador(cuad.result)
+                memo.assign(glob, globTemp, local, localTemp, result, res)
+            else:
+                createMatRes(result, res)
     return i + 1
         
 def greater(cuad, i):
@@ -274,7 +290,6 @@ def greater(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'>',right_op)
     if (left_op > right_op):
         res = True
     else:
@@ -293,7 +308,6 @@ def lesser(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'<',right_op)
     if (left_op < right_op):
         res = True
     else:
@@ -312,7 +326,6 @@ def lesser_e(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'<=',right_op)
     if (left_op <= right_op):
         res = True
     else:
@@ -331,7 +344,6 @@ def greater_e(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'>=',right_op)
     if (left_op >= right_op):
         res = True
     else:
@@ -350,7 +362,6 @@ def equal(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'==',right_op)
     if (left_op == right_op):
         res = True
     else:
@@ -369,7 +380,6 @@ def different(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'!=',right_op)
     if (left_op != right_op):
         res = True
     else:
@@ -388,7 +398,6 @@ def andOp(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'&&',right_op)
     if (left_op and right_op):
         res = True
     else:
@@ -407,7 +416,6 @@ def orOp(cuad, i):
         right_op = findCte(dir2)
     else:
         right_op = memo.get(glob, globTemp, local, localTemp, dir2)
-    #print(left_op,'||',right_op)
     if (left_op or right_op):
         res = True
     else:
@@ -418,7 +426,6 @@ def orOp(cuad, i):
 def gotofalse(cuad, i):
     dir1 = int(cuad.dir1)
     left_op = memo.get(glob, globTemp, local, localTemp, dir1)
-    #print('Gotof',left_op,' ',cuad.result)
     if(left_op):
         return i + 1
     else:
@@ -426,7 +433,19 @@ def gotofalse(cuad, i):
 
 def lee(cuad, i):
     valor = input()
+    try:
+        valor = int(valor)
+    except ValueError:
+        try:
+            valor = float(valor)
+        except ValueError:
+            pass
+    tipo1 = gettipo(valor)
     result = apuntador(cuad.result)
+    tipo2 = memo.indentifyType(result)
+    if tipo1 != tipo2:
+        print('Error: Valor ingresado no es valido')
+        sys.exit()
     memo.assign(glob, globTemp, local, localTemp, result, valor)
     return i + 1
 
@@ -451,7 +470,6 @@ def asigna(cuad, i):
             right_op = findCte(dir1)
         else:
             right_op = memo.get(glob, globTemp, local, localTemp, dir1)
-        #print(cuad.result,'=',right_op)
         memo.assign(glob, globTemp, local, localTemp, result, right_op)
         return i + 1
     else:
