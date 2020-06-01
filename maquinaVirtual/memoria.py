@@ -19,6 +19,7 @@ gtB = 7000
 lI = 13000
 lF = 14000
 lC = 15000
+
 #Temporales Locales
 ltI = 16000
 ltF = 17000
