@@ -1,0 +1,29 @@
+programa patito;
+var
+ int a[10], b[10], i,j;
+
+
+principal()
+{
+    escribe("Iniciando programa...");
+
+    a[0] = 0;
+    a[1] = 1;
+    a[2] = 2;
+    a[3] = 3;
+    a[4] = 4;
+    a[5] = 5;
+
+    i = 5;
+    escribe("Ejecutando operción...");
+    desde j=0 hasta (i-1) hacer {
+         b[j] = a[j] * i;
+    }
+    escribe("Guardando operción...");
+    escribe("Resultado:");
+
+    desde j=0 hasta (i-1) hacer {
+        escribe(b[j]);
+    }
+
+}

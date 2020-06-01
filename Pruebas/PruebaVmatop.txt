@@ -1,0 +1,302 @@
+programa PruebaVmatop;
+var
+    int arrI[3], matI[1][1], arrRI[3], matRI[1][1], rI;
+    float arrF[3], matF[1][1], arrRF[3], matRF[1][1], rF;
+    int i, j;
+
+principal()
+{
+    arrI[0] = 1;
+    arrI[1] = 2;
+    arrI[2] = 3;
+    arrI[3] = 4;
+    arrF[0] = 1.0;
+    arrF[1] = 2.0;
+    arrF[2] = 3.0;
+    arrF[3] = 4.0;
+
+    matI[0,0] = 1;
+    matI[0,1] = 2;
+    matI[1,0] = 3;
+    matI[1,1] = 4;
+    matF[0,0] = 1.0;
+    matF[0,1] = 2.0;
+    matF[1,0] = 3.0;
+    matF[1,1] = 4.0;
+
+    arrRI = arrI * 2;
+    escribe("int[] * int");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRI[i]);
+    }
+    arrRF = arrI * 2.0;
+    escribe("int[] * float");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+    arrRF = arrF * 2.0;
+    escribe("float[] * float");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+
+    arrRI = arrI + 2;
+    escribe("int[] + int");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRI[i]);
+    }
+    arrRF = arrI + 2.0;
+    escribe("int[] + float");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+    arrRF = arrF + 2.0;
+    escribe("float[] + float");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+
+    arrRI = arrI - 2;
+    escribe("int[] - int");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRI[i]);
+    }
+    arrRF = arrI - 2.0;
+    escribe("int[] - float");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+    arrRF = arrF - 2.0;
+    escribe("float[] - float");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+
+
+    matRI = matI * 2;
+    escribe("int[][] * int");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+    matRF = matI * 2.0;
+    escribe("int[][] * float");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+    matRF = matF * 2.0;
+    escribe("float[][] * float");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+
+    matRI = matI + 2;
+    escribe("int[][] + int");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+    matRF = matI + 2.0;
+    escribe("int[][] + float");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+    matRF = matF + 2.0;
+    escribe("float[][] + float");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+
+    matRI = matI - 2;
+    escribe("int[][] - int");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+    matRF = matI - 2.0;
+    escribe("int[][] - float");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+    matRF = matF - 2.0;
+    escribe("float[][] - float");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+
+
+    rI = arrI * arrI;
+    escribe("int[] * int[]");
+    escribe(rI);
+    rF = arrI * arrF;
+    escribe("int[] * float[]");
+    escribe(rF);
+    rF = arrF * arrF;
+    escribe("float[] * float[]");
+    escribe(rF);
+
+    arrRI = arrI + arrI;
+    escribe("int[] + int[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRI[i]);
+    }
+    arrRF = arrI + arrF;
+    escribe("int[] + float[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+    arrRF = arrF + arrF;
+    escribe("float[] * float[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+
+    arrRI = arrI - arrI;
+    escribe("int[] - int[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRI[i]);
+    }
+    arrRF = arrI - arrF;
+    escribe("int[] - float[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+    arrRF = arrF - arrF;
+    escribe("float[] * float[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+
+
+    matRI = matI * matI;
+    escribe("int[][] * int[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+    matRF = matI * matF;
+    escribe("int[][] * float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+    matRF = matF * matF;
+    escribe("float[][] * float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+
+    matRI = matI + matI;
+    escribe("int[][] + int[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+    matRF = matI + matF;
+    escribe("int[][] + float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+    matRF = matF + matF;
+    escribe("float[][] + float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+
+    matRI = matI - matI;
+    escribe("int[][] - int[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+    matRF = matI - matF;
+    escribe("int[][] - float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+    matRF = matF - matF;
+    escribe("float[][] - float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+}

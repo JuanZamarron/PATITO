@@ -1,0 +1,70 @@
+programa patito;
+var
+ int a[10][10], b[10][10], mult[10][10], r1, c1, r2, c2, i, j, k;
+
+
+principal()
+{
+
+    escribe("Enter rows and columns for first matrix: ");
+    lee(r1);
+    lee(c1);
+    escribe("Enter rows and columns for second matrix: ");
+    lee(r2);
+    lee(c2);
+
+
+     mientras (c1 != r2) haz {
+        escribe( "Error! column of first matrix not equal to row of second.");
+        escribe( "Enter rows and columns for first matrix: ");
+        lee(r1);
+        lee(c1);
+        escribe( "Enter rows and columns for second matrix: ");
+        lee(r2);
+        lee(c2);
+    }
+
+    escribe("Enter elements of matrix 1: ");
+    desde i = 0 hasta  (r1 - 1) hacer {
+        desde j = 0 hasta (c1 - 1) hacer {
+            escribe( "Enter element a: ", i + 1, j + 1, " => ");
+            lee(a[i,j]);
+        }
+    }
+
+    escribe("Enter elements of matrix 2:" );
+    desde i = 0 hasta (r2 - 1 )hacer{
+        desde j = 0 hasta (c2 - 1) hacer{
+            escribe( "Enter element b", i + 1, j + 1, " => ");
+            lee( b[i,j]);
+        }
+    }
+
+
+
+    desde i = 0 hasta (r1 - 1) hacer{
+        desde j = 0 hasta (c1 - 1) hacer{
+            mult[i,j]=0;
+        }
+    }
+
+
+     desde i = 0 hasta (r1 - 1) hacer{
+        desde j = 0 hasta (c2 - 1)  hacer{
+              desde k = 0 hasta (c1 - 1 )hacer{
+                mult[i,j] = mult[i,j] + a[i,k] * b[k,j];
+            }
+        }
+     }
+
+
+    desde i = 0 hasta  (r1 - 1) hacer{
+        desde j = 0 hasta (c2 - 1 )hacer{
+            escribe( " => ", mult[i,j]);
+            si(j == c2-1) entonces{
+                escribe("\n");
+            }
+        }
+    }
+
+}

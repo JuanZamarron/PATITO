@@ -1,0 +1,85 @@
+programa PruebaVtranspuesta;
+var
+    int arrI[3], matI[1][1], arrRI[3], matRI[1][1], rI;
+    float arrF[3], matF[1][1], arrRF[3], matRF[1][1], rF;
+    char arrC[3], matC[1][1], arrRC[3], matRC[1][1], rC;
+    int i, j;
+
+
+principal()
+{
+    arrI[0] = 1;
+    arrI[1] = 2;
+    arrI[2] = 3;
+    arrI[3] = 4;
+    arrF[0] = 1.0;
+    arrF[1] = 2.0;
+    arrF[2] = 3.0;
+    arrF[3] = 4.0;
+    arrC[0] = 'a';
+    arrC[1] = 'b';
+    arrC[2] = 'c';
+    arrC[3] = 'd';
+
+    matI[0,0] = 1;
+    matI[0,1] = 2;
+    matI[1,0] = 3;
+    matI[1,1] = 4;
+    matF[0,0] = 1.0;
+    matF[0,1] = 2.0;
+    matF[1,0] = 3.0;
+    matF[1,1] = 4.0;
+    matC[0,0] = 'a';
+    matC[0,1] = 'b';
+    matC[1,0] = 'c';
+    matC[1,1] = 'd';
+
+    arrRI = ¡arrI;
+    matRI = ¡matI;
+    arrRF = ¡arrF;
+    matRF = ¡matF;
+    arrRC = ¡arrC;
+    matRC = ¡matC;
+
+    escribe("Transpuesta int[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRI[i]);
+    }
+    escribe("Transpuesta int[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRI[i,j]);
+        }
+    }
+
+    escribe("Transpuesta float[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRF[i]);
+    }
+    escribe("Transpuesta float[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRF[i,j]);
+        }
+    }
+
+    escribe("Transpuesta char[]");
+    desde i=0 hasta 3 hacer
+    {
+        escribe(arrRC[i]);
+    }
+    escribe("Transpuesta char[][]");
+    desde i=0 hasta 1 hacer
+    {
+        desde j=0 hasta 1 hacer
+        {
+            escribe(matRC[i,j]);
+        }
+    }
+}

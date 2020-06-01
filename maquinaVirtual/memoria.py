@@ -8,6 +8,7 @@
 gI = 1000
 gF = 2000
 gC = 3000
+
 #Temporales Globales
 gtI = 4000
 gtF = 5000
@@ -18,6 +19,7 @@ gtB = 7000
 lI = 13000
 lF = 14000
 lC = 15000
+
 #Temporales Locales
 ltI = 16000
 ltF = 17000

@@ -77,7 +77,7 @@ def p_varaux3(p):
         if Tablas.isVector != None:
             if Tablas.isVector == 1:
                 if p[4]<1:
-                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    print("Error: No se puede declarar una matriz o vector con tamaño 0.")
                     sys.exit()
                 dir1 = Tablas.findCteVM(p[4])
                 m = Tablas.findCteVM(Tablas.m)
@@ -93,7 +93,7 @@ def p_varaux3(p):
                     mv.restMemo(tipo)
             elif Tablas.isVector == 2:
                 if p[4]<1 or p[7]<1:
-                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    print("Error: No se puede declarar una matriz o vector con tamaño 0.")
                     sys.exit()
                 dir1 = Tablas.findCteVM(p[4])
                 dir2 = Tablas.findCteVM(p[7])
@@ -114,7 +114,7 @@ def p_varaux3(p):
         if Tablas.isVector != None:
             if Tablas.isVector == 1:
                 if p[4]<1:
-                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    print("Error: No se puede declarar una matriz o vector con tamaño 0.")
                     sys.exit()
                 dir1 = Tablas.findCteVM(p[4])
                 m = Tablas.findCteVM(Tablas.m)
@@ -130,7 +130,7 @@ def p_varaux3(p):
                     mv.restMemo(tipo)
             elif Tablas.isVector == 2:
                 if p[4]<1 or p[7]<1:
-                    print("ERROR: No se puede declarar una matriz o vector con tamaño 0.")
+                    print("Error: No se puede declarar una matriz o vector con tamaño 0.")
                     sys.exit()
                 dir1 = Tablas.findCteVM(p[4])
                 dir2 = Tablas.findCteVM(p[7])
@@ -219,7 +219,6 @@ def p_tipo(p):
     tipo : INT
          | FLOAT
          | CHAR
-         | STRING
     '''
     Tablas.myType = p[1]
 ##########################################################
@@ -697,7 +696,7 @@ def p_removeid(p):
     removeid :
     '''
     idDir = quad.PilaO.pop()
-    tipo = quad.Ptypes.pop()
+    #tipo = quad.Ptypes.pop()
     temp = Tablas.findCteVM(idDir)
     if temp == False:
         print('Error: No es variable dimensionada')
@@ -710,6 +709,7 @@ def p_ver1(p):
     ver1 :
     '''
     temp = quad.PilaO.pop()
+    quad.Ptypes.pop()
     #quad.PilaO.append(temp)
     loc = Tablas.findLVector(Tablas.isVector)
     lim1 = Tablas.findCteVM(0)
@@ -734,6 +734,7 @@ def p_ver2(p):
     ver2 :
     '''
     temp = quad.PilaO.pop()
+    quad.Ptypes.pop()
     #quad.PilaO.append(temp)
     loc = Tablas.findLVector(Tablas.isVector)
     lim1 = Tablas.findCteVM(0)
@@ -759,6 +760,7 @@ def p_ver3(p):
     ver3 :
     '''
     temp = quad.PilaO.pop()
+    quad.Ptypes.pop()
     loc = Tablas.findLVector(Tablas.isVector)
     lim1 = Tablas.findCteVM(0)
     if loc == True:

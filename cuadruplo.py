@@ -92,7 +92,7 @@ def popAssign():
                 Ptypes.append(left_type)
                 return True
             else:
-                print("ERROR: type mismatch")
+                print("Error: type mismatch, assign")
                 sys.exit()
                 return False
     return False
@@ -120,7 +120,7 @@ def popLog(glob):
                 Ptypes.append(result_type)
                 return True
             else:
-                print("ERROR: type mismatch")
+                print("Error: type mismatch, and, or")
                 sys.exit()
     return False
 
@@ -147,7 +147,7 @@ def popRel(glob):
                 Ptypes.append(result_type)
                 return True
             else:
-                print("ERROR: type mismatch")
+                print("Error: type mismatch, <,<=,>,>=")
                 sys.exit()
     return False
 
@@ -183,7 +183,7 @@ def popTerm(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print("Error: type mismatch")
+                    print("Error: type mismatch,+,-")
                     sys.exit()
     return False
 
@@ -202,7 +202,10 @@ def popFact(glob):
                 operator = Poper.pop()
                 result_type = semantic_cube[operator][left_type][right_type]
                 tam = compMatSize(right_operand, tempR, left_operand, tempL, operator)
-                salto = tamMat(tam)
+                if tam == 1:
+                    salto = 1
+                else:
+                    salto = tamMat(tam)
                 if(result_type != 'err'):
                     result = mv.getMemoTemp(result_type, glob, salto)
                     if (salto > 1 and len(tam) == 1):
@@ -219,7 +222,7 @@ def popFact(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print("ERROR: type mismatch")
+                    print("Error: type mismatch,*,/")
                     sys.exit()
     return False
 
@@ -267,7 +270,7 @@ def popMat(glob):
                     Ptypes.append(result_type)
                     return True
                 else:
-                    print('Error: type mismatch')
+                    print('Error: type mismatch,¡,$,?')
                     sys.exit()
     return False
 
@@ -278,19 +281,19 @@ def gettipo(cte):
     if cte == 'true' or cte == 'false':
         temp = 'boolean'
         return temp
-    if tipo == "<class 'float'>":
+    elif tipo == "<class 'float'>":
         temp = 'float'
         return temp
-    if tipo == "<class 'int'>":
+    elif tipo == "<class 'int'>":
         temp = 'int'
         return temp
-    if tipo == "<class 'str'>":
-        temp = 'string'
-        return temp
-    if tipo == "<class 'char'>":
+    elif cte[0] == "'":
         temp = 'char'
         return temp
-
+    elif tipo == "<class 'str'>":
+        temp = 'string'
+        return temp
+    
 #Funcion que imprime los cuadruplos generados
 def imprime():
     for i in range(0, len(Quad)):
@@ -304,7 +307,7 @@ def popFalseBottom():
 def GotoF_SI():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
-        print('Error: type mismatch')
+        print('Error: type mismatch, SI')
         sys.exit()
         return False
     else:
@@ -336,7 +339,7 @@ def pushJumps():
 def GotoF_While():
     exp_type = Ptypes.pop()
     if (exp_type != 'boolean'):
-        print('Error: type mismatch')
+        print('Error: type mismatch, MIENTRAS')
         sys.exit()
         return False
     else:
@@ -377,7 +380,7 @@ def compareFor(glob):
         Ptypes.append(result_type)
         return True
     else:
-        print("ERROR: type mismatch")
+        print("Error: type mismatch, FOR")
         sys.exit()
     return False
 
@@ -473,11 +476,27 @@ def compMatSize(rO,rT,lO,lT,op):
             print('Error: Matrices de diferentes dimensiones')
             sys.exit()
         elif op == '$':
+            if (len(sR) == 2):
+                print('Error: EL arreglo tiene que ser de 2 dimensiones para sacar determinante')
+                sys.exit()
+            elif (sR[1] != sR[2]):
+                print('Error: La matriz tiene que ser cuadrada.')
+                sys.exit()
             return 1
         elif op == '¡':
-            return [sR[2], sR[1]]
+            if (len(sR) == 2):
+                return [sR[1]]
+            else:
+                return [sR[2], sR[1]]
         elif op == '?':
-            return [sR[1], sR[2]]
+            if (len(sR) == 2):
+                print('Error: EL arreglo tiene que ser de 2 dimensiones para sacar inversa')
+                sys.exit()
+            elif (sR[1] != sR[2]):
+                print('Error: La matriz tiene que ser cuadrada.')
+                sys.exit()
+            else:
+                return [sR[1], sR[2]]
         elif (op == '+' or op == '-'):
             if (len(sR) == 2):
                 if(sR[1] != sL[1]):
@@ -493,7 +512,11 @@ def compMatSize(rO,rT,lO,lT,op):
                     return [sR[1], sR[2]]
         elif (op == '*'):
             if (len(sR) == 2):
-                print('Error: No se puede multiplicar esta matriz.')
+                if (sR[1] != sL[1]):
+                    print('Error: No se puede multiplicar esta matriz.')
+                    sys.exit()
+                else:
+                    return 1
             else:
                 if(sL[2] != sR[1]):
                     print('Error: No se puede multiplicar esta matriz.')

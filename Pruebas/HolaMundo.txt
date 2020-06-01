@@ -1,0 +1,4 @@
+programa holamundo;
+    principal(){
+        escribe("Hola mundo!");
+    }

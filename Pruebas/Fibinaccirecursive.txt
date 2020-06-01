@@ -1,0 +1,29 @@
+programa fibonaccirecursive;
+   var int x , i;
+
+funcion int fibrecursive(int j)
+{
+   si(j <= 1) entonces
+   {
+    regresa(j);
+   }sino {
+      regresa( fibrecursive(j-1) + fibrecursive(j-2));
+   }
+}
+
+principal()
+{
+   i = 0;
+   escribe("Ingresa en número de repeticiones de la serie:");
+   lee(x);
+    escribe("Fibonnaci Serie: ");
+
+   mientras (i < x) haz
+   {
+      escribe(fibrecursive(i));
+      i = i + 1;
+   }
+
+}
+
+
