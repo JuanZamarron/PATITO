@@ -1,6 +1,4 @@
-programa holamuno;
-        {
-        principal(){
-            escribir("Hola mundo!");
-        }
+programa holamundo;
+    principal(){
+        escribe("Hola mundo!");
     }

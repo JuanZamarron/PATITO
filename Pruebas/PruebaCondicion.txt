@@ -1,25 +1,32 @@
 programa condicion;
 var
-    int m, i, Arreglo[10],local,mult;
+    int m, i, arr[10],local,mult;
 
-principal()
-   {
-       desde i = 0 hasta local hacer {
-        Arreglo[i] = i * mult;
-       }
-
-        mientras (m <= local) haz {
-            escribir(Arreglo[j]);
-            m = m + 1;
-        }
-
-      si (Arreglo[2] < local) entonces
+funcion void compara (int dato){
+    si (dato < local) entonces
          {
-            escribe(Arreglo[2] , " es menor a: ", mult);
+            escribe(dato, " es menor a: ", mult);
          }
       sino
         {
-            escribe(Arreglo[2] , " es mayoy a: ", mult);
+            escribe(dato , " es mayor a: ", mult);
         }
+    }
+
+principal()
+   {
+        m = 0;
+        mult = 4;
+        local = 8;
+
+       desde i = 0 hasta (local) hacer {
+        arr[i] = i * mult;
+       }
+
+        mientras (m <= local) haz {
+            compara(arr[m]);
+            m = m + 1;
+        }
+
    }
 

@@ -14,9 +14,9 @@ funcion float searchNumber(float x, float len)
 
 principal()
 {
-	escribe("Enter the size of array:");
+	escribe("Enter the size of array (float):");
 	lee(n);
-	escribe("Enter the array elements:");
+	escribe("Enter the array elements:  (float)");
 
 	desde i=0.0 hasta (n-1.0) hacer {
 	    lee(a[i]);
@@ -43,10 +43,10 @@ principal()
     f = 0.0;
     v = n - 1.0;
     result = searchNumber(x, n);
-    si(result < 9999.0) entonces {
+    si(result < 9999.0 ) entonces {
         escribe("el elemento no se encuentra en la posición:",result);
     }sino{
-        escribe("El elemento se encuentra en el index: ", result);
+        escribe("El elemento No Existe");
     }
 
 }
