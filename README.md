@@ -3,9 +3,16 @@ El lenguaje de programación Patito++  es un lenguaje imperativo especial
 que desarrollamos como parte de nuestro proyecto final de la materia de 
 Diseño de Compiladores .
 
-### Librerías usadas YACC & Lex
-* lex.py => reserved, tokens y expresiones regulares
-* yacc.py => gramatica
+### Librerías usadas y proceso de desarrollo
+Para el desarrollo del proyecto  Patito++ se utilizó python3 como lenguaje de programación base.
+
+Para el compilador y utilizamos la librería Ply  para el Lex el cual nos ayudó con las palabras reservadas, los tokens y las expresiones reculares.
+y la Gramática usamos Yacc.
+
+Además utilizamos numpy que nos ayudó para funciones especiales de las matrices, tales como : sumar, restar, multiplicar matrices, determinante, inversa y transpuesta de matrices.
+
+Durante el proceso de Branching del desarrollo del compilador, utilizamos la técnica GitFlow, el cual se basa en dos branches principales : 
+Master que contiene producción y develop, que contiene un código pre-producción con características añadidas.  Durante el ciclo de desarrollo usamos una variedad de branches usadas como cuádruplos, gramática, maquinavirtual, ejemplos, entro otros.
 
 ### Hola mundo
 Una función simple que puede correrse con Patito ++ es parecida a la siguiente línea de código:
